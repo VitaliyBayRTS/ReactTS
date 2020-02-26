@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import './App.scss';
-import Header from './component/Header';
-import NavBar from './component/NavBar';
-import Profile from './component/Profile';
+import Header from './component/Header/Header';
+import NavBar from './component/NavBar/NavBar';
+import Profile from './component/Profile/Profile';
 
+interface PropsInterface {
 
-function App(): any {
+}
+
+const App: FunctionComponent<PropsInterface> = (props) => {
   return (
     <div className="app-wrapper">
       <Header />
