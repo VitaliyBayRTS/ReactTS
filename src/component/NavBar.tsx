@@ -1,16 +1,16 @@
 import React from 'react';
-import '../App.scss';
+import s from './NavBar.module.scss';
 
 function NavBar(): any {
     return (
-        <div className="nav">
+        <div className={s.nav}>
             <nav>
                 <ul>
-                    <li>Profile</li>
-                    <li>Messages</li>
-                    <li>News</li>
-                    <li>Music</li>
-                    <li>Settings</li>
+                    <li className={`${s.item} ${s.active}`}>Profile</li>
+                    <li className={s.item}>Messages</li>
+                    <li className={s.item}>News</li>
+                    <li className={s.item}>Music</li>
+                    <li className={s.item}>Settings</li>
                 </ul>
             </nav>
         </div>
