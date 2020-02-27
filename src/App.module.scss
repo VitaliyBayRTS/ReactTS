@@ -1,4 +1,4 @@
-.app-wrapper {
+.app_wrapper {
     display: grid;
     grid-template-rows: 60px, 1fr;
     grid-template-columns: 2fr, 10fr;
@@ -6,4 +6,9 @@
     grid-template-areas: 
     "h h h"
     "n c c";
+}
+.content {
+    background-color: #2EAD37;
+    border: 2px solid #000;
+    grid-area: c;
 }
