@@ -1,6 +1,6 @@
 import React, { FunctionComponent, Props } from 'react';
 import s from './NavBar.module.scss';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 interface PropsInterface {
 
@@ -13,19 +13,19 @@ const NavBar: FunctionComponent<PropsInterface> = (props) => {
             <nav>
                 <ul>
                     <li>
-                        <Link to="/profile" className={`${s.item} ${s.active}`}>Profile</Link>
+                        <NavLink to="/profile" className={s.item} activeClassName={s.active} >Profile</NavLink>
                     </li>
                     <li>
-                        <Link to="/dialog" className={s.item}>Messages</Link>
+                        <NavLink to="/dialog" className={s.item} activeClassName={s.active}>Messages</NavLink>
                     </li>
                     <li>
-                        <Link to="/#" className={s.item}>News</Link>
+                        <NavLink to="/news" className={s.item} activeClassName={s.active}>News</NavLink>
                     </li>
                     <li>
-                        <Link to="/#" className={s.item}>Music</Link>
+                        <NavLink to="/music" className={s.item} activeClassName={s.active}>Music</NavLink>
                     </li>
                     <li>
-                        <Link to="/#" className={s.item}>Settings</Link>
+                        <NavLink to="/setting" className={s.item} activeClassName={s.active}>Settings</NavLink>
                     </li>
                 </ul>
             </nav>

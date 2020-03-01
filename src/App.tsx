@@ -5,7 +5,6 @@ import NavBar from './component/NavBar/NavBar';
 import Profile from './component/Profile/Profile';
 import Dialog from './component/Dialog/Dialog';
 import { Route, BrowserRouter } from 'react-router-dom';
-// import { Route, HashRouter as Router, Switch } from 'react-router-dom';
 
 interface PropsInterface {
 

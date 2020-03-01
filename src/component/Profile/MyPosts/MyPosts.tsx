@@ -6,6 +6,22 @@ interface PropsInterface {
 
 }
 
+interface PostDataInterface {
+    text: string
+    name: string
+    like: number
+};
+
+const PostData: Array<PostDataInterface> = [
+    {text: "Super puper ninja 1", name: "Ninja 1", like: 4},
+    {text: "OMG I'm in Internet", name: "Ninja 2", like: 2},
+    {text: "Join to my way of samurai", name: "Ninja 3", like: 13}
+];
+
+let PostDataElements = PostData.map( p => <Post text={p.text} name={p.name} like={p.like} />);
+
+
+
 const MyPosts: FunctionComponent<PropsInterface> = (props) => {
     return (
         <div className={s.post_box}>
@@ -15,9 +31,7 @@ const MyPosts: FunctionComponent<PropsInterface> = (props) => {
                 <button>Add Post</button>
             </div>
             <div>
-                <Post text="Super puper ninja 1" name="Ninja 1" like={4} />
-                <Post text="OMG I'm in Internet" name="Ninja 2" like={2}/>
-                <Post text="Join to my way of samurai" name="Ninja 3" like={13}/>
+                {PostDataElements}
             </div>
         </div>
     )
