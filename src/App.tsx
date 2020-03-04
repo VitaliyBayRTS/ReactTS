@@ -7,11 +7,7 @@ import Dialog from './component/Dialog/Dialog';
 import { Route, BrowserRouter } from 'react-router-dom';
 
 interface PropsInterface {
-  state: any
-  addPost: any
-  addMessage: any
-  changeMessageText: any
-  changePostText: any
+  store: any
 }
 
 const App: FunctionComponent<PropsInterface> = (props) => {
@@ -21,12 +17,12 @@ const App: FunctionComponent<PropsInterface> = (props) => {
         <Header />
         <NavBar />
         <div className={s.content}>
-            <Route path="/profile" render={() => <Profile state={props.state.profilePage}
-                                                          addPost={props.addPost}
-                                                          changePostText={props.changePostText}/>} />
-            <Route path="/dialog" render={() => <Dialog dialogData={props.state.dialogPage} 
-                                                          addMessage={props.addMessage}
-                                                          changeMessageText={props.changeMessageText}/>} />
+            <Route path="/profile" render={() => <Profile state={props.store.state.profilePage}
+                                                          addPost={props.store.addPost}
+                                                          changePostText={props.store.changePostText}/>} />
+            <Route path="/dialog" render={() => <Dialog dialogData={props.store.state.dialogPage} 
+                                                          addMessage={props.store.addMessage}
+                                                          changeMessageText={props.store.changeMessageText}/>} />
         </div>
       </div>
     </BrowserRouter>
