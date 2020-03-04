@@ -10,6 +10,8 @@ interface PropsInterface {
   state: any
   addPost: any
   addMessage: any
+  changeMessageText: any
+  changePostText: any
 }
 
 const App: FunctionComponent<PropsInterface> = (props) => {
@@ -20,9 +22,11 @@ const App: FunctionComponent<PropsInterface> = (props) => {
         <NavBar />
         <div className={s.content}>
             <Route path="/profile" render={() => <Profile state={props.state.profilePage}
-                                                          addPost={props.addPost}/>} />
+                                                          addPost={props.addPost}
+                                                          changePostText={props.changePostText}/>} />
             <Route path="/dialog" render={() => <Dialog dialogData={props.state.dialogPage} 
-                                                          addMessage={props.addMessage}/>} />
+                                                          addMessage={props.addMessage}
+                                                          changeMessageText={props.changeMessageText}/>} />
         </div>
       </div>
     </BrowserRouter>

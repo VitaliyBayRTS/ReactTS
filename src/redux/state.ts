@@ -1,25 +1,32 @@
+import {rerenderEntireTree} from "./render";
+
 
 
 interface DialogMessageInterface {
     text: string
 };
-
-export interface DialogDataInterface {
-    DialogItemData: Array<DialogItemInteface>
-    DialogMessageData: Array<DialogMessageInterface>
-}
-
-
-export interface PostDataInterface {
-    id: number
-    text: string
-    name: string
-    like: number
-};
 interface DialogItemInteface {
     id: number
     name: string
 }
+
+export interface DialogDataInterface {
+    DialogItemData: Array<DialogItemInteface>
+    DialogMessageData: Array<DialogMessageInterface>
+    newMessageText: string
+}
+
+
+interface PostInterface {
+    id: number
+    text: string
+    like: number
+};
+export interface PostDataInterface {
+    PostData: Array<PostInterface>
+    newPostText: string
+}
+
 
 let state = {
     dialogPage : {
@@ -35,34 +42,47 @@ let state = {
             { text: "PrePrePre" },
             { text: "PrePrePrePrePrePrePrePrePre" },
             { text: "OMG, i am in YouTube" }
-        ]
+        ],
+        newMessageText: ""
     },
     profilePage : {
         PostData : [
-            { id: 1,  text: "Super puper ninja 1", name: "Ninja 1", like: 4 },
-            { id: 2, text: "OMG I'm in Internet", name: "Ninja 2", like: 2 },
-            { id: 3, text: "Join to my way of samurai", name: "Ninja 3", like: 13 }
-        ]
+            { id: 1,  text: "Super puper ninja 1", like: 4 },
+            { id: 2, text: "OMG I'm in Internet", like: 2 },
+            { id: 3, text: "Join to my way of samurai", like: 13 }
+        ], 
+        newPostText: ""
     }
 }
 
-export let addPost = (postText: string): void => {
+export let addPost = (): void => {
     let newPost = {
         id: 4,
-        text: postText,
-        name: "Ninja 4",
+        text: state.profilePage.newPostText,
         like: 0
     };
-
     state.profilePage.PostData.push(newPost);
+    state.profilePage.newPostText = "";
+    rerenderEntireTree(state);
 };
 
-export let addMessage = (messageText: string): void => {
+export let addMessage = (): void => {
     let newMessage = {
-        text: messageText
+        text: state.dialogPage.newMessageText
     }
-
     state.dialogPage.DialogMessageData.push(newMessage);
+    state.dialogPage.newMessageText = "";
+    rerenderEntireTree(state);
+}
+
+export let changeMessageText = (text: string) => {
+    state.dialogPage.newMessageText = text;
+    rerenderEntireTree(state);
+}
+export let changePostText = (text: string) => {
+    state.profilePage.newPostText = text;
+    debugger;
+    rerenderEntireTree(state);
 }
 
 

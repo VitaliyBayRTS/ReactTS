@@ -4,26 +4,29 @@ import Post from './Posts/Post';
 import { PostDataInterface } from '../../../redux/state';
 
 interface PropsInterface {
-    state: Array<PostDataInterface>
+    state: PostDataInterface
     addPost: any
+    changePostText: any
 }
 
 const MyPosts: FunctionComponent<PropsInterface> = (props) => {
     // debugger;
-    let PostDataElements = props.state.map( p => <Post text={p.text} name={p.name} like={p.like} />);
+    let PostDataElements = props.state.PostData.map( p => <Post text={p.text} like={p.like} />);
     let componentRef = React.createRef<HTMLTextAreaElement>();
 
     let addPost = () => {
-        let text: string | undefined = componentRef.current?.value;
-        props.addPost(text);
+        props.addPost();
     };
 
+    let onChangeAction = () => {
+        props.changePostText(componentRef.current?.value);
+    }
     
     return (
         <div className={s.post_box}>
             My post
             <div>
-                <textarea ref={componentRef}></textarea>
+                <textarea ref={componentRef} onChange={onChangeAction} value={props.state.newPostText}/>
                 <button onClick={addPost}>Add Post</button>
             </div>
             <div>
