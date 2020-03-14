@@ -6,8 +6,7 @@ import { PostDataInterface } from '../../redux/state';
 
 interface PropsInterface {
     state: any
-    addPost: any
-    changePostText: any
+    dispatch: any
 }
 
 const Profile: FunctionComponent<PropsInterface> = (props) => {
@@ -16,8 +15,7 @@ const Profile: FunctionComponent<PropsInterface> = (props) => {
         <div>
             <MyProfile />
             <MyPosts state={props.state}
-                    addPost={props.addPost}
-                    changePostText={props.changePostText}/>
+                    dispatch={props.dispatch}/>
         </div>
     )
 }

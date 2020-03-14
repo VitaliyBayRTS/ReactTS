@@ -11,18 +11,17 @@ interface PropsInterface {
 }
 
 const App: FunctionComponent<PropsInterface> = (props) => {
+  // debugger;
   return (
     <BrowserRouter>
       <div className={s.app_wrapper}>
         <Header />
         <NavBar />
         <div className={s.content}>
-            <Route path="/profile" render={() => <Profile state={props.store.state.profilePage}
-                                                          addPost={props.store.addPost}
-                                                          changePostText={props.store.changePostText}/>} />
-            <Route path="/dialog" render={() => <Dialog dialogData={props.store.state.dialogPage} 
-                                                          addMessage={props.store.addMessage}
-                                                          changeMessageText={props.store.changeMessageText}/>} />
+            <Route path="/profile" render={() => <Profile state={props.store.getState.profilePage}
+                                                          dispatch={props.store.dispatch}/>} />
+            <Route path="/dialog" render={() => <Dialog dialogData={props.store.getState.dialogPage} 
+                                                          dispatch={props.store.dispatch}/>} />
         </div>
       </div>
     </BrowserRouter>

@@ -2,27 +2,26 @@ import React, { FunctionComponent } from 'react';
 import s from './Dialog.module.scss';
 import DialogItem from './DialogItem/DialogItem';
 import DialogMessage from './DialogMessages/DialogMessage';
+import { addMessageActionCreator, newMessageTextActionCreator } from '../../redux/dialogReducer';
 import { DialogDataInterface } from '../../redux/state';
 
 interface PropsInterface {
     dialogData: DialogDataInterface
-    addMessage: any
-    changeMessageText: any
+    dispatch: any
 }
 
 const Dialog: FunctionComponent<PropsInterface> = (props) => {
-    // debugger;
     let DialogItemElemets = props.dialogData.DialogItemData.map( u =>  <DialogItem id={u.id} name={u.name}/>);
     let DialogMessageElemets = props.dialogData.DialogMessageData.map( m => <DialogMessage text={m.text}/>);
 
     let componentElement = React.createRef<HTMLTextAreaElement>()
 
     let sendMessage = () => {
-        props.addMessage();
+        props.dispatch(addMessageActionCreator())
     }
 
     let onChangeAction = () => {
-        props.changeMessageText(componentElement.current?.value);
+        props.dispatch(newMessageTextActionCreator(componentElement.current?.value));
     }
 
     return (

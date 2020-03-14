@@ -13,6 +13,6 @@ let rerenderEntireTree = (state: any): void => {
         document.getElementById('root'));
 }
 
-rerenderEntireTree(state);
+rerenderEntireTree(store.getState);
 
 store.subscriber(rerenderEntireTree);

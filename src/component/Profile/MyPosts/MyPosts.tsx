@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Posts/Post';
+import { addPostActionCreator,  newPostTextActionCreator} from '../../../redux/profileReducer';
 import { PostDataInterface } from '../../../redux/state';
 
 interface PropsInterface {
     state: PostDataInterface
-    addPost: any
-    changePostText: any
+    dispatch: any
 }
+
 
 const MyPosts: FunctionComponent<PropsInterface> = (props) => {
     // debugger;
@@ -15,11 +16,13 @@ const MyPosts: FunctionComponent<PropsInterface> = (props) => {
     let componentRef = React.createRef<HTMLTextAreaElement>();
 
     let addPost = () => {
-        props.addPost();
+        // props.addPost();
+        props.dispatch(addPostActionCreator());
     };
 
     let onChangeAction = () => {
-        props.changePostText(componentRef.current?.value);
+        // props.changePostText(componentRef.current?.value);
+        props.dispatch(newPostTextActionCreator(componentRef.current?.value));
     }
     
     return (
