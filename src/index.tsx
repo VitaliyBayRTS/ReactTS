@@ -1,18 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import store from './redux/state';
+import store from './redux/redux-store';
 import App from './App';
-import state from './redux/state';
-interface PropsInterface {
-    state: any
-}
-
 
 let rerenderEntireTree = (state: any): void => {
-    ReactDOM.render(<App store={store}/>, 
+    ReactDOM.render(<App store={state} dispatch={store.dispatch.bind(store)}/>, 
         document.getElementById('root'));
 }
+rerenderEntireTree(store.getState());
 
-rerenderEntireTree(store.getState);
-
-store.subscriber(rerenderEntireTree);
+store.subscribe(() => {
+    let state = store.getState();
+    rerenderEntireTree(state);
+});

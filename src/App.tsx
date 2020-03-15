@@ -8,6 +8,7 @@ import { Route, BrowserRouter } from 'react-router-dom';
 
 interface PropsInterface {
   store: any
+  dispatch: any
 }
 
 const App: FunctionComponent<PropsInterface> = (props) => {
@@ -16,12 +17,12 @@ const App: FunctionComponent<PropsInterface> = (props) => {
     <BrowserRouter>
       <div className={s.app_wrapper}>
         <Header />
-        <NavBar state={props.store.getState.sidebarPage} dispatch={props.store.dispatch}/>
+        <NavBar state={props.store.sidebarPage} dispatch={props.dispatch}/>
         <div className={s.content}>
-            <Route path="/profile" render={() => <Profile state={props.store.getState.profilePage}
-                                                          dispatch={props.store.dispatch}/>} />
-            <Route path="/dialog" render={() => <Dialog dialogData={props.store.getState.dialogPage} 
-                                                          dispatch={props.store.dispatch}/>} />
+            <Route path="/profile" render={() => <Profile state={props.store.profilePage}
+                                                          dispatch={props.dispatch}/>} />
+            <Route path="/dialog" render={() => <Dialog dialogData={props.store.dialogPage} 
+                                                          dispatch={props.dispatch}/>} />
         </div>
       </div>
     </BrowserRouter>

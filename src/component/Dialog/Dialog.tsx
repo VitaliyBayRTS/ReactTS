@@ -3,7 +3,7 @@ import s from './Dialog.module.scss';
 import DialogItem from './DialogItem/DialogItem';
 import DialogMessage from './DialogMessages/DialogMessage';
 import { addMessageActionCreator, newMessageTextActionCreator } from '../../redux/dialogReducer';
-import { DialogDataInterface } from '../../redux/state';
+import { DialogDataInterface } from '../../redux/store';
 
 interface PropsInterface {
     dialogData: DialogDataInterface

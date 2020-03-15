@@ -67,21 +67,21 @@ let store = {
             newNoteText: ""
         }
     },
-    get getState() {
+    getState() {
         return this._state;
     },
 
-    subscriber(observer: any) {
-        store.rerenderEntireTree = observer;
+    subscribe(observer: any) {
+        this.rerenderEntireTree = observer;
     },
 
     dispatch(action: ActionType) {
 
-        store.getState.profilePage = profileReducer(store.getState.profilePage, action);
-        store.getState.dialogPage = dialogReducer(store.getState.dialogPage, action);
-        store.getState.sidebarPage = sidebarReducer(store.getState.sidebarPage, action);
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogPage = dialogReducer(this._state.dialogPage, action);
+        this._state.sidebarPage = sidebarReducer(this._state.sidebarPage, action);
 
-        store.rerenderEntireTree(store.getState);
+        this.rerenderEntireTree(this._state);
     },
 
     rerenderEntireTree(state: any) {

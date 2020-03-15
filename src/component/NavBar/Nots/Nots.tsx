@@ -8,6 +8,7 @@ interface notsInterface  {
 }
 
 const Nots: FunctionComponent<notsInterface> = (props) => {
+    // debugger;
     let noteItems = props.state.sidebarData.map((n: any) => <NotsItems text={n.text}/>)
     let componentRef = React.createRef<HTMLTextAreaElement>();
     
@@ -18,7 +19,6 @@ const Nots: FunctionComponent<notsInterface> = (props) => {
     let addNote = () => {
         props.dispatch(addNoteActionCreator());
     }
-    // debugger;
     return(
         <div>
             <div>

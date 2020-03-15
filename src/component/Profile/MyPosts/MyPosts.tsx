@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Posts/Post';
 import { addPostActionCreator,  newPostTextActionCreator} from '../../../redux/profileReducer';
-import { PostDataInterface } from '../../../redux/state';
+import { PostDataInterface } from '../../../redux/store';
 
 interface PropsInterface {
     state: PostDataInterface
