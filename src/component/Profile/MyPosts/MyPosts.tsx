@@ -5,28 +5,30 @@ import { addPostActionCreator,  newPostTextActionCreator} from '../../../redux/p
 import { PostDataInterface } from '../../../redux/store';
 
 interface PropsInterface {
-    state: PostDataInterface
-    dispatch: any
+    postData: any
+    addPost: any
+    newPostText: any
+    newPostTextValue: any
 }
 
 
 const MyPosts: FunctionComponent<PropsInterface> = (props) => {
-    let PostDataElements = props.state.PostData.map( p => <Post text={p.text} like={p.like} />);
+    let PostDataElements = props.postData.map( (p: any) => <Post text={p.text} like={p.like} />);
     let componentRef = React.createRef<HTMLTextAreaElement>();
 
     let addPost = () => {
-        props.dispatch(addPostActionCreator());
+        props.addPost();
     };
 
     let onChangeAction = () => {
-        props.dispatch(newPostTextActionCreator(componentRef.current?.value));
+        props.newPostText(componentRef.current?.value);
     }
     
     return (
         <div className={s.post_box}>
             My post
             <div>
-                <textarea ref={componentRef} onChange={onChangeAction} value={props.state.newPostText}/>
+                <textarea ref={componentRef} onChange={onChangeAction} value={props.newPostTextValue}/>
                 <button onClick={addPost}>Add Post</button>
             </div>
             <div>

@@ -3,6 +3,7 @@ import s from './Profile.module.scss';
 import MyPosts from './MyPosts/MyPosts';
 import MyProfile from './MyProfile/Profile';
 import { PostDataInterface } from '../../redux/store';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 interface PropsInterface {
     state: any
@@ -10,11 +11,10 @@ interface PropsInterface {
 }
 
 const Profile: FunctionComponent<PropsInterface> = (props) => {
-    // debugger;
     return (
         <div>
             <MyProfile />
-            <MyPosts state={props.state}
+            <MyPostsContainer state={props.state}
                     dispatch={props.dispatch}/>
         </div>
     )

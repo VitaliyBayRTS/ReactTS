@@ -12,7 +12,6 @@ interface PropsInterface {
 }
 
 const App: FunctionComponent<PropsInterface> = (props) => {
-  // debugger;
   return (
     <BrowserRouter>
       <div className={s.app_wrapper}>
