@@ -1,5 +1,6 @@
 import profileReducer from "./profileReducer";
 import dialogReducer from "./dialogReducer";
+import sidebarReducer from "./sidebarReducer";
 
 interface DialogMessageInterface {
     text: string
@@ -10,13 +11,11 @@ interface DialogItemInteface {
     name: string
 }
 
-
 interface ActionType {
     type: string
     postText?: string
     messageText?: string
 }
-
 
 interface PostInterface {
     id: number
@@ -60,6 +59,12 @@ let store = {
                 { id: 3, text: "Join to my way of samurai", like: 13 }
             ],
             newPostText: ""
+        },
+        sidebarPage: {
+            sidebarData: [
+                {id: 1, text: "Hay que terminar React.ts"}
+            ],
+            newNoteText: ""
         }
     },
     get getState() {
@@ -74,6 +79,7 @@ let store = {
 
         store.getState.profilePage = profileReducer(store.getState.profilePage, action);
         store.getState.dialogPage = dialogReducer(store.getState.dialogPage, action);
+        store.getState.sidebarPage = sidebarReducer(store.getState.sidebarPage, action);
 
         store.rerenderEntireTree(store.getState);
     },

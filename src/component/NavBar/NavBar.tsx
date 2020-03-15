@@ -1,9 +1,11 @@
 import React, { FunctionComponent, Props } from 'react';
 import s from './NavBar.module.scss';
 import { NavLink } from 'react-router-dom';
+import Nots from './Nots/Nots';
 
 interface PropsInterface {
-
+    state: any
+    dispatch: any
 }
 
 
@@ -29,6 +31,8 @@ const NavBar: FunctionComponent<PropsInterface> = (props) => {
                     </li>
                 </ul>
             </nav>
+
+            <Nots state={props.state} dispatch={props.dispatch}/>
         </div>
     )
 }

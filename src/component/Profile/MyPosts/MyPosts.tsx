@@ -11,17 +11,14 @@ interface PropsInterface {
 
 
 const MyPosts: FunctionComponent<PropsInterface> = (props) => {
-    // debugger;
     let PostDataElements = props.state.PostData.map( p => <Post text={p.text} like={p.like} />);
     let componentRef = React.createRef<HTMLTextAreaElement>();
 
     let addPost = () => {
-        // props.addPost();
         props.dispatch(addPostActionCreator());
     };
 
     let onChangeAction = () => {
-        // props.changePostText(componentRef.current?.value);
         props.dispatch(newPostTextActionCreator(componentRef.current?.value));
     }
     

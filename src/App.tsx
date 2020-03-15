@@ -16,7 +16,7 @@ const App: FunctionComponent<PropsInterface> = (props) => {
     <BrowserRouter>
       <div className={s.app_wrapper}>
         <Header />
-        <NavBar />
+        <NavBar state={props.store.getState.sidebarPage} dispatch={props.store.dispatch}/>
         <div className={s.content}>
             <Route path="/profile" render={() => <Profile state={props.store.getState.profilePage}
                                                           dispatch={props.store.dispatch}/>} />

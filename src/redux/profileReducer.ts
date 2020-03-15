@@ -23,17 +23,6 @@ let profileReducer = (state: any, action: any): any => {
         default:
             return state;
     }
-    // if (action.type == ADD_POST) {
-    //     let newPost = {
-    //         id: 4,
-    //         text: state.newPostText,
-    //         like: 0
-    //     };
-    //     state.PostData.push(newPost);
-    //     state.newPostText = "";
-    // } else if (action.type == CHANGE_POST_TEXT) {
-    //     state.newPostText = action.postText + "";
-    // }
 }
 
 export default profileReducer;
