@@ -6,25 +6,24 @@ import { PostDataInterface } from '../../../redux/store';
 import MyPosts from './MyPosts';
 
 interface PropsInterface {
-    state: PostDataInterface
-    dispatch: any
+    store: any
 }
-
 
 const MyPostsContainer: FunctionComponent<PropsInterface> = (props) => {
     let addPost = () => {
-        props.dispatch(addPostActionCreator());
+        props.store.dispatch(addPostActionCreator());
+
     };
 
     let onChangeAction = (text: string | undefined) => {
-        props.dispatch(newPostTextActionCreator(text));
+        props.store.dispatch(newPostTextActionCreator(text));
     }
     
     return (
         <MyPosts addPost={addPost} 
                 newPostText={onChangeAction}
-                postData={props.state.PostData}
-                newPostTextValue={props.state.newPostText} />
+                postData={props.store.getState().profilePage.PostData}
+                newPostTextValue={props.store.getState().profilePage.newPostText} />
     )
 }
 

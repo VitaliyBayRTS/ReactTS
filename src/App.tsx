@@ -3,25 +3,25 @@ import s from './App.module.scss';
 import Header from './component/Header/Header';
 import NavBar from './component/NavBar/NavBar';
 import Profile from './component/Profile/Profile';
-import Dialog from './component/Dialog/Dialog';
 import { Route, BrowserRouter } from 'react-router-dom';
+import DialogContainer from './component/Dialog/DialogContainer';
 
 interface PropsInterface {
   store: any
-  dispatch: any
 }
 
 const App: FunctionComponent<PropsInterface> = (props) => {
+
+  // let state = props.store.getState().profilePage;
+  // debugger;
   return (
     <BrowserRouter>
       <div className={s.app_wrapper}>
         <Header />
-        <NavBar state={props.store.sidebarPage} dispatch={props.dispatch}/>
+        <NavBar store={props.store}/>
         <div className={s.content}>
-            <Route path="/profile" render={() => <Profile state={props.store.profilePage}
-                                                          dispatch={props.dispatch}/>} />
-            <Route path="/dialog" render={() => <Dialog dialogData={props.store.dialogPage} 
-                                                          dispatch={props.dispatch}/>} />
+            <Route path="/profile" render={() => <Profile store={props.store}/>} />
+            <Route path="/dialog" render={() => <DialogContainer store={props.store}/>} />
         </div>
       </div>
     </BrowserRouter>

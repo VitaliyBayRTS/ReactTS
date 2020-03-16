@@ -6,16 +6,14 @@ import { PostDataInterface } from '../../redux/store';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 interface PropsInterface {
-    state: any
-    dispatch: any
+    store: any
 }
 
 const Profile: FunctionComponent<PropsInterface> = (props) => {
     return (
         <div>
             <MyProfile />
-            <MyPostsContainer state={props.state}
-                    dispatch={props.dispatch}/>
+            <MyPostsContainer store={props.store}/>
         </div>
     )
 }

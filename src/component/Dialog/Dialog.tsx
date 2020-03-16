@@ -6,22 +6,26 @@ import { addMessageActionCreator, newMessageTextActionCreator } from '../../redu
 import { DialogDataInterface } from '../../redux/store';
 
 interface PropsInterface {
-    dialogData: DialogDataInterface
-    dispatch: any
+    sendMessage: any
+    newMessageText: any
+    newMessageTextValue: any
+    dialogData: any
 }
 
 const Dialog: FunctionComponent<PropsInterface> = (props) => {
-    let DialogItemElemets = props.dialogData.DialogItemData.map( u =>  <DialogItem id={u.id} name={u.name}/>);
-    let DialogMessageElemets = props.dialogData.DialogMessageData.map( m => <DialogMessage text={m.text}/>);
+    let DialogItemElemets = props.dialogData.DialogItemData.map( (u: any) =>  <DialogItem id={u.id} name={u.name}/>);
+    let DialogMessageElemets = props.dialogData.DialogMessageData.map( (m: any)=> <DialogMessage text={m.text}/>);
 
     let componentElement = React.createRef<HTMLTextAreaElement>()
 
     let sendMessage = () => {
-        props.dispatch(addMessageActionCreator())
+        props.sendMessage();
+        // props.dispatch(addMessageActionCreator())
     }
 
     let onChangeAction = () => {
-        props.dispatch(newMessageTextActionCreator(componentElement.current?.value));
+        props.newMessageText(componentElement.current?.value);
+        // props.dispatch(newMessageTextActionCreator(componentElement.current?.value));
     }
 
     return (
@@ -32,7 +36,7 @@ const Dialog: FunctionComponent<PropsInterface> = (props) => {
             <div className={s.dialogMessage}>
                 {DialogMessageElemets}
                 <div>
-                    <textarea ref={componentElement} onChange={onChangeAction} value={props.dialogData.newMessageText}/>
+                    <textarea ref={componentElement} onChange={onChangeAction} value={props.newMessageTextValue}/>
                     <button onClick={sendMessage}>Send Message</button>
                 </div>
             </div>
