@@ -13,6 +13,7 @@ interface PropsInterface {
 }
 
 const Dialog: FunctionComponent<PropsInterface> = (props) => {
+    debugger;
     let DialogItemElemets = props.dialogData.DialogItemData.map( (u: any) =>  <DialogItem id={u.id} name={u.name}/>);
     let DialogMessageElemets = props.dialogData.DialogMessageData.map( (m: any)=> <DialogMessage text={m.text}/>);
 

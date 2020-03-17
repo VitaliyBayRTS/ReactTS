@@ -5,15 +5,13 @@ import NavBar from './component/NavBar/NavBar';
 import Profile from './component/Profile/Profile';
 import { Route, BrowserRouter } from 'react-router-dom';
 import DialogContainer from './component/Dialog/DialogContainer';
+import SuperDialogContainer from './component/Dialog/DialogContainer';
 
 interface PropsInterface {
   store: any
 }
 
 const App: FunctionComponent<PropsInterface> = (props) => {
-
-  // let state = props.store.getState().profilePage;
-  // debugger;
   return (
     <BrowserRouter>
       <div className={s.app_wrapper}>
@@ -21,7 +19,7 @@ const App: FunctionComponent<PropsInterface> = (props) => {
         <NavBar store={props.store}/>
         <div className={s.content}>
             <Route path="/profile" render={() => <Profile store={props.store}/>} />
-            <Route path="/dialog" render={() => <DialogContainer store={props.store}/>} />
+            <Route path="/dialog" render={() => <SuperDialogContainer />} />
         </div>
       </div>
     </BrowserRouter>

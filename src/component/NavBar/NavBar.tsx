@@ -3,6 +3,7 @@ import s from './NavBar.module.scss';
 import { NavLink } from 'react-router-dom';
 import Nots from './Nots/Nots';
 import NotsContainer from './Nots/NotsContainer';
+import SuperNotsContainer from './Nots/NotsContainer';
 
 interface PropsInterface {
     store: any
@@ -10,6 +11,7 @@ interface PropsInterface {
 
 
 const NavBar: FunctionComponent<PropsInterface> = (props) => {
+    debugger;
     return (
         <div className={s.nav}>
             <nav>
@@ -32,7 +34,7 @@ const NavBar: FunctionComponent<PropsInterface> = (props) => {
                 </ul>
             </nav>
 
-            <NotsContainer store={props.store}/>
+            <SuperNotsContainer/>
         </div>
     )
 }

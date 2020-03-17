@@ -1,10 +1,10 @@
 const ADD_MESSAGE: string = 'ADD-MESSAGE';
 const CHANGE_MESSAGE_TEXT: string = 'CHANGE-MESSAGE-TEXT';
 
-export const addMessageActionCreator = () => ({type: ADD_MESSAGE});
+export const addMessageActionCreator = () => ({ type: ADD_MESSAGE });
 
-export const newMessageTextActionCreator = (text: string | undefined) => 
-    ({type: CHANGE_MESSAGE_TEXT, messageText: text});
+export const newMessageTextActionCreator = (text: string | undefined) =>
+    ({ type: CHANGE_MESSAGE_TEXT, messageText: text });
 
 let initialState = {
     DialogItemData: [
@@ -22,19 +22,24 @@ let initialState = {
     ],
     newMessageText: ""
 }
-    
-let dialogReducer = (state:any = initialState, action: any): any => {
+
+let dialogReducer = (state: any = initialState, action: any): any => {
     switch (action.type) {
-        case ADD_MESSAGE:
+        case ADD_MESSAGE: {
             let newMessage = {
                 text: state.newMessageText
             }
-            state.DialogMessageData.push(newMessage);
-            state.newMessageText = "";
-            return state;
-        case CHANGE_MESSAGE_TEXT:
-            state.newMessageText = action.messageText + "";
-            return state;
+            let stateCopy = { ...state };
+            stateCopy.DialogMessageData = [...state.DialogMessageData];
+            stateCopy.DialogMessageData.push(newMessage);
+            stateCopy.newMessageText = "";
+            return stateCopy
+        }
+        case CHANGE_MESSAGE_TEXT: {
+            let stateCopy = { ...state };
+            stateCopy.newMessageText = action.messageText + "";
+            return stateCopy;
+        }
         default:
             return state;
     }

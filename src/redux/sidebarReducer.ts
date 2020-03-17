@@ -16,17 +16,23 @@ let initialState = {
 
 let sidebarReducer = (state: any = initialState, action: any): any => {
     switch (action.type) {
-        case ADD_NOTE:
+        case ADD_NOTE: {
+            debugger;
             let newNote = {
                 id: state.sidebarData.length,
                 text: state.newNoteText
             }
-            state.sidebarData.push(newNote);
-            state.newNoteText = "";
-            return state;
-        case CHANGE_NOTE_MESSAGE:
-            state.newNoteText = action.text;
-            return state;
+            let stateCopy = {...state};
+            stateCopy.sidebarData = [...state.sidebarData];
+            stateCopy.sidebarData.push(newNote);
+            stateCopy.newNoteText = "";
+            return stateCopy;
+        }
+        case CHANGE_NOTE_MESSAGE: {
+            let stateCopy = {...state};
+            stateCopy.newNoteText = action.text;
+            return stateCopy;
+        }
         default:
             return state;
     }
