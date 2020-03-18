@@ -11,7 +11,6 @@ interface PropsInterface {
 
 
 const NavBar: FunctionComponent<PropsInterface> = (props) => {
-    debugger;
     return (
         <div className={s.nav}>
             <nav>

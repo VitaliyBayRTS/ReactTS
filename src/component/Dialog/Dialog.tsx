@@ -13,9 +13,8 @@ interface PropsInterface {
 }
 
 const Dialog: FunctionComponent<PropsInterface> = (props) => {
-    debugger;
-    let DialogItemElemets = props.dialogData.DialogItemData.map( (u: any) =>  <DialogItem id={u.id} name={u.name}/>);
-    let DialogMessageElemets = props.dialogData.DialogMessageData.map( (m: any)=> <DialogMessage text={m.text}/>);
+    let DialogItemElemets = props.dialogData.DialogItemData.map((u: any) => <DialogItem key={u.id} id={u.id} name={u.name} />);
+    let DialogMessageElemets = props.dialogData.DialogMessageData.map((m: any) => <DialogMessage key={m.id} text={m.text} />);
 
     let componentElement = React.createRef<HTMLTextAreaElement>()
 
@@ -30,14 +29,14 @@ const Dialog: FunctionComponent<PropsInterface> = (props) => {
     }
 
     return (
-        <div className={s.dialogBox}>            
+        <div className={s.dialogBox}>
             <div className={s.dialogItem}>
                 {DialogItemElemets}
             </div>
             <div className={s.dialogMessage}>
                 {DialogMessageElemets}
                 <div>
-                    <textarea ref={componentElement} onChange={onChangeAction} value={props.newMessageTextValue}/>
+                    <textarea ref={componentElement} onChange={onChangeAction} value={props.newMessageTextValue} />
                     <button onClick={sendMessage}>Send Message</button>
                 </div>
             </div>

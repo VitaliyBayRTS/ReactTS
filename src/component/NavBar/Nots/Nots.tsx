@@ -10,18 +10,15 @@ interface notsInterface  {
 }
 
 const Nots: FunctionComponent<notsInterface> = (props) => {
-    // debugger;
-    let noteItems = props.sidebarData.map((n: any) => <NotsItems text={n.text}/>)
+    let noteItems = props.sidebarData.map((n: any) => <NotsItems key={n.id} text={n.text}/>)
     let componentRef = React.createRef<HTMLTextAreaElement>();
     
     let addNote = () => {
         props.addNote();
-        // props.dispatch(addNoteActionCreator());
     }
 
     let onChangeAction = () => {
         props.newNoteText(componentRef.current?.value);
-        // props.dispatch(newNoteTextActionCreator(componentRef.current?.value));
     }
    
     return(
