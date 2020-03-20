@@ -25,6 +25,9 @@ const NavBar: FunctionComponent<PropsInterface> = (props) => {
                         <NavLink to="/news" className={s.item} activeClassName={s.active}>News</NavLink>
                     </li>
                     <li>
+                        <NavLink to="/users" className={s.item} activeClassName={s.active}>Users</NavLink>
+                    </li>
+                    <li>
                         <NavLink to="/music" className={s.item} activeClassName={s.active}>Music</NavLink>
                     </li>
                     <li>

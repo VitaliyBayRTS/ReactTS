@@ -6,6 +6,7 @@ import Profile from './component/Profile/Profile';
 import { Route, BrowserRouter } from 'react-router-dom';
 import DialogContainer from './component/Dialog/DialogContainer';
 import SuperDialogContainer from './component/Dialog/DialogContainer';
+import UserContainer from './component/Users/UsersContainer';
 
 interface PropsInterface {
   store: any
@@ -20,6 +21,7 @@ const App: FunctionComponent<PropsInterface> = (props) => {
         <div className={s.content}>
             <Route path="/profile" render={() => <Profile store={props.store}/>} />
             <Route path="/dialog" render={() => <SuperDialogContainer />} />
+            <Route path="/users" render={() => <UserContainer />} />
         </div>
       </div>
     </BrowserRouter>
