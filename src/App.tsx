@@ -4,9 +4,9 @@ import Header from './component/Header/Header';
 import NavBar from './component/NavBar/NavBar';
 import Profile from './component/Profile/Profile';
 import { Route, BrowserRouter } from 'react-router-dom';
-import DialogContainer from './component/Dialog/DialogContainer';
 import SuperDialogContainer from './component/Dialog/DialogContainer';
 import UserContainer from './component/Users/UsersContainer';
+import ProfileContainer from './component/Profile/ProfileContainer';
 
 interface PropsInterface {
   store: any
@@ -19,7 +19,7 @@ const App: FunctionComponent<PropsInterface> = (props) => {
         <Header />
         <NavBar store={props.store}/>
         <div className={s.content}>
-            <Route path="/profile" render={() => <Profile store={props.store}/>} />
+            <Route path="/profile" render={() => <ProfileContainer />} />
             <Route path="/dialog" render={() => <SuperDialogContainer />} />
             <Route path="/users" render={() => <UserContainer />} />
         </div>

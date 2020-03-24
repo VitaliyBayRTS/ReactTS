@@ -1,8 +1,6 @@
 import React, { FunctionComponent, Props } from 'react';
 import s from './NavBar.module.scss';
 import { NavLink } from 'react-router-dom';
-import Nots from './Nots/Nots';
-import NotsContainer from './Nots/NotsContainer';
 import SuperNotsContainer from './Nots/NotsContainer';
 
 interface PropsInterface {

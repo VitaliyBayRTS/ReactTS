@@ -3,23 +3,25 @@ const UNFOLLOW: string = "UNFOLLOW";
 const SET_USERS: string = "SET-USERS";
 const SET_CURRENT_PAGE: string = "SET_CURRENT_PAGE";
 const SET_USERS_COUNT: string = "SET_USERS_COUNT";
+const SET_FETCHING: string = "SET_FETCHING";
 
-export let followAC = (userId: number) => ({type: FOLLOW, userId});
-export let unfollowAC = (userId: number) => ({type: UNFOLLOW, userId});
-export let setUsersAC = (users: any) => ({type: SET_USERS, users});
-export let setCurrentPageAC = (page: any) => ({type: SET_CURRENT_PAGE, page});
-export let setUsersCountAC = (count: any) => ({type: SET_USERS_COUNT, count});
+export let follow = (userId: number) => ({type: FOLLOW, userId});
+export let unfollow = (userId: number) => ({type: UNFOLLOW, userId});
+export let setUsers = (users: any) => ({type: SET_USERS, users});
+export let setCurrentPage = (page: any) => ({type: SET_CURRENT_PAGE, page});
+export let setUsersCount = (count: any) => ({type: SET_USERS_COUNT, count});
+export let setFetching = (value: any) => ({type: SET_FETCHING, value});
 
 let initialState = {
     users: [],
     usersCount: 0,
     pageSize: 5,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: true
 }
 
 
 let usersReducer = (state: any = initialState, action: any) => {
-    // debugger;
     switch (action.type) {
         case FOLLOW:
             return {
@@ -55,6 +57,11 @@ let usersReducer = (state: any = initialState, action: any) => {
             return {
                 ...state,
                 usersCount: action.count
+            }
+        case SET_FETCHING:
+            return {
+                ...state,
+                isFetching: action.value
             }
         default:
             return state;
