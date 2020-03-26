@@ -1,6 +1,6 @@
 const ADD_POST: string = 'ADD-POST';
 const CHANGE_POST_TEXT: string = 'CHANGE-POST-TEXT';
-const SET_PROFILE_INFO: string = 'SET_PROFILE_INFO-POST-TEXT';
+const SET_PROFILE_INFO: string = 'SET_PROFILE_INFO';
 
 export const addPostActionCreator = () => ({ type: ADD_POST });
 export const setPofileInfo = (profile: any) => ({ type: SET_PROFILE_INFO, profile });
@@ -37,7 +37,7 @@ let profileReducer = (state: any = initialState, action: any): any => {
         case SET_PROFILE_INFO: 
             return {
                 ...state,
-                profileInfo: action.profile
+                profileInfo: {...action.profile}
             }
         default:
             return state;

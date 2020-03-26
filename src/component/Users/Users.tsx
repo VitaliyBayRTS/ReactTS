@@ -31,7 +31,7 @@ let Users: FunctionComponent<PropsInterface> = (props) => {
         {props.users.map((u: any) => {
             return <div key={u.id}>
                 <div>
-                    <NavLink to="/profile/2">
+                    <NavLink to={"/profile/" + u.id}>
                         <img src={u.photos.small != null ? u.photos.small : userIcon} alt="" className={s.avatar} />
                     </NavLink>
                     {u.followed ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button> :

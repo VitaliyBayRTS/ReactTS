@@ -7,11 +7,11 @@ interface PropsInterface {
 }
 
 const MyProfile: FunctionComponent<PropsInterface> = (props) => {
-
+    console.log(!props.profileInfo)
     if(!props.profileInfo) {
         return <Preloader />
     }
-
+    debugger;
     return (
         <div>
             <div >
@@ -19,7 +19,7 @@ const MyProfile: FunctionComponent<PropsInterface> = (props) => {
                     <img src="https://png.pngtree.com/thumb_back/fh260/background/20191010/pngtree-blue-glitter-dreamy-background-image_317748.jpg" alt="" />
                 </div>
                 <div>
-                    <img src={props.profileInfo.photos.small} alt=""/>
+                    <img src={props.profileInfo.profile.photos.small} alt=""/>
                     ava + description
                 </div>
             </div>
