@@ -4,6 +4,7 @@ const SET_USERS: string = "SET-USERS";
 const SET_CURRENT_PAGE: string = "SET_CURRENT_PAGE";
 const SET_USERS_COUNT: string = "SET_USERS_COUNT";
 const SET_FETCHING: string = "SET_FETCHING";
+const DISABLE_USERS: string = "DISABLE_USERS";
 
 export let follow = (userId: number) => ({type: FOLLOW, userId});
 export let unfollow = (userId: number) => ({type: UNFOLLOW, userId});
@@ -11,13 +12,15 @@ export let setUsers = (users: any) => ({type: SET_USERS, users});
 export let setCurrentPage = (page: any) => ({type: SET_CURRENT_PAGE, page});
 export let setUsersCount = (count: any) => ({type: SET_USERS_COUNT, count});
 export let setFetching = (value: any) => ({type: SET_FETCHING, value});
+export let setDisableUsers = (isDisable: any, usersId: any) => ({type: DISABLE_USERS, isDisable, usersId});
 
 let initialState = {
     users: [],
     usersCount: 0,
     pageSize: 5,
     currentPage: 1,
-    isFetching: true
+    isFetching: true,
+    disableUsers: []
 }
 
 
@@ -62,6 +65,12 @@ let usersReducer = (state: any = initialState, action: any) => {
             return {
                 ...state,
                 isFetching: action.value
+            }
+        case DISABLE_USERS:
+            return {
+                ...state,
+                disableUsers: action.isDisable ? [...state.disableUsers, action.usersId] 
+                : state.disableUsers.filter( (id: any) => id != action.usersId)
             }
         default:
             return state;

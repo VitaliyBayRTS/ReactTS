@@ -3,6 +3,7 @@ import s from "./Users.module.scss";
 import axios from "axios";
 import userIcon from "../../assets/img/user.jpeg";
 import { NavLink } from "react-router-dom";
+import Axios from "axios";
 
 interface PropsInterface {
     users: any
@@ -12,6 +13,8 @@ interface PropsInterface {
     pageSize: any
     currentPage: any
     onPaginationClick: any
+    setDisableUsers: any
+    disableUsers: any
 }
 
 let Users: FunctionComponent<PropsInterface> = (props) => {
@@ -34,8 +37,35 @@ let Users: FunctionComponent<PropsInterface> = (props) => {
                     <NavLink to={"/profile/" + u.id}>
                         <img src={u.photos.small != null ? u.photos.small : userIcon} alt="" className={s.avatar} />
                     </NavLink>
-                    {u.followed ? <button onClick={() => props.unfollow(u.id)}>Unfollow</button> :
-                        <button onClick={() => props.follow(u.id)}>Follow</button>}
+                    {u.followed ?
+                        <button disabled={props.disableUsers.some( (id: any) => id == u.id)} onClick={() => {
+                            props.setDisableUsers(true, u.id);
+                            Axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {
+                                withCredentials: true,
+                                headers: {
+                                    "API-KEY": "91630e37-cb0d-4a53-8f4c-2f5b7ec1d93b"
+                                }
+                            }).then((response) => {
+                                if (response.data.error == null) {
+                                    props.setDisableUsers(false, u.id);
+                                    props.unfollow(u.id);
+                                }
+                            })
+                        }}>Unfollow</button> :
+                        <button disabled={props.disableUsers.some( (id: any) => id == u.id)} onClick={() => {
+                            props.setDisableUsers(true, u.id);
+                            Axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`, {}, {
+                                withCredentials: true,
+                                headers: {
+                                    "API-KEY": "91630e37-cb0d-4a53-8f4c-2f5b7ec1d93b"
+                                }
+                            }).then((response) => {
+                                if (response.data.error == null) {
+                                    props.setDisableUsers(false, u.id);
+                                    props.follow(u.id);
+                                }
+                            })
+                        }}>Follow</button>}
                 </div>
                 <div>
                     <span>{u.name}</span>

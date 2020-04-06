@@ -7,7 +7,6 @@ interface PropsInterface {
 }
 
 const MyProfile: FunctionComponent<PropsInterface> = (props) => {
-    console.log(!props.profileInfo)
     if(!props.profileInfo) {
         return <Preloader />
     }
