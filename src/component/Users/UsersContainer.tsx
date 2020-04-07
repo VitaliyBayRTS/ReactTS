@@ -1,66 +1,44 @@
 import { connect } from "react-redux";
 import Users from "./Users";
-import { follow, unfollow, setUsers, setCurrentPage, setUsersCount, setFetching, setDisableUsers } from "../../redux/usersReducer";
+import { getUsersThunk, unfollowThunk, followThunk } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
-import { getUsers } from "../../dal/dal";
 
 interface MyProps {
-    setUsers: any
     users: any
-    unfollow: any
-    follow: any
     usersCount: any
     pageSize: any
     currentPage: any
-    setCurrentPage: any
-    setUsersCount: any
-    setFetching: any
     isFetching: any
-    setDisableUsers: any
     disableUsers: any
+    getUsersThunk: any
+    unfollowThunk: any
+    followThunk: any
 }
 
 class UsersClassComponent extends React.Component<MyProps>{
 
     componentDidMount() {
-        this.props.setFetching(true);
-        getUsers(this.props.currentPage, this.props.pageSize).then((data: any) => {
-            if (data.error == null) {
-                this.props.setUsers(data.items);
-                this.props.setUsersCount(data.totalCount);
-                this.props.setFetching(false);
-            }
-        })
+        this.props.getUsersThunk(this.props.currentPage, this.props.pageSize);
     }
 
     onPaginationClick = (p: any) => {
-        this.props.setFetching(true);
-        this.props.setCurrentPage(p);
-        getUsers(p, this.props.pageSize).then((data: any) => {
-            if (data.error == null) {
-                this.props.setUsers(data.items);
-                this.props.setFetching(false);
-            }
-        })
+        this.props.getUsersThunk(p, this.props.pageSize);
     }
 
     render() {
         return <>
-            {this.props.isFetching ? <Preloader /> : <Users users = {this.props.users}
-                unfollow = {this.props.unfollow}
-                follow = {this.props.follow}
-                usersCount = {this.props.usersCount}
-                pageSize = {this.props.pageSize}
-                currentPage = {this.props.currentPage}
-                onPaginationClick = {this.onPaginationClick}
-                setDisableUsers ={this.props.setDisableUsers}
-                disableUsers = {this.props.disableUsers} />}
+            {this.props.isFetching ? <Preloader /> : <Users users={this.props.users}
+                usersCount={this.props.usersCount}
+                pageSize={this.props.pageSize}
+                currentPage={this.props.currentPage}
+                onPaginationClick={this.onPaginationClick}
+                disableUsers={this.props.disableUsers}
+                unfollowThunk={this.props.unfollowThunk}
+                followThunk={this.props.followThunk} />}
         </>
     }
 }
-
-
 
 let mapStateToProps = (state: any) => {
     return {
@@ -73,9 +51,6 @@ let mapStateToProps = (state: any) => {
     }
 }
 
-let UserContainer = connect(mapStateToProps, {
-    follow, unfollow, setUsers,
-    setCurrentPage, setUsersCount, setFetching, setDisableUsers
-})(UsersClassComponent);
+let UserContainer = connect(mapStateToProps, {getUsersThunk, unfollowThunk, followThunk})(UsersClassComponent);
 
 export default UserContainer;
