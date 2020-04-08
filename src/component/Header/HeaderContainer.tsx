@@ -1,24 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
-import {setUserData} from './../../redux/authMeReducer';
-import Axios from 'axios';
+import {setUserData, meThunk} from './../../redux/authMeReducer';
 
 interface MyProps {
-    setUserData: any
     isAuth: any
     login: any
+    meThunk: any
 }
 
 class HeaderContainer extends React.Component<MyProps>{
 
     componentDidMount() {
-        Axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
-            withCredentials: true
-        }).then((response: any) => {
-            let {id, login, email} = response.data.data;
-            this.props.setUserData({id, login, email});
-        })
+        this.props.meThunk();
     }
 
 
@@ -35,4 +29,4 @@ let mapStateToProps = (state: any) => {
     }
 }
 
-export default connect(mapStateToProps, {setUserData})(HeaderContainer);
+export default connect(mapStateToProps, {meThunk})(HeaderContainer);

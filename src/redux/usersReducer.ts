@@ -19,7 +19,7 @@ export const setDisableUsers = (isDisable: any, usersId: any) => ({ type: DISABL
 export const getUsersThunk = (currentPage: any, pageSize: any) => (dispatch: any) => {
     dispatch(setFetching(true));
     usersAPI.getUsers(currentPage, pageSize).then((data: any) => {
-        if (data.error == null) {
+        if (data.resultCode == 0) {
             dispatch(setUsers(data.items));
             dispatch(setUsersCount(data.totalCount));
             dispatch(setFetching(false));

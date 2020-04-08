@@ -1,10 +1,7 @@
 import React, { Component, FunctionComponent } from "react";
 import s from "./Users.module.scss";
-import axios from "axios";
 import userIcon from "../../assets/img/user.jpeg";
 import { NavLink } from "react-router-dom";
-import Axios from "axios";
-import { usersAPI } from "../../dal/dal";
 
 interface PropsInterface {
     users: any

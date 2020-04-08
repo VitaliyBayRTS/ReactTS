@@ -1,6 +1,17 @@
+import { authApi } from './../dal/dal';
 const SET_USER_DATA = 'SET_USER_DATA';
 
-export let setUserData = ({userId, email, login} : any) => ({type: SET_USER_DATA, data: {userId, email, login}})
+export const setUserData = ({userId, email, login} : any) => ({type: SET_USER_DATA, data: {userId, email, login}})
+
+export const meThunk = () => (dispatch: any) => {
+    authApi.me().then((response: any) => {
+        if(response.data.resultCode == 0) {
+            let {id, login, email} = response.data.data;
+            dispatch(setUserData({id, login, email}));
+        }
+        
+    })
+}
 
 let initialState = {
     userId: null,

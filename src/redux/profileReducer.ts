@@ -1,3 +1,5 @@
+import { usersAPI } from "../dal/dal";
+
 const ADD_POST: string = 'ADD-POST';
 const CHANGE_POST_TEXT: string = 'CHANGE-POST-TEXT';
 const SET_PROFILE_INFO: string = 'SET_PROFILE_INFO';
@@ -6,6 +8,12 @@ export const addPostActionCreator = () => ({ type: ADD_POST });
 export const setPofileInfo = (profile: any) => ({ type: SET_PROFILE_INFO, profile });
 export const newPostTextActionCreator = (text: string | undefined) =>
     ({ type: CHANGE_POST_TEXT, postText: text });
+
+export const getProfileThunk = (userId: any) => (dispatch: any) => {
+    usersAPI.getProfile(userId).then((response: any) => {
+        dispatch(setPofileInfo(response.data));
+    })
+}
 
 let initialState = {
     PostData: [

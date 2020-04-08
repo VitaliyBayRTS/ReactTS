@@ -1,28 +1,22 @@
 import React, { FunctionComponent } from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import {setPofileInfo} from '../../redux/profileReducer';
-import Axios from 'axios';
-import Preloader from '../common/Preloader/Preloader';
+import {setPofileInfo, getProfileThunk} from '../../redux/profileReducer';
 import { withRouter } from 'react-router-dom';
 
 interface MyProps {
     setPofileInfo: any
     profile: any
     match: any
+    getProfileThunk: any
 }
 
 class ProfileClass extends React.Component<MyProps> {
 
     componentDidMount() {
-        console.log(this)
         let userId = this.props.match.params.userId;
-        if(!userId) {
-            userId = 2;
-        }
-        Axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId).then((response: any) => {
-            this.props.setPofileInfo(response.data);
-        })
+        if(!userId) userId = 2;
+        this.props.getProfileThunk(userId);
     }
 
     render() {
@@ -35,15 +29,8 @@ let mapStateToProps = (state: any) => {
         profile: state.profilePage.profileInfo
     }
 }
-let mapDispatchToProps = (dispatch: any) => {
-    return {
-        setPofileInfo: (profile: any) => {
-            dispatch(setPofileInfo({ type: setPofileInfo, profile}))
-        }
-    }
-}
 
 let router = withRouter<any, any>(ProfileClass);
 
-let ProfileContainer = connect(mapStateToProps, mapDispatchToProps)(router);
+let ProfileContainer = connect(mapStateToProps, {setPofileInfo, getProfileThunk})(router);
 export default ProfileContainer;
