@@ -2,13 +2,14 @@ import React, { FunctionComponent } from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
 import {setPofileInfo, getProfileThunk} from '../../redux/profileReducer';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Redirect } from 'react-router-dom';
 
 interface MyProps {
     setPofileInfo: any
     profile: any
     match: any
     getProfileThunk: any
+    isAuth: any
 }
 
 class ProfileClass extends React.Component<MyProps> {
@@ -20,13 +21,15 @@ class ProfileClass extends React.Component<MyProps> {
     }
 
     render() {
+        if(!this.props.isAuth) return <Redirect to="/login"/>
         return <Profile {...this.props} profileInfo={this.props.profile}/>
     }
 }
 
 let mapStateToProps = (state: any) => {
     return {
-        profile: state.profilePage.profileInfo
+        profile: state.profilePage.profileInfo,
+        isAuth: state.auth.isAuth
     }
 }
 

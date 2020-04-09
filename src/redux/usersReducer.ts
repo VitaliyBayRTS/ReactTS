@@ -19,7 +19,9 @@ export const setDisableUsers = (isDisable: any, usersId: any) => ({ type: DISABL
 export const getUsersThunk = (currentPage: any, pageSize: any) => (dispatch: any) => {
     dispatch(setFetching(true));
     usersAPI.getUsers(currentPage, pageSize).then((data: any) => {
-        if (data.resultCode == 0) {
+        debugger
+        if (data.error == null) {
+            
             dispatch(setUsers(data.items));
             dispatch(setUsersCount(data.totalCount));
             dispatch(setFetching(false));
@@ -30,7 +32,7 @@ export const getUsersThunk = (currentPage: any, pageSize: any) => (dispatch: any
 export const unfollowThunk = (usersId: any) => (dispatch: any) => {
     dispatch(setDisableUsers(true, usersId));
     usersAPI.unfollow(usersId).then((data) => {
-        if (data.resultCode == 0) {
+        if (data.error == null) {
             dispatch(setDisableUsers(false, usersId));
             dispatch(unfollow(usersId));
         }
@@ -39,7 +41,7 @@ export const unfollowThunk = (usersId: any) => (dispatch: any) => {
 export const followThunk = (userId: any) => (dispatch: any) => {
     dispatch(setDisableUsers(true, userId));
     usersAPI.follow(userId).then((data) => {
-        if (data.resultCode == 0) {
+        if (data.error == null) {
             dispatch(setDisableUsers(false, userId));
             dispatch(follow(userId));
         }

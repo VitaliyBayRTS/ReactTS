@@ -2,14 +2,14 @@ import React, { FunctionComponent } from 'react';
 import s from './Dialog.module.scss';
 import DialogItem from './DialogItem/DialogItem';
 import DialogMessage from './DialogMessages/DialogMessage';
-import { addMessageActionCreator, newMessageTextActionCreator } from '../../redux/dialogReducer';
-import { DialogDataInterface } from '../../redux/store';
+import { Redirect } from 'react-router-dom';
 
 interface PropsInterface {
     sendMessage: any
     newMessageText: any
     newMessageTextValue: any
     dialogData: any
+    isAuth: any
 }
 
 const Dialog: FunctionComponent<PropsInterface> = (props) => {
@@ -20,14 +20,15 @@ const Dialog: FunctionComponent<PropsInterface> = (props) => {
 
     let sendMessage = () => {
         props.sendMessage();
-        // props.dispatch(addMessageActionCreator())
     }
 
     let onChangeAction = () => {
         props.newMessageText(componentElement.current?.value);
-        // props.dispatch(newMessageTextActionCreator(componentElement.current?.value));
     }
 
+    if(!props.isAuth) {
+        return <Redirect to="/login"/>
+    }
     return (
         <div className={s.dialogBox}>
             <div className={s.dialogItem}>
