@@ -27,7 +27,6 @@ class UsersClassComponent extends React.Component<MyProps>{
     }
 
     render() {
-        debugger;
         return <>
             {this.props.isFetching ? <Preloader /> : <Users users={this.props.users}
                 usersCount={this.props.usersCount}

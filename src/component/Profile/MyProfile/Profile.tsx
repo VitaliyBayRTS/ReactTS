@@ -1,9 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import s from './MyProfile.module.scss';
 import Preloader from '../../common/Preloader/Preloader';
+import ProfileStatus from './ProfileStatus'
 
 interface PropsInterface {
     profileInfo: any
+    status: any
+    updateUserStatusThunk: any
 }
 
 const MyProfile: FunctionComponent<PropsInterface> = (props) => {
@@ -13,12 +16,12 @@ const MyProfile: FunctionComponent<PropsInterface> = (props) => {
     return (
         <div>
             <div >
-                <div>
+                {/* <div>
                     <img src="https://png.pngtree.com/thumb_back/fh260/background/20191010/pngtree-blue-glitter-dreamy-background-image_317748.jpg" alt="" />
-                </div>
+                </div> */}
                 <div>
                     <img src={props.profileInfo.photos.large} alt=""/>
-                    ava + description
+                    <ProfileStatus status={props.status} updateUserStatusThunk={props.updateUserStatusThunk}/>
                 </div>
             </div>
         </div>

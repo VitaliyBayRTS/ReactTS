@@ -26,9 +26,6 @@ const Dialog: FunctionComponent<PropsInterface> = (props) => {
         props.newMessageText(componentElement.current?.value);
     }
 
-    if(!props.isAuth) {
-        return <Redirect to="/login"/>
-    }
     return (
         <div className={s.dialogBox}>
             <div className={s.dialogItem}>

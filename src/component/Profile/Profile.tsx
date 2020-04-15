@@ -7,12 +7,14 @@ import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 interface PropsInterface {
     profileInfo: any
+    status: any
+    updateUserStatusThunk: any
 }
 
 const Profile: FunctionComponent<PropsInterface> = (props) => {
     return (
         <div>
-            <MyProfile profileInfo={props.profileInfo}/>
+            <MyProfile profileInfo={props.profileInfo} status={props.status} updateUserStatusThunk={props.updateUserStatusThunk}/>
             <MyPostsContainer />
         </div>
     )

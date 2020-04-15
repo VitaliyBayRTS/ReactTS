@@ -2,12 +2,13 @@ import React, { FunctionComponent } from 'react';
 import { addMessageActionCreator, newMessageTextActionCreator } from '../../redux/dialogReducer';
 import Dialog from './Dialog';
 import { connect } from 'react-redux';
+import { withAuthRedirect } from '../../hoc/witAuthRedirect';
+import { compose } from 'redux';
 
 let mapStateToProps = (state: any) => {
     return {
         newMessageTextValue: state.dialogPage.newMessageText,
-        dialogData: state.dialogPage,
-        isAuth: state.auth.isAuth
+        dialogData: state.dialogPage
     }
 }
 
@@ -22,6 +23,7 @@ let mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-const SuperDialogContainer = connect(mapStateToProps, mapDispatchToProps)(Dialog);
-
-export default SuperDialogContainer;
+export default compose(connect(mapStateToProps, mapDispatchToProps),
+withAuthRedirect
+)
+(Dialog) as React.ComponentType<any>;;
