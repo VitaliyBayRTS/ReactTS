@@ -2,12 +2,12 @@ import React, { FunctionComponent } from 'react';
 import s from './Dialog.module.scss';
 import DialogItem from './DialogItem/DialogItem';
 import DialogMessage from './DialogMessages/DialogMessage';
-import { Redirect } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
+import { required, maxLength } from '../../utilities/validator/validator';
+import { Textarea } from '../../utilities/ReduxForm/Form';
 
 interface PropsInterface {
     sendMessage: any
-    newMessageText: any
-    newMessageTextValue: any
     dialogData: any
     isAuth: any
 }
@@ -16,14 +16,9 @@ const Dialog: FunctionComponent<PropsInterface> = (props) => {
     let DialogItemElemets = props.dialogData.DialogItemData.map((u: any) => <DialogItem key={u.id} id={u.id} name={u.name} />);
     let DialogMessageElemets = props.dialogData.DialogMessageData.map((m: any) => <DialogMessage key={m.id} text={m.text} />);
 
-    let componentElement = React.createRef<HTMLTextAreaElement>()
-
-    let sendMessage = () => {
-        props.sendMessage();
-    }
-
-    let onChangeAction = () => {
-        props.newMessageText(componentElement.current?.value);
+    let sendMessage = (value: any) => {
+        props.sendMessage(value.messageBody);
+        console.log(value)
     }
 
     return (
@@ -33,13 +28,23 @@ const Dialog: FunctionComponent<PropsInterface> = (props) => {
             </div>
             <div className={s.dialogMessage}>
                 {DialogMessageElemets}
-                <div>
-                    <textarea ref={componentElement} onChange={onChangeAction} value={props.newMessageTextValue} />
-                    <button onClick={sendMessage}>Send Message</button>
-                </div>
+                <MessageForm onSubmit={sendMessage}/>
             </div>
         </div>
     )
 }
+
+let maxLength10 = maxLength(10);
+
+const ReduxMessageForm: FunctionComponent<any> = (props) => {
+    return (<div>
+        <form onSubmit={props.handleSubmit}>
+            <Field component={Textarea} name="messageBody" validate={[required, maxLength10]}/>
+            <button>Send Message</button>
+        </form>
+    </div>);
+} 
+
+let MessageForm = reduxForm({form: "message"})(ReduxMessageForm);
 
 export default Dialog;

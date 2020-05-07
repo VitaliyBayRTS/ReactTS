@@ -1,4 +1,3 @@
-import React, { FunctionComponent } from 'react';
 import { newNoteTextActionCreator, addNoteActionCreator } from '../../../redux/sidebarReducer';
 import Nots from './Nots';
 import { connect } from 'react-redux';

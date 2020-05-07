@@ -19,9 +19,7 @@ export const setDisableUsers = (isDisable: any, usersId: any) => ({ type: DISABL
 export const getUsersThunk = (currentPage: any, pageSize: any) => (dispatch: any) => {
     dispatch(setFetching(true));
     usersAPI.getUsers(currentPage, pageSize).then((data: any) => {
-        debugger
-        if (data.error == null) {
-            
+        if (data.error === null) {
             dispatch(setUsers(data.items));
             dispatch(setUsersCount(data.totalCount));
             dispatch(setFetching(false));
@@ -32,7 +30,7 @@ export const getUsersThunk = (currentPage: any, pageSize: any) => (dispatch: any
 export const unfollowThunk = (usersId: any) => (dispatch: any) => {
     dispatch(setDisableUsers(true, usersId));
     usersAPI.unfollow(usersId).then((data) => {
-        if (data.error == null) {
+        if (data.error === null) {
             dispatch(setDisableUsers(false, usersId));
             dispatch(unfollow(usersId));
         }
@@ -41,7 +39,7 @@ export const unfollowThunk = (usersId: any) => (dispatch: any) => {
 export const followThunk = (userId: any) => (dispatch: any) => {
     dispatch(setDisableUsers(true, userId));
     usersAPI.follow(userId).then((data) => {
-        if (data.error == null) {
+        if (data.error === null) {
             dispatch(setDisableUsers(false, userId));
             dispatch(follow(userId));
         }
@@ -64,7 +62,7 @@ let usersReducer = (state: any = initialState, action: any) => {
             return {
                 ...state,
                 users: state.users.map((u: any) => {
-                    if (u.id == action.userId) {
+                    if (u.id === action.userId) {
                         return { ...u, followed: true };
                     }
                     return u;
@@ -74,7 +72,7 @@ let usersReducer = (state: any = initialState, action: any) => {
             return {
                 ...state,
                 users: state.users.map((u: any) => {
-                    if (u.id == action.userId) {
+                    if (u.id === action.userId) {
                         return { ...u, followed: false };
                     }
                     return u;
@@ -104,7 +102,7 @@ let usersReducer = (state: any = initialState, action: any) => {
             return {
                 ...state,
                 disableUsers: action.isDisable ? [...state.disableUsers, action.usersId]
-                    : state.disableUsers.filter((id: any) => id != action.usersId)
+                    : state.disableUsers.filter((id: any) => id !== action.usersId)
             }
         default:
             return state;

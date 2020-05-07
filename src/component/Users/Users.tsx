@@ -1,4 +1,4 @@
-import React, { Component, FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 import s from "./Users.module.scss";
 import userIcon from "../../assets/img/user.jpeg";
 import { NavLink } from "react-router-dom";
@@ -25,7 +25,7 @@ let Users: FunctionComponent<PropsInterface> = (props) => {
 
     return <div>
         {pages.map((p: any) => {
-            return <span key={p} className={props.currentPage == p ?
+            return <span key={p} className={props.currentPage === p ?
                 s.selectedPage + " " + s.paginationItem :
                 s.paginationItem}
                 onClick={(e) => { props.onPaginationClick(p) }}>{p}</span>
@@ -37,10 +37,10 @@ let Users: FunctionComponent<PropsInterface> = (props) => {
                         <img src={u.photos.small != null ? u.photos.small : userIcon} alt="" className={s.avatar} />
                     </NavLink>
                     {u.followed ?
-                        <button disabled={props.disableUsers.some((id: any) => id == u.id)} onClick={() => {
+                        <button disabled={props.disableUsers.some((id: any) => id === u.id)} onClick={() => {
                             props.unfollowThunk(u.id);
                         }}>Unfollow</button> :
-                        <button disabled={props.disableUsers.some((id: any) => id == u.id)} onClick={() => {
+                        <button disabled={props.disableUsers.some((id: any) => id === u.id)} onClick={() => {
                             props.followThunk(u.id);
                         }}>Follow</button>}
                 </div>

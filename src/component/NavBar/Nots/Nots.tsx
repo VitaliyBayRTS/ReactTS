@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import NotsItems from './NotsItems/NotsItems';
-import { newNoteTextActionCreator, addNoteActionCreator } from '../../../redux/sidebarReducer';
 
 interface notsInterface  {
     addNote: any

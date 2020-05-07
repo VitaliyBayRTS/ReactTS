@@ -1,10 +1,10 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
 import {setPofileInfo, getProfileThunk, getUserStatusThunk, updateUserStatusThunk} from '../../redux/profileReducer';
 import { withRouter } from 'react-router-dom';
-import { withAuthRedirect } from '../../hoc/witAuthRedirect';
 import { compose } from 'redux';
+import { withAuthRedirect } from '../../hoc/witAuthRedirect';
 
 interface MyProps {
     setPofileInfo: any
@@ -15,13 +15,14 @@ interface MyProps {
     getUserStatusThunk: any
     status: any
     updateUserStatusThunk: any
+    autorizedUserId: any
 }
 
 class ProfileClass extends React.Component<MyProps> {
 
     componentDidMount() {
         let userId = this.props.match.params.userId;
-        if(!userId) userId =  6553;
+        if(!userId) userId =  this.props.autorizedUserId;
         this.props.getProfileThunk(userId);
         this.props.getUserStatusThunk(userId);
     }
@@ -36,7 +37,8 @@ class ProfileClass extends React.Component<MyProps> {
 let mapStateToProps = (state: any) => {
     return {
         profile: state.profilePage.profileInfo,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        autorizedUserId: state.auth.userId
     }
 }
 

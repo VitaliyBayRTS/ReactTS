@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 interface myProps {
     isAuth: any
     login: any
+    logout: any
 }
 
 const Header: FunctionComponent<myProps> = (props) => {
@@ -13,7 +14,9 @@ const Header: FunctionComponent<myProps> = (props) => {
              <header>
                 <img src="https://png.pngtree.com/element_pic/16/11/02/bd886d7ccc6f8dd8db17e841233c9656.jpg" alt=""/>
                 <div>
-                    {props.isAuth ? props.login : <NavLink to="/login">Login</NavLink>}
+                    {props.isAuth ? 
+                    <div> {props.login} - <button onClick={props.logout}>LogOut</button></div> 
+                    : <NavLink to="/login">Login</NavLink>}
                 </div>
             </header>
         </div>

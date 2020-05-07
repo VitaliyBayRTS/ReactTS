@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Props } from 'react';
+import React, { FunctionComponent } from 'react';
 import s from './NavBar.module.scss';
 import { NavLink } from 'react-router-dom';
 import SuperNotsContainer from './Nots/NotsContainer';

@@ -1,10 +1,7 @@
 const ADD_MESSAGE: string = 'ADD-MESSAGE';
-const CHANGE_MESSAGE_TEXT: string = 'CHANGE-MESSAGE-TEXT';
 
-export const addMessageActionCreator = () => ({ type: ADD_MESSAGE });
+export const addMessageActionCreator = (messageBody: string) => ({ type: ADD_MESSAGE, messageBody });
 
-export const newMessageTextActionCreator = (text: string | undefined) =>
-    ({ type: CHANGE_MESSAGE_TEXT, messageText: text });
 
 let initialState = {
     DialogItemData: [
@@ -19,8 +16,7 @@ let initialState = {
         { id: 1, text: "PrePrePre" },
         { id: 2, text: "PrePrePrePrePrePrePrePrePre" },
         { id: 3, text: "OMG, i am in YouTube" }
-    ],
-    newMessageText: ""
+    ]
 }
 
 let dialogReducer = (state: any = initialState, action: any): any => {
@@ -30,13 +26,7 @@ let dialogReducer = (state: any = initialState, action: any): any => {
                 ...state,
                 DialogMessageData: [...state.DialogMessageData, {
                     id: state.DialogMessageData.length + 1,
-                    text: state.newMessageText
-                }],
-                newMessageText: ""
-            }
-        case CHANGE_MESSAGE_TEXT:
-            return { ...state,
-            newMessageText: action.messageText
+                    text: action.messageBody                }],
             }
         default:
             return state;

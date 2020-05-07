@@ -1,41 +1,46 @@
 import React, { FunctionComponent } from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Posts/Post';
-import { addPostActionCreator,  newPostTextActionCreator} from '../../../redux/profileReducer';
-import { PostDataInterface } from '../../../redux/store';
+import { Field, reduxForm } from 'redux-form';
+import { required, maxLength } from '../../../utilities/validator/validator';
+import { Textarea } from '../../../utilities/ReduxForm/Form';
 
 interface PropsInterface {
     postData: any
     addPost: any
-    newPostText: any
-    newPostTextValue: any
 }
 
 
 const MyPosts: FunctionComponent<PropsInterface> = (props) => {
-    let PostDataElements = props.postData.map( (p: any) => <Post text={p.text} like={p.like} />);
-    let componentRef = React.createRef<HTMLTextAreaElement>();
+    let PostDataElements = props.postData.map( (p: any) => <Post key={p.id} text={p.text} like={p.like} />);
 
-    let addPost = () => {
-        props.addPost();
+    let addPost = (value: any) => {
+        props.addPost(value.postBody);
+        console.log(value.postBody)
     };
-
-    let onChangeAction = () => {
-        props.newPostText(componentRef.current?.value);
-    }
     
     return (
         <div className={s.post_box}>
             My post
-            <div>
-                <textarea ref={componentRef} onChange={onChangeAction} value={props.newPostTextValue}/>
-                <button onClick={addPost}>Add Post</button>
-            </div>
+            <AddReduxForm onSubmit={addPost}/>
             <div>
                 {PostDataElements}
             </div>
         </div>
     )
 }
+
+let maxLength20 = maxLength(20);
+
+const AddPost: FunctionComponent<any> = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <Field component={Textarea} name="postBody" validate={[required, maxLength20]}/>
+            <button>Add Post</button>
+        </form>
+    )
+}
+
+let AddReduxForm = reduxForm({form: "post"})(AddPost);
 
 export default MyPosts;

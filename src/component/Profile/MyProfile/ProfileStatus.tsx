@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from 'react';
-import s from './MyProfile.module.scss';
+import React from 'react';
+// import s from './MyProfile.module.scss';
 
 interface PropsInterface {
     status: string
@@ -11,6 +11,14 @@ class ProfileStatus extends React.Component<PropsInterface> {
     state = {
         isEditMode: false,
         status: this.props.status
+    }
+
+    componentDidUpdate(prevProps: any, prevState: any) {
+        if(this.props.status !== prevProps.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
     activeEditMode = () => {
