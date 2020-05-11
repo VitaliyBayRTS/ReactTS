@@ -30,7 +30,7 @@ export const getUsersThunk = (currentPage: any, pageSize: any) => (dispatch: any
 export const unfollowThunk = (usersId: any) => (dispatch: any) => {
     dispatch(setDisableUsers(true, usersId));
     usersAPI.unfollow(usersId).then((data) => {
-        if (data.error === null) {
+        if (data.error == null) {
             dispatch(setDisableUsers(false, usersId));
             dispatch(unfollow(usersId));
         }
@@ -39,7 +39,7 @@ export const unfollowThunk = (usersId: any) => (dispatch: any) => {
 export const followThunk = (userId: any) => (dispatch: any) => {
     dispatch(setDisableUsers(true, userId));
     usersAPI.follow(userId).then((data) => {
-        if (data.error === null) {
+        if (data.error == null) {
             dispatch(setDisableUsers(false, userId));
             dispatch(follow(userId));
         }

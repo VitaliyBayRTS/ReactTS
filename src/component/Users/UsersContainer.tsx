@@ -3,6 +3,7 @@ import Users from "./Users";
 import { getUsersThunk, unfollowThunk, followThunk } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
+import { getUsersSelector, getUserCount, getPageSize, getCurrentPage, getIsFetching, getDisableUsers } from "../../redux/usersSelectors";
 
 interface MyProps {
     users: any
@@ -42,12 +43,12 @@ class UsersClassComponent extends React.Component<MyProps>{
 
 let mapStateToProps = (state: any) => {
     return {
-        users: state.usersPage.users,
-        usersCount: state.usersPage.usersCount,
-        pageSize: state.usersPage.pageSize,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        disableUsers: state.usersPage.disableUsers
+        users: getUsersSelector(state),
+        usersCount: getUserCount(state),
+        pageSize: getPageSize(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        disableUsers: getDisableUsers(state)
     }
 }
 
