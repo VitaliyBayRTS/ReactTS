@@ -3,6 +3,7 @@ import s from './MyProfile.module.scss';
 import Preloader from '../../common/Preloader/Preloader';
 import ProfileStatus from './ProfileStatus'
 import UserPhoto from './../../../assets/img/user.jpeg';
+import ProfileStatusWithHook from './ProfileStatusWithHook';
 
 interface PropsInterface {
     profileInfo: any
@@ -22,7 +23,7 @@ const MyProfile: FunctionComponent<PropsInterface> = (props) => {
                 </div> */}
                 <div>
                     <img className={s.userPhoto} src={props.profileInfo.photos.large || UserPhoto} alt=""/>
-                    <ProfileStatus status={props.status} updateUserStatusThunk={props.updateUserStatusThunk}/>
+                    <ProfileStatusWithHook status={props.status} updateUserStatusThunk={props.updateUserStatusThunk}/>
                 </div>
             </div>
         </div>
