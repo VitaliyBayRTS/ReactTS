@@ -1,3 +1,4 @@
+import { unfollowFollowChanging } from './../utilities/objectHelpers/objectHelper';
 import { usersAPI } from "../dal/dal";
 
 const FOLLOW: string = "FOLLOW";
@@ -16,34 +17,31 @@ export const setUsersCount = (count: any) => ({ type: SET_USERS_COUNT, count });
 export const setFetching = (value: any) => ({ type: SET_FETCHING, value });
 export const setDisableUsers = (isDisable: any, usersId: any) => ({ type: DISABLE_USERS, isDisable, usersId });
 
-export const getUsersThunk = (currentPage: any, pageSize: any) => (dispatch: any) => {
+export const getUsersThunk = (currentPage: any, pageSize: any) => async (dispatch: any) => {
     dispatch(setFetching(true));
-    usersAPI.getUsers(currentPage, pageSize).then((data: any) => {
-        if (data.error === null) {
-            dispatch(setUsers(data.items));
-            dispatch(setUsersCount(data.totalCount));
-            dispatch(setFetching(false));
-            dispatch(setCurrentPage(currentPage));
-        }
-    })
+    const data = await usersAPI.getUsers(currentPage, pageSize);
+    if (data.error === null) {
+        dispatch(setUsers(data.items));
+        dispatch(setUsersCount(data.totalCount));
+        dispatch(setFetching(false));
+        dispatch(setCurrentPage(currentPage));
+    }
 }
-export const unfollowThunk = (usersId: any) => (dispatch: any) => {
+
+const followUnfollowFlow = async (dispatch: any, usersId: any, dal: any, actionCreator: any) => {
     dispatch(setDisableUsers(true, usersId));
-    usersAPI.unfollow(usersId).then((data) => {
-        if (data.error == null) {
-            dispatch(setDisableUsers(false, usersId));
-            dispatch(unfollow(usersId));
-        }
-    })
+    const data = await dal(usersId);
+    if (data.error == null) {
+        dispatch(setDisableUsers(false, usersId));
+        dispatch(actionCreator(usersId));
+    }
 }
-export const followThunk = (userId: any) => (dispatch: any) => {
-    dispatch(setDisableUsers(true, userId));
-    usersAPI.follow(userId).then((data) => {
-        if (data.error == null) {
-            dispatch(setDisableUsers(false, userId));
-            dispatch(follow(userId));
-        }
-    })
+
+export const unfollowThunk = (userId: any) => (dispatch: any) => {
+    followUnfollowFlow(dispatch, userId, usersAPI.unfollow, unfollow);
+}
+export const followThunk = (userId: any) => async (dispatch: any) => {
+    followUnfollowFlow(dispatch, userId, usersAPI.follow, follow);
 }
 
 let initialState = {
@@ -61,22 +59,12 @@ let usersReducer = (state: any = initialState, action: any) => {
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map((u: any) => {
-                    if (u.id === action.userId) {
-                        return { ...u, followed: true };
-                    }
-                    return u;
-                })
+                users: unfollowFollowChanging(state.users, ["id"], action.userId, {followed: true})
             }
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map((u: any) => {
-                    if (u.id === action.userId) {
-                        return { ...u, followed: false };
-                    }
-                    return u;
-                })
+                users: unfollowFollowChanging(state.users, ["id"], action.userId, {followed: false})
             }
         case SET_USERS:
             return {

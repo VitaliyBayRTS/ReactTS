@@ -20,7 +20,8 @@ interface MyProps {
 class UsersClassComponent extends React.Component<MyProps>{
 
     componentDidMount() {
-        this.props.getUsersThunk(this.props.currentPage, this.props.pageSize);
+        let {currentPage, pageSize} = this.props;
+        this.props.getUsersThunk(currentPage, pageSize);
     }
 
     onPaginationClick = (p: any) => {

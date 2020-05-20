@@ -10,8 +10,8 @@ interface PropsInterface {
     addPost: any
 }
 
-
 const MyPosts: FunctionComponent<PropsInterface> = (props) => {
+    
     let PostDataElements = props.postData.map( (p: any) => <Post key={p.id} text={p.text} like={p.like} />);
 
     let addPost = (value: any) => {

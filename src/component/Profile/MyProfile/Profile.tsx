@@ -18,9 +18,6 @@ const MyProfile: FunctionComponent<PropsInterface> = (props) => {
     return (
         <div>
             <div>
-                {/* <div>
-                    <img src="https://png.pngtree.com/thumb_back/fh260/background/20191010/pngtree-blue-glitter-dreamy-background-image_317748.jpg" alt="" />
-                </div> */}
                 <div>
                     <img className={s.userPhoto} src={props.profileInfo.photos.large || UserPhoto} alt=""/>
                     <ProfileStatusWithHook status={props.status} updateUserStatusThunk={props.updateUserStatusThunk}/>

@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from "react";
-import s from "./Users.module.scss";
-import userIcon from "../../assets/img/user.jpeg";
-import { NavLink } from "react-router-dom";
+import Paginator from "../../utilities/Paginator/Paginator";
+import User from "./User/User";
 
 interface PropsInterface {
     users: any
@@ -16,42 +15,56 @@ interface PropsInterface {
 
 let Users: FunctionComponent<PropsInterface> = (props) => {
 
-    let pageCount = Math.ceil(props.usersCount / props.pageSize);
-
-    let pages = [];
-    for (let i = 1; i <= pageCount; i++) {
-        pages.push(i);
-    }
-
     return <div>
-        {pages.map((p: any) => {
-            return <span key={p} className={props.currentPage === p ?
-                s.selectedPage + " " + s.paginationItem :
-                s.paginationItem}
-                onClick={(e) => { props.onPaginationClick(p) }}>{p}</span>
-        })}
-        {props.users.map((u: any) => {
-            return <div key={u.id}>
-                <div>
-                    <NavLink to={"/profile/" + u.id}>
-                        <img src={u.photos.small != null ? u.photos.small : userIcon} alt="" className={s.avatar} />
-                    </NavLink>
-                    {u.followed ?
-                        <button disabled={props.disableUsers.some((id: any) => id === u.id)} onClick={() => {
-                            props.unfollowThunk(u.id);
-                        }}>Unfollow</button> :
-                        <button disabled={props.disableUsers.some((id: any) => id === u.id)} onClick={() => {
-                            props.followThunk(u.id);
-                        }}>Follow</button>}
-                </div>
-                <div>
-                    <span>{u.name}</span>
-                    <span>{u.status}</span>
-                    <span>{"u.location.city"}</span>
-                    <span>{"u.location.country"}</span>
-                </div>
-            </div>
-        })}
+        <Paginator usersCount={props.usersCount} 
+                    pageSize={props.pageSize} 
+                    currentPage={props.currentPage}
+                    onPaginationClick={props.onPaginationClick}
+                    />
+        {props.users.map((u: any) => <User disableUsers={props.disableUsers}
+                        unfollowThunk={props.unfollowThunk}
+                        followThunk={props.followThunk}
+                        key={u.id}
+                        userData={u}
+            /> 
+        // {
+            // let user = u;
+            // const propsInterface = {
+            //     disableUsers: props.disableUsers,
+            //     unfollowThunk: props.unfollowThunk,
+            //     followThunk: props.followThunk,
+            //     key: u.id,
+            //     userData: u
+            // }
+            // return <User disableUsers={props.disableUsers}
+            //             unfollowThunk={props.unfollowThunk}
+            //             followThunk={props.followThunk}
+            //             key={u.id}
+            //             algo={u}
+            // /> 
+        //     return <div key={u.id}>
+        //     <div>
+        //         <NavLink to={"/profile/" + u.id}>
+        //             <img src={u.photos.small != null ? u.photos.small : userIcon} alt="" className={s.avatar} />
+        //         </NavLink>
+        //         {u.followed ?
+        //             <button disabled={props.disableUsers.some((id: any) => id === u.id)} onClick={() => {
+        //                 props.unfollowThunk(u.id);
+        //             }}>Unfollow</button> :
+        //             <button disabled={props.disableUsers.some((id: any) => id === u.id)} onClick={() => {
+        //                 props.followThunk(u.id);
+        //             }}>Follow</button>}
+        //     </div>
+        //     <div>
+        //         <span>{u.name}</span>
+        //         <span>{u.status}</span>
+        //         <span>{"props.u.location.city"}</span>
+        //         <span>{"props.u.location.country"}</span>
+        //     </div>
+        // </div>
+    
+        // }
+        )}
     </div>
 }
 
