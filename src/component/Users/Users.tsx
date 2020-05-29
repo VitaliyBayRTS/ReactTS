@@ -16,7 +16,7 @@ interface PropsInterface {
 let Users: FunctionComponent<PropsInterface> = (props) => {
 
     return <div>
-        <Paginator usersCount={props.usersCount} 
+        <Paginator itemCount={props.usersCount} 
                     pageSize={props.pageSize} 
                     currentPage={props.currentPage}
                     onPaginationClick={props.onPaginationClick}
@@ -27,43 +27,6 @@ let Users: FunctionComponent<PropsInterface> = (props) => {
                         key={u.id}
                         userData={u}
             /> 
-        // {
-            // let user = u;
-            // const propsInterface = {
-            //     disableUsers: props.disableUsers,
-            //     unfollowThunk: props.unfollowThunk,
-            //     followThunk: props.followThunk,
-            //     key: u.id,
-            //     userData: u
-            // }
-            // return <User disableUsers={props.disableUsers}
-            //             unfollowThunk={props.unfollowThunk}
-            //             followThunk={props.followThunk}
-            //             key={u.id}
-            //             algo={u}
-            // /> 
-        //     return <div key={u.id}>
-        //     <div>
-        //         <NavLink to={"/profile/" + u.id}>
-        //             <img src={u.photos.small != null ? u.photos.small : userIcon} alt="" className={s.avatar} />
-        //         </NavLink>
-        //         {u.followed ?
-        //             <button disabled={props.disableUsers.some((id: any) => id === u.id)} onClick={() => {
-        //                 props.unfollowThunk(u.id);
-        //             }}>Unfollow</button> :
-        //             <button disabled={props.disableUsers.some((id: any) => id === u.id)} onClick={() => {
-        //                 props.followThunk(u.id);
-        //             }}>Follow</button>}
-        //     </div>
-        //     <div>
-        //         <span>{u.name}</span>
-        //         <span>{u.status}</span>
-        //         <span>{"props.u.location.city"}</span>
-        //         <span>{"props.u.location.country"}</span>
-        //     </div>
-        // </div>
-    
-        // }
         )}
     </div>
 }

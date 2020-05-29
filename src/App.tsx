@@ -2,14 +2,17 @@ import React from 'react';
 import s from './App.module.scss';
 import NavBar from './component/NavBar/NavBar';
 import { Route, BrowserRouter } from 'react-router-dom';
-import DialogContainer from './component/Dialog/DialogContainer';
 import UserContainer from './component/Users/UsersContainer';
-import ProfileContainer from './component/Profile/ProfileContainer';
 import HeaderContainer from './component/Header/HeaderContainer';
 import LoginContainer from './component/Login/LoginContainer';
 import { initializeApp } from './redux/appReducer';
-import { connect } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import Preloader from './component/common/Preloader/Preloader';
+import store from './redux/redux-store';
+import { withSuspense } from './hoc/withSuspense';
+
+const ProfileContainer = React.lazy(() => import('./component/Profile/ProfileContainer'));
+const DialogContainer = React.lazy(() => import('./component/Dialog/DialogContainer'));
 
 interface PropsInterface {
   store: any
@@ -33,8 +36,8 @@ class App extends React.Component<PropsInterface> {
           <HeaderContainer />
           <NavBar store={this.props.store}/>
           <div className={s.content}>
-              <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-              <Route path="/dialog" render={() => <DialogContainer />} />
+              <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
+              <Route path="/dialog" render={withSuspense(DialogContainer)}/>
               <Route path="/users" render={() => <UserContainer />} />
               <Route path="/login" render={() => <LoginContainer />} />
           </div>
@@ -50,4 +53,12 @@ let mapStateToProps = (state: any) => {
   }
 }
 
-export default connect(mapStateToProps, {initializeApp})(App);
+let AppContainer =  connect(mapStateToProps, {initializeApp})(App);
+
+let SocialApp: any = (props: any) => {
+  return <Provider store={store}>
+    <AppContainer store={store} />
+  </Provider>
+}
+
+export default SocialApp;

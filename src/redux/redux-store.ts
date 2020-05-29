@@ -1,4 +1,4 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import dialogReducer from './dialogReducer';
 import profileReducer from './profileReducer';
 import sidebarReducer from './sidebarReducer';
@@ -7,6 +7,7 @@ import authMeReducer from './authMeReducer';
 import thunkMiddleware from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form';
 import appReducer from './appReducer';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
 let reducers = combineReducers({    
     dialogPage: dialogReducer,
@@ -18,11 +19,7 @@ let reducers = combineReducers({
     app: appReducer
 });
 
-
-
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
-
-// console.log(store.getState())
+let store = createStore(reducers, composeWithDevTools(applyMiddleware(thunkMiddleware)));
 
 
 export default store;
