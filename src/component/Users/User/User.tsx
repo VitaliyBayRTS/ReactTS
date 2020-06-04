@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from "react";
+import React, { FunctionComponent } from "react";
 import s from "../Users.module.scss";
 import userIcon from "../../../assets/img/user.jpeg";
 import { NavLink } from "react-router-dom";

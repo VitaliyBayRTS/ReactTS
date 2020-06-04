@@ -6,12 +6,20 @@ interface PropsInterface {
     profileInfo: any
     status: any
     updateUserStatusThunk: any
+    isOwner: any
+    savePhoto: any
+    saveProfileInfo: any
 }
 
 const Profile: FunctionComponent<PropsInterface> = (props) => {
     return (
         <div>
-            <MyProfile profileInfo={props.profileInfo} status={props.status} updateUserStatusThunk={props.updateUserStatusThunk}/>
+            <MyProfile savePhoto={props.savePhoto} 
+                isOwner={props.isOwner} 
+                profileInfo={props.profileInfo} 
+                status={props.status} 
+                updateUserStatusThunk={props.updateUserStatusThunk}
+                saveProfileInfo={props.saveProfileInfo}/>
             <MyPostsContainer />
         </div>
     )
