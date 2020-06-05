@@ -46,11 +46,14 @@ export const saveProfileInfo = (profile: any) => async (dispatch: any, getState:
     if(response.data.resultCode === 0) {
         dispatch(getProfileThunk(userId))
     } else {
-        const errorMessage = response.data.messages[0]
-        let field = errorMessage.indexOf("Contacts->") + 10
-        let name = errorMessage.substr(field, errorMessage.length - field - 1).toLowerCase()
-        debugger
-        dispatch(stopSubmit('profileData', {_error: errorMessage}));
+        const errorMessage = response.data.messages[0];
+        let field: number = errorMessage.indexOf("Contacts->") + 10;
+        let socialName: string = errorMessage.substr(field, errorMessage.length - field - 1).toLowerCase();
+        let objError: Record<string, any> = {};
+        objError[socialName] = errorMessage;
+        const object = {"contacts": objError}
+        dispatch(stopSubmit("profileData", object));
+        return Promise.reject(errorMessage)
     }
 }
 

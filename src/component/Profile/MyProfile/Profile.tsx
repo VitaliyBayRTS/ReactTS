@@ -29,8 +29,9 @@ const MyProfile: FunctionComponent<PropsInterface> = ({profileInfo, ...props}) =
     }
 
     const onSubmit = (dataForm: any) => {
-        props.saveProfileInfo(dataForm);
-        // setEditMode(false)
+        props.saveProfileInfo(dataForm).then(() => {
+            setEditMode(false)
+        })
     }
 
     return (
