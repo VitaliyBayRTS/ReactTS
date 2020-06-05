@@ -40,6 +40,7 @@ export const savePhoto = (photo: any) => async (dispatch: any) => {
     }
 }
 
+
 export const saveProfileInfo = (profile: any) => async (dispatch: any, getState: any) => {
     const userId = getState().auth.userId;
     const response = await profileAPI.saveProfileInfo(profile)
@@ -48,11 +49,15 @@ export const saveProfileInfo = (profile: any) => async (dispatch: any, getState:
     } else {
         const errorMessage = response.data.messages[0];
         let field: number = errorMessage.indexOf("Contacts->") + 10;
-        let socialName: string = errorMessage.substr(field, errorMessage.length - field - 1).toLowerCase();
-        let objError: Record<string, any> = {};
-        objError[socialName] = errorMessage;
-        const object = {"contacts": objError}
-        dispatch(stopSubmit("profileData", object));
+        if(field == 9) {
+            dispatch(stopSubmit("profileData", {_error: errorMessage}));
+        } else {
+            let socialNetworkName: string = errorMessage.substr(field, errorMessage.length - field - 1).toLowerCase();
+            let objError: Record<string, any> = {};
+            objError[socialNetworkName] = errorMessage;
+            const object = {"contacts": objError}
+            dispatch(stopSubmit("profileData", object));
+        }
         return Promise.reject(errorMessage)
     }
 }

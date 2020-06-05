@@ -6,13 +6,14 @@ import { login } from './../../redux/authMeReducer';
 
 class LoginContainer extends React.Component<any> {
     render() {
-        return <Login login={this.props.login} isAuth={this.props.isAuth}/>
+        return <Login login={this.props.login} isAuth={this.props.isAuth} captchaUrl={this.props.captchaUrl}/>
     }
 }
 
 let mapStateToProps = (state: any) => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captchaUrl: state.auth.captchaUrl
     }
 }
 
