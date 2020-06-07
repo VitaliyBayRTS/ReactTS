@@ -1,13 +1,18 @@
 import { meThunk } from './authMeReducer';
+import { getProfileThunk } from './profileReducer';
 const SUCCESS_INITIALIZING = 'SUCCESS_INITIALIZING';
 
 export const InitializedSuccess = () =>
  ({type: SUCCESS_INITIALIZING })
 
-export const initializeApp = () => (dispatch: any) => {
+export const initializeApp = () => (dispatch: any, getState: any) => {
     let promise = dispatch(meThunk());
     Promise.all([promise]).then( () => {
-        dispatch(InitializedSuccess())
+        let userId = getState().auth.userId;
+        dispatch(getProfileThunk(userId)).then(() => {
+            dispatch(InitializedSuccess())
+        })
+        
     })
 }
 

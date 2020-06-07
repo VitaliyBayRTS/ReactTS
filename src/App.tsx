@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './App.module.scss';
 import NavBar from './component/NavBar/NavBar';
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import UserContainer from './component/Users/UsersContainer';
 import HeaderContainer from './component/Header/HeaderContainer';
 import LoginContainer from './component/Login/LoginContainer';
@@ -31,18 +31,25 @@ class App extends React.Component<PropsInterface> {
     if(!this.props.appInitialized) return <Preloader />
 
     return (
-      <BrowserRouter>
-        <div className={s.app_wrapper}>
-          <HeaderContainer />
-          <NavBar store={this.props.store}/>
-          <div className={s.content}>
-              <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
-              <Route path="/dialog" render={withSuspense(DialogContainer)}/>
-              <Route path="/users" render={() => <UserContainer />} />
-              <Route path="/login" render={() => <LoginContainer />} />
+      <div className={s.container}>
+        <div className={s.header}></div>
+        <BrowserRouter>
+          <div className={s.app_wrapper}>
+            <HeaderContainer />
+            <NavBar store={this.props.store}/>
+            <div className={s.content}>
+              <Switch>
+                <Route exact path="/" render={() => <Redirect to="/profile" />}/>
+                <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
+                <Route path="/dialog" render={withSuspense(DialogContainer)}/>
+                <Route path="/users" render={() => <UserContainer />} />
+                <Route path="/login" render={() => <LoginContainer />} />
+                <Route path="*" render={() => <div>404 Page not Found</div>}/>
+              </Switch>
+            </div>
           </div>
-        </div>
       </BrowserRouter>
+      </div>
     );
   }
 }

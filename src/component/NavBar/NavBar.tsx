@@ -1,7 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import s from './NavBar.module.scss';
 import { NavLink } from 'react-router-dom';
-import SuperNotsContainer from './Nots/NotsContainer';
 
 interface PropsInterface {
     store: any
@@ -33,8 +32,6 @@ const NavBar: FunctionComponent<PropsInterface> = (props) => {
                     </li>
                 </ul>
             </nav>
-
-            <SuperNotsContainer/>
         </div>
     )
 }

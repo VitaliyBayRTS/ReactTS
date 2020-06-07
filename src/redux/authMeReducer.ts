@@ -18,8 +18,6 @@ export const meThunk = () => async (dispatch: any) => {
 
 export const login = (email: string, password: string, rememberMe: boolean, captcha: any) => async (dispatch: any) => {
     const response = await authApi.login(email, password, rememberMe, captcha);
-    // response.data.resultCode = 10
-    // debugger
     if(response.data.resultCode === 0) {
         dispatch(meThunk());
     } else {

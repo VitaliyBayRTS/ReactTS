@@ -1,14 +1,22 @@
-.app_wrapper {
-    display: grid;
-    grid-template-rows: 60px, 1fr;
-    grid-template-columns: 1fr, 5fr, 5fr;
-    grid-gap: 10px;
-    grid-template-areas: 
-    "h h h"
-    "n c c";
+body {
+    margin: 0;
+    background-color: #E3E3E3;
 }
-.content {
-    background-color: #2EAD37;
-    border: 2px solid #000;
-    grid-area: c;
+.container {
+    .header {
+        position: absolute;
+        background: #099DBD;
+        height: 7vh;
+        width: 100%;
+        z-index: -1;
+    }
+    .app_wrapper {
+        display: grid;
+        grid: 7vh auto / 20vw auto;
+        padding: 0 110px;
+    }
+    .content {
+        background-color: #fff;
+        grid-column: 2/3;
+    }
 }

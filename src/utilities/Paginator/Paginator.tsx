@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useState } from "react";
 import s from "./Paginator.module.scss";
+import cn from 'classnames';
 
 interface PropsInterface {
     itemCount: any
@@ -27,9 +28,9 @@ let Paginator: FunctionComponent<PropsInterface> = (props) => {
         onClick={() => {setPortionNumber(portionNumber - 1)}
         }>Prev</button>
         {pages.filter((p: any) => p >= leftPortionNumber && p <= rightPortionNumber).map((p: any) => {
-            return <span key={p} className={props.currentPage === p ?
-                s.selectedPage + " " + s.paginationItem :
-                s.paginationItem}
+            return <span key={p} className={cn(s.paginationItem, {
+                    [s.selectedPage]: props.currentPage === p
+                })}
                 onClick={(e) => { 
                     props.onPaginationClick(p)
                  }}>{p}</span>

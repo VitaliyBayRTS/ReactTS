@@ -7,6 +7,7 @@ interface MyProps {
     isAuth: any
     login: any
     logout: any
+    profile: any
 }
 
 class HeaderContainer extends React.Component<MyProps>{
@@ -20,7 +21,8 @@ class HeaderContainer extends React.Component<MyProps>{
 let mapStateToProps = (state: any) => {
     return {
         isAuth: state.auth.isAuth,
-        login: state.auth.login
+        login: state.auth.login,
+        profile: state.profilePage.profileInfo
     }
 }
 

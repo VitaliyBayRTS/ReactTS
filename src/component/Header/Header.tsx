@@ -1,22 +1,38 @@
 import React, { FunctionComponent } from 'react';
 import s from './Header.module.scss';
 import { NavLink } from 'react-router-dom';
+import Preloader from '../common/Preloader/Preloader';
+import cub from '../../assets/img/cub.png';
 
 interface myProps {
     isAuth: any
     login: any
     logout: any
+    profile: any
 }
 
+
+
 const Header: FunctionComponent<myProps> = (props) => {
+    
+    if(props.profile == null) {
+        return <Preloader />
+    }
+
     return (
         <div className={s.header}>
              <header>
-                <img src="https://png.pngtree.com/element_pic/16/11/02/bd886d7ccc6f8dd8db17e841233c9656.jpg" alt=""/>
+                {props.isAuth && 
+                <div className={s.userBox}>  
+                    <img src={props.profile.photos.small} alt=""/>
+                    <span>{props.login}</span>
+                </div>}
                 <div>
-                    {props.isAuth ? 
-                    <div> {props.login} - <button onClick={props.logout}>LogOut</button></div> 
-                    : <NavLink to="/login">Login</NavLink>}
+                    <img src={cub} alt=""/>
+                </div>
+                <div>
+                    {props.isAuth ? <button onClick={props.logout}>LogOut</button> 
+                    : <div><NavLink to="/login">Login</NavLink></div>}
                 </div>
             </header>
         </div>

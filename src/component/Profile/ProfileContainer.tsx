@@ -25,7 +25,7 @@ class ProfileClass extends React.Component<MyProps> {
 
     updateProfile() {
         let userId = this.props.match.params.userId;
-        if(!userId) userId =  this.props.autorizedUserId;
+        if(!userId) userId = this.props.autorizedUserId;
         this.props.getProfileThunk(userId);
         this.props.getUserStatusThunk(userId);
     }
