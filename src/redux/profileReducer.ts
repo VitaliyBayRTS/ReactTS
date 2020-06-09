@@ -1,3 +1,4 @@
+import { setUserFoto } from './authMeReducer';
 import { usersAPI, profileAPI } from "../dal/dal";
 import { stopSubmit } from "redux-form";
 
@@ -17,7 +18,7 @@ export const savePhotoSuccess = (photoFile: any) => ({ type: SAVE_PHOTO, photoFi
 export const getProfileThunk = (userId: any) => async (dispatch: any) => {
     const response = await usersAPI.getProfile(userId)
     dispatch(setPofileInfo(response.data));
-    
+    return response;
 }
 
 export const getUserStatusThunk = (userId: any) => async (dispatch: any) => {

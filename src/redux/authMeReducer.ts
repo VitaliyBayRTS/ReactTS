@@ -2,21 +2,51 @@ import { authApi, securityApi } from './../dal/dal';
 import { stopSubmit } from 'redux-form';
 const SET_USER_DATA = 'SET_USER_DATA';
 const GET_CAPTCHA_URL = 'GET_CAPTCHA_URL';
+const GET_USER_IMAGE = 'GET_USER_IMAGE';
 
-export const setUserData = (userId: string  | null, login: string  | null, email: string  | null, isAuth: boolean) =>
+type payloadUserDataType = {
+    userId: string | null,
+    login: string | null,
+    email: string | null,
+    isAuth: boolean
+}
+
+type ACsetUserDataType = {
+    type: typeof SET_USER_DATA,
+    payload: payloadUserDataType
+}
+
+type payloadCaptchaUrlType = {
+    captchaUrl: string
+}
+
+type ACgetCaptchaUrlSuccessType = {
+    type: typeof GET_CAPTCHA_URL,
+    payload: payloadCaptchaUrlType
+}
+
+type ACSetUserFoto = {
+    type: typeof GET_USER_IMAGE,
+    userImage: string
+}
+
+export const setUserData = (userId: string  | null, login: string  | null, email: string  | null, isAuth: boolean): ACsetUserDataType =>
  ({type: SET_USER_DATA, payload: {userId, login, email, isAuth} })
-export const getCaptchaUrlSuccess = (captchaUrl: any) =>
+export const getCaptchaUrlSuccess = (captchaUrl: string): ACgetCaptchaUrlSuccessType =>
  ({type: GET_CAPTCHA_URL, payload: {captchaUrl} })
+ export const setUserFoto = (userImage: string) => ({type: GET_USER_IMAGE, userImage})
 
 export const meThunk = () => async (dispatch: any) => {
     const response = await authApi.me();
     if(response.data.resultCode === 0) {
         let {id, login, email} = response.data.data;
         dispatch(setUserData(id, login, email, true));
+    } else {
+        return response.data.resultCode;
     }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha: any) => async (dispatch: any) => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
     const response = await authApi.login(email, password, rememberMe, captcha);
     if(response.data.resultCode === 0) {
         dispatch(meThunk());
@@ -40,20 +70,22 @@ export const logout = () => async (dispatch: any) => {
 
 export const getCaptchaUrl = () => async (dispatch: any) => {
     const response = await securityApi.getCaptcha();
-    const url = response.data.url;
-    debugger
+    const url: string = response.data.url;
     dispatch(getCaptchaUrlSuccess(url))
 }
 
+type stateType = typeof initialState;
+
 let initialState = {
-    userId: null,
-    email: null,
-    login: null,
-    isAuth: false,
-    captchaUrl: null
+    userId: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
+    isAuth: false as boolean,
+    captchaUrl: null as string | null,
+    userImage: null as string | null
 }
 
-let authMeReducer = (state: any = initialState , action: any) => {
+let authMeReducer = (state: stateType = initialState , action: any) => {
     switch (action.type) {
         case SET_USER_DATA:
         case GET_CAPTCHA_URL:
@@ -61,7 +93,8 @@ let authMeReducer = (state: any = initialState , action: any) => {
                 ...state,
                 ...action.payload
             }
-    
+        case GET_USER_IMAGE:
+            return {...state, userImage: action.userImage}
         default:
            return state
     }

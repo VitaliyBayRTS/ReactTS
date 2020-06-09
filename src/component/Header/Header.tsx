@@ -1,32 +1,31 @@
 import React, { FunctionComponent } from 'react';
 import s from './Header.module.scss';
 import { NavLink } from 'react-router-dom';
-import Preloader from '../common/Preloader/Preloader';
 import cub from '../../assets/img/cub.png';
 
 interface myProps {
     isAuth: any
     login: any
     logout: any
-    profile: any
+    profileImage: any
 }
 
 
 
 const Header: FunctionComponent<myProps> = (props) => {
     
-    if(props.profile == null) {
-        return <Preloader />
-    }
+    // if(props.profile == null) {
+    //     return null
+    // }
 
     return (
         <div className={s.header}>
              <header>
-                {props.isAuth && 
+                {props.isAuth && props.profileImage ?
                 <div className={s.userBox}>  
-                    <img src={props.profile.photos.small} alt=""/>
+                    <img src={props.profileImage} alt=""/>
                     <span>{props.login}</span>
-                </div>}
+                </div> : <div></div> }
                 <div>
                     <img src={cub} alt=""/>
                 </div>
