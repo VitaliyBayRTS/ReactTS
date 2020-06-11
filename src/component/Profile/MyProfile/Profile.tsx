@@ -13,14 +13,15 @@ import vk from '../../../assets/img/socialNetworkIcon/vk.svg';
 import website from '../../../assets/img/socialNetworkIcon/website.svg';
 import youtube from '../../../assets/img/socialNetworkIcon/youtube.svg';
 import cn from 'classnames';
+import { profileInfoType, photosType } from '../../../types/types';
 
 interface PropsInterface {
-    profileInfo: any
-    status: any
-    updateUserStatusThunk: any
-    isOwner: any
-    savePhoto: any
-    saveProfileInfo: any
+    profileInfo: profileInfoType | null,
+    status: string,
+    isOwner: boolean,
+    updateUserStatusThunk: (status: string) => void,
+    savePhoto: (photo: photosType) => void,
+    saveProfileInfo: (profile: profileInfoType) => any
 }
 
 const MyProfile: FunctionComponent<PropsInterface> = ({profileInfo, ...props}) => {
@@ -56,7 +57,7 @@ const MyProfile: FunctionComponent<PropsInterface> = ({profileInfo, ...props}) =
                         { editMode 
                             ? <ProfileDataForm initialValues={profileInfo} onSubmit={onSubmit} /> 
                             : <ProfileData profileInfo={profileInfo} isOwner={props.isOwner} changeEditMode={() => {setEditMode(true)}}/> }
-                        <ProfileStatusWithHook status={props.status} updateUserStatusThunk={props.updateUserStatusThunk}/>
+                        <ProfileStatusWithHook isOwner={props.isOwner} status={props.status} updateUserStatusThunk={props.updateUserStatusThunk}/>
                     </div>
                 </div>
             </div>
@@ -64,7 +65,13 @@ const MyProfile: FunctionComponent<PropsInterface> = ({profileInfo, ...props}) =
     )
 }
 
-const ProfileData: FunctionComponent<any> = ({profileInfo, isOwner, changeEditMode}) => {
+type ProfileDataType = {
+    profileInfo: profileInfoType,
+    isOwner: boolean,
+    changeEditMode: () => void
+}
+
+const ProfileData: FunctionComponent<ProfileDataType> = ({profileInfo, isOwner, changeEditMode}) => {
     return <div>
         {isOwner && <button onClick={changeEditMode}>Edit Information</button>}
         <div>
@@ -81,15 +88,20 @@ const ProfileData: FunctionComponent<any> = ({profileInfo, isOwner, changeEditMo
         </div>
         <div >
             <b>Contacts: </b> <div className={s.itemBox}>
-                {Object.keys(profileInfo.contacts).map((key: any) => {
-                    return <Contacts key={key} contactKey={key} contactValue={profileInfo.contacts[key]}/>
+                {Object.keys(profileInfo.contacts).map((key: string) => {
+                    //@ts-ignore
+                    return  <Contacts key={key} contactKey={key} contactValue={profileInfo.contacts[key]}/>
                 })}
             </div> 
         </div>
     </div>
 }
 
-let icon: any ={
+type iconType = {
+    [key:string]: string;
+}
+
+const icon: iconType = {
     'facebook': facebook,
     'website': website,
     'vk': vk,
@@ -100,10 +112,15 @@ let icon: any ={
     'mainLink': mainLink
 }
 
-const Contacts: FunctionComponent<any> = ({contactKey, contactValue}) => {
+type ContactsType = {
+    contactKey: string,
+    contactValue: string
+}
+
+const Contacts: FunctionComponent<ContactsType> = ({contactKey, contactValue}) => {
     let img = icon[contactKey];
     return <div className={cn({[s.contactItem]: contactValue}, s.default)}>
-        <a href={contactValue} target="_blanc">{contactValue && <img src={img}/>}</a>
+        <a href={contactValue} target="_blanc">{contactValue && <img src={img} alt={contactKey}/>}</a>
     </div>
 }
 

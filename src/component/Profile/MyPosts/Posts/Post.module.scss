@@ -15,10 +15,13 @@
     margin: 0;
   }
   .like {
+    display: table;
+    padding: 2px;
     cursor: pointer;
-    transition: color ease  0.17s;
+    border-radius: 2px;
+    transition: color ease  0.27s;
     &:hover {
-      color: #fff;
+      background: #C4C4C4;
     }
   }
 }

@@ -9,9 +9,9 @@ type ACSuccessInitializingType = {
 export const InitializedSuccess = (): ACSuccessInitializingType => ({type: SUCCESS_INITIALIZING })
 
 export const initializeApp = () => (dispatch: any, getState: any) => {
-    let promise = dispatch(meThunk())
+    dispatch(meThunk())
     .then( (result: any) => {
-        if(result != 1) {
+        if(result !== 1) {
             let userId: number = getState().auth.userId;
             dispatch(getProfileThunk(userId)).then((result: any) => {
                 dispatch(setUserFoto(result.data.photos.small))
@@ -19,7 +19,6 @@ export const initializeApp = () => (dispatch: any, getState: any) => {
         }   
         dispatch(InitializedSuccess())     
     })
-    // Promise.all([promise])
 }
 
 type stateType = {
@@ -30,7 +29,7 @@ let initialState: stateType = {
     initialazed: false
 }
 
-let appReducer = (state: stateType = initialState , action: any) => {
+let appReducer = (state: stateType = initialState , action: any): stateType => {
     switch (action.type) {
         case SUCCESS_INITIALIZING:
             return {

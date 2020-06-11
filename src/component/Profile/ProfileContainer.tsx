@@ -1,24 +1,36 @@
 import React from 'react';
 import Profile from './Profile';
 import { connect } from 'react-redux';
-import {setPofileInfo, getProfileThunk, getUserStatusThunk, 
+import { getProfileThunk, getUserStatusThunk, 
     updateUserStatusThunk, savePhoto, saveProfileInfo} from '../../redux/profileReducer';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { withAuthRedirect } from '../../hoc/witAuthRedirect';
+import { profileInfoType, photosType } from '../../types/types';
+import { stateType } from '../../redux/redux-store';
 
-interface MyProps {
-    setPofileInfo: any
-    profile: any
+type mapStateToPropsType = {
+    profile: profileInfoType | null,
+    autorizedUserId: number | null,
+    status: string
+}
+
+type OwnProps = {
     match: any
-    getProfileThunk: any
-    isAuth: any
-    getUserStatusThunk: any
-    status: any
-    updateUserStatusThunk: any
-    autorizedUserId: any
-    savePhoto: any
-    saveProfileInfo: any
+}
+
+type mapDispatchToPropsType = {
+    getProfileThunk: (userId: number) => void,
+    getUserStatusThunk: (userId: number) => void,
+    updateUserStatusThunk: (status: string) => void,
+    savePhoto: (photo: photosType) => void,
+    saveProfileInfo: (profile: profileInfoType) => void
+}
+
+type MyProps = mapStateToPropsType & mapDispatchToPropsType & OwnProps;
+
+type OwnStateType = {
+
 }
 
 class ProfileClass extends React.Component<MyProps> {
@@ -33,7 +45,7 @@ class ProfileClass extends React.Component<MyProps> {
     componentDidMount() {
         this.updateProfile();
     }
-    componentDidUpdate(prevProps: MyProps, prevState: any, snapshot: any) {
+    componentDidUpdate(prevProps: MyProps, prevState: OwnStateType) {
         if(this.props.match.params.userId !== prevProps.match.params.userId) {
             this.updateProfile();
         }
@@ -43,12 +55,13 @@ class ProfileClass extends React.Component<MyProps> {
     render() {
         return <Profile {...this.props} profileInfo={this.props.profile}
              status={this.props.status} updateUserStatusThunk={this.props.updateUserStatusThunk}
-            isOwner={!this.props.match.params.userId} savePhoto={this.props.savePhoto} saveProfileInfo={this.props.saveProfileInfo}/>
+            isOwner={!this.props.match.params.userId} savePhoto={this.props.savePhoto} 
+            saveProfileInfo={this.props.saveProfileInfo}/>
     }
 }
 
 
-let mapStateToProps = (state: any) => {
+let mapStateToProps = (state: stateType): mapStateToPropsType => {
     return {
         profile: state.profilePage.profileInfo,
         status: state.profilePage.status,
@@ -57,7 +70,8 @@ let mapStateToProps = (state: any) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {setPofileInfo, getProfileThunk, getUserStatusThunk, updateUserStatusThunk, savePhoto, saveProfileInfo}),
+    connect<mapStateToPropsType, mapDispatchToPropsType, OwnProps, stateType>
+    (mapStateToProps, {getProfileThunk, getUserStatusThunk, updateUserStatusThunk, savePhoto, saveProfileInfo}),
     withRouter,
     withAuthRedirect
 )(ProfileClass) as React.ComponentType<any>;

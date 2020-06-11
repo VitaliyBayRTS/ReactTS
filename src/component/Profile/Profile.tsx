@@ -1,14 +1,15 @@
 import React, { FunctionComponent } from 'react';
 import MyProfile from './MyProfile/Profile';
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import { profileInfoType, photosType } from '../../types/types';
 
 interface PropsInterface {
-    profileInfo: any
-    status: any
-    updateUserStatusThunk: any
-    isOwner: any
-    savePhoto: any
-    saveProfileInfo: any
+    profileInfo: profileInfoType | null,
+    status: string,
+    isOwner: boolean,
+    updateUserStatusThunk: (status: string) => void,
+    savePhoto: (photo: photosType) => void,
+    saveProfileInfo: (profile: profileInfoType) => void
 }
 
 const Profile: FunctionComponent<PropsInterface> = (props) => {

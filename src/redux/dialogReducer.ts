@@ -1,3 +1,4 @@
+import { DialogItemDataType, DialogMessageDataType } from './../types/types';
 const ADD_MESSAGE: string = 'ADD-MESSAGE';
 
 type ACaddMessageActionType = {
@@ -7,15 +8,6 @@ type ACaddMessageActionType = {
 
 export const addMessageActionCreator = (messageBody: string): ACaddMessageActionType => ({ type: ADD_MESSAGE, messageBody });
 
-type DialogItemDataType = {
-    id: number,
-    name: string
-}
-
-type DialogMessageDataType = {
-    id: number,
-    text: string
-}
 
 type stateType = typeof initialState;
 
@@ -35,7 +27,7 @@ let initialState = {
     ] as Array<DialogMessageDataType>
 }
 
-let dialogReducer = (state: stateType = initialState, action: any): any => {
+let dialogReducer = (state: stateType = initialState, action: any): stateType => {
     switch (action.type) {
         case ADD_MESSAGE:
             return {

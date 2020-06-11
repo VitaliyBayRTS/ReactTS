@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 // import s from './MyProfile.module.scss';
 
-interface PropsInterface {
+type PropsType = {
     status: string
-    updateUserStatusThunk: any
+    updateUserStatusThunk: (status: string) => void,
+    isOwner: boolean
 }
 
-let ProfileStatusWithHook: FunctionComponent<PropsInterface> = (props) => {
+let ProfileStatusWithHook: FunctionComponent<PropsType> = (props) => {
     
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.status);
@@ -16,7 +17,9 @@ let ProfileStatusWithHook: FunctionComponent<PropsInterface> = (props) => {
     }, [props.status]);
 
     let activeEditMode = () => {
-        setEditMode(true)
+        if(props.isOwner) {
+            setEditMode(true)
+        }
     }
 
     let deactiveEditMode = () => {

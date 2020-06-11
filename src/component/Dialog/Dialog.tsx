@@ -5,11 +5,11 @@ import DialogMessage from './DialogMessages/DialogMessage';
 import { Field, reduxForm } from 'redux-form';
 import { required, maxLength } from '../../utilities/validator/validator';
 import { Textarea } from '../../utilities/ReduxForm/Form';
+import { dialogDataType } from '../../types/types';
 
-interface PropsInterface {
-    sendMessage: any
-    dialogData: any
-    isAuth: any
+type PropsInterface = {
+    sendMessage: (value: string) => void
+    dialogData: dialogDataType
 }
 
 const Dialog: FunctionComponent<PropsInterface> = (props) => {

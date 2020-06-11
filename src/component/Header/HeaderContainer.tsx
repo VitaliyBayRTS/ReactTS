@@ -2,13 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Header from './Header';
 import { logout } from './../../redux/authMeReducer';
+import { stateType } from '../../redux/redux-store';
 
-interface MyProps {
-    isAuth: any
-    login: any
-    logout: any
-    profileImage: any
+type mapStateToPropsType = {
+    isAuth: boolean
+    login: string | null
+    profileImage: string | null
 }
+
+type mapDipatchToPropsType = {
+    logout: () => void
+}
+
+type OwnProps = {
+
+}
+
+type MyProps = mapStateToPropsType & mapDipatchToPropsType & OwnProps
 
 class HeaderContainer extends React.Component<MyProps>{
 
@@ -18,7 +28,7 @@ class HeaderContainer extends React.Component<MyProps>{
     
 }
 
-let mapStateToProps = (state: any) => {
+let mapStateToProps = (state: stateType): mapStateToPropsType => {
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.login,
@@ -26,4 +36,5 @@ let mapStateToProps = (state: any) => {
     }
 }
 
-export default connect(mapStateToProps, { logout})(HeaderContainer);
+export default connect<mapStateToPropsType, mapDipatchToPropsType, OwnProps, stateType>
+(mapStateToProps, { logout})(HeaderContainer);

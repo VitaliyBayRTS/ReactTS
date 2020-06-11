@@ -1,5 +1,6 @@
 import { unfollowFollowChanging } from './../utilities/objectHelpers/objectHelper';
 import { usersAPI } from "../dal/dal";
+import { usersType } from '../types/types';
 
 const FOLLOW: string = "FOLLOW";
 const UNFOLLOW: string = "UNFOLLOW";
@@ -9,15 +10,44 @@ const SET_USERS_COUNT: string = "SET_USERS_COUNT";
 const SET_FETCHING: string = "SET_FETCHING";
 const DISABLE_USERS: string = "DISABLE_USERS";
 
-export const follow = (userId: number) => ({ type: FOLLOW, userId });
-export const unfollow = (userId: number) => ({ type: UNFOLLOW, userId });
-export const setUsers = (users: any) => ({ type: SET_USERS, users });
-export const setCurrentPage = (page: any) => ({ type: SET_CURRENT_PAGE, page });
-export const setUsersCount = (count: any) => ({ type: SET_USERS_COUNT, count });
-export const setFetching = (value: any) => ({ type: SET_FETCHING, value });
-export const setDisableUsers = (isDisable: any, usersId: any) => ({ type: DISABLE_USERS, isDisable, usersId });
+type followType = {
+    type: typeof FOLLOW,
+    userId: number 
+}
+export const follow = (userId: number): followType => ({ type: FOLLOW, userId });
+type unfollowType = {
+    type: typeof UNFOLLOW,
+    userId: number 
+}
+export const unfollow = (userId: number): unfollowType => ({ type: UNFOLLOW, userId });
+type setUsersType = {
+    type: typeof SET_USERS,
+    users: usersType 
+}
+export const setUsers = (users: usersType): setUsersType => ({ type: SET_USERS, users });
+type setCurrentPageType = {
+    type: typeof SET_CURRENT_PAGE,
+    page: number 
+}
+export const setCurrentPage = (page: number): setCurrentPageType => ({ type: SET_CURRENT_PAGE, page });
+type setUsersCountType = {
+    type: typeof SET_USERS_COUNT,
+    count: number 
+}
+export const setUsersCount = (count: number): setUsersCountType => ({ type: SET_USERS_COUNT, count });
+type setFetchingType = {
+    type: typeof SET_FETCHING,
+    value: boolean 
+}
+export const setFetching = (value: boolean): setFetchingType => ({ type: SET_FETCHING, value });
+type setDisableUsersType = {
+    type: typeof DISABLE_USERS,
+    isDisable: boolean,
+    usersId: number
+}
+export const setDisableUsers = (isDisable: boolean, usersId: number): setDisableUsersType => ({ type: DISABLE_USERS, isDisable, usersId });
 
-export const getUsersThunk = (currentPage: any, pageSize: any) => async (dispatch: any) => {
+export const getUsersThunk = (currentPage: number, pageSize: number) => async (dispatch: any) => {
     dispatch(setFetching(true));
     const data = await usersAPI.getUsers(currentPage, pageSize);
     if (data.error === null) {
@@ -28,7 +58,7 @@ export const getUsersThunk = (currentPage: any, pageSize: any) => async (dispatc
     }
 }
 
-const followUnfollowFlow = async (dispatch: any, usersId: any, dal: any, actionCreator: any) => {
+const followUnfollowFlow = async (dispatch: any, usersId: number, dal: any, actionCreator: any) => {
     dispatch(setDisableUsers(true, usersId));
     const data = await dal(usersId);
     if (data.error == null) {
@@ -37,24 +67,27 @@ const followUnfollowFlow = async (dispatch: any, usersId: any, dal: any, actionC
     }
 }
 
-export const unfollowThunk = (userId: any) => (dispatch: any) => {
+export const unfollowThunk = (userId: number) => (dispatch: any) => {
     followUnfollowFlow(dispatch, userId, usersAPI.unfollow, unfollow);
 }
-export const followThunk = (userId: any) => async (dispatch: any) => {
+export const followThunk = (userId: number) => async (dispatch: any) => {
     followUnfollowFlow(dispatch, userId, usersAPI.follow, follow);
 }
 
+
 let initialState = {
-    users: [],
+    users: [] as Array<usersType>,
     usersCount: 0,
     pageSize: 5,
     currentPage: 1,
     isFetching: true,
-    disableUsers: []
+    disableUsers: [] as Array<number>
 }
 
+type stateType = typeof initialState;
 
-let usersReducer = (state: any = initialState, action: any) => {
+
+let usersReducer = (state: stateType = initialState, action: any): stateType => {
     switch (action.type) {
         case FOLLOW:
             return {

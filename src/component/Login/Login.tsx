@@ -6,12 +6,12 @@ import { Redirect } from 'react-router-dom';
 import s from './../../utilities/ReduxForm/ReduxForm.module.scss';
 
 interface IFormProps {
-    handleSubmit: any
-    error: any
+    handleSubmit: () => void
+    error: string
 }
 
 interface IDispatchProps {
-    captchaUrl: any
+    captchaUrl: string
 }
 
 let LoginForm = (props: IDispatchProps & InjectedFormProps<IFormProps, IDispatchProps>) => {
@@ -27,7 +27,7 @@ let LoginForm = (props: IDispatchProps & InjectedFormProps<IFormProps, IDispatch
                 <Field type="checkbox" name="rememberMe" component={Input}/> Remember me
             </div>
             {props.error && <div className={s.commonError}> {props.error} </div>}
-            {props.captchaUrl && <img src={props.captchaUrl} />}
+            {props.captchaUrl && <img src={props.captchaUrl} alt="asd"/>}
             { props.captchaUrl && <div>
                 <Field placeholder="Input symbols of image" name="captcha" component={Input} validate={[required]}/>
             </div> }
@@ -42,9 +42,9 @@ let LoginForm = (props: IDispatchProps & InjectedFormProps<IFormProps, IDispatch
 let LoginReduxForm = reduxForm<IFormProps, IDispatchProps>({form: 'login'})(LoginForm);
 
 interface propsInter {
-    login: any
-    isAuth: any
-    captchaUrl: any
+    login: (email: string, password: string, rememberMe: boolean, captcha: string) => void,
+    isAuth: boolean
+    captchaUrl: string
 }
 
 let Login: FunctionComponent<propsInter> = (props) => {

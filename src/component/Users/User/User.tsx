@@ -2,16 +2,16 @@ import React, { FunctionComponent } from "react";
 import s from "../Users.module.scss";
 import userIcon from "../../../assets/img/user.jpeg";
 import { NavLink } from "react-router-dom";
+import { usersType } from "../../../types/types";
 
-interface PropsInterface {
-    userData: any
-    disableUsers: any
-    unfollowThunk: any
-    followThunk: any
-    key: any
+interface PropsType {
+    userData: usersType,
+    disableUsers: Array<number>,
+    unfollowThunk: (userId: number) => void,
+    followThunk: (userId: number) => void
 }
 
-let User: FunctionComponent<PropsInterface> = (props) => {
+let User: FunctionComponent<PropsType> = (props) => {
 
     return <div>
         <div>

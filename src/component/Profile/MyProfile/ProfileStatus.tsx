@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 // import s from './MyProfile.module.scss';
 
-interface PropsInterface {
+type PropsType = {
     status: string
-    updateUserStatusThunk: any
+    updateUserStatusThunk: (status: string) => void,
+    isOwner: boolean
 }
 
-class ProfileStatus extends React.Component<PropsInterface> {
+type LocalStateType = {
+    isEditMode: boolean,
+    status: string
+}
+
+class ProfileStatus extends React.Component<PropsType> {
     
-    state = {
+    state: LocalStateType = {
         isEditMode: false,
         status: this.props.status
     }
 
-    componentDidUpdate(prevProps: any, prevState: any) {
+    componentDidUpdate(prevProps: PropsType, prevState: LocalStateType) {
         if(this.props.status !== prevProps.status) {
             this.setState({
                 status: this.props.status
@@ -34,7 +40,7 @@ class ProfileStatus extends React.Component<PropsInterface> {
         this.props.updateUserStatusThunk(this.state.status)
     }
 
-    onChangeStatus = (e: any) => {
+    onChangeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({
             status: e.currentTarget.value
         })

@@ -4,20 +4,15 @@ import { NavLink } from 'react-router-dom';
 import cub from '../../assets/img/cub.png';
 
 interface myProps {
-    isAuth: any
-    login: any
-    logout: any
-    profileImage: any
+    isAuth: boolean
+    login: string | null
+    logout: () => void
+    profileImage: string | null
 }
 
 
 
 const Header: FunctionComponent<myProps> = (props) => {
-    
-    // if(props.profile == null) {
-    //     return null
-    // }
-
     return (
         <div className={s.header}>
              <header>

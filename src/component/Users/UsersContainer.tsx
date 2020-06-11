@@ -4,18 +4,25 @@ import { getUsersThunk, unfollowThunk, followThunk } from "../../redux/usersRedu
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
 import { getUsersSelector, getUserCount, getPageSize, getCurrentPage, getIsFetching, getDisableUsers } from "../../redux/usersSelectors";
+import { usersType } from "../../types/types";
+import { stateType } from "../../redux/redux-store";
 
-interface MyProps {
-    users: any
-    usersCount: any
-    pageSize: any
-    currentPage: any
-    isFetching: any
-    disableUsers: any
-    getUsersThunk: any
-    unfollowThunk: any
-    followThunk: any
+type mapStateToPropsType = {
+    users: Array<usersType>,
+    usersCount: number,
+    pageSize: number,
+    currentPage: number,
+    isFetching: boolean,
+    disableUsers: Array<number>
 }
+
+type mapDispatchToPropsType = {
+    getUsersThunk: (currentPage: number, pageSize: number) => void,
+    unfollowThunk: (userId: number) => void,
+    followThunk: (userId: number) => void
+}
+
+type MyProps = mapStateToPropsType & mapDispatchToPropsType
 
 class UsersClassComponent extends React.Component<MyProps>{
 
@@ -24,7 +31,7 @@ class UsersClassComponent extends React.Component<MyProps>{
         this.props.getUsersThunk(currentPage, pageSize);
     }
 
-    onPaginationClick = (p: any) => {
+    onPaginationClick = (p: number) => {
         this.props.getUsersThunk(p, this.props.pageSize);
     }
 
@@ -42,7 +49,7 @@ class UsersClassComponent extends React.Component<MyProps>{
     }
 }
 
-let mapStateToProps = (state: any) => {
+let mapStateToProps = (state: stateType): mapStateToPropsType => {
     return {
         users: getUsersSelector(state),
         usersCount: getUserCount(state),
@@ -53,6 +60,7 @@ let mapStateToProps = (state: any) => {
     }
 }
 
-let UserContainer = connect(mapStateToProps, {getUsersThunk, unfollowThunk, followThunk})(UsersClassComponent);
+let UserContainer = connect<mapStateToPropsType, mapDispatchToPropsType, {}, stateType>
+(mapStateToProps, {getUsersThunk, unfollowThunk, followThunk})(UsersClassComponent);
 
 export default UserContainer;

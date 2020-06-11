@@ -1,16 +1,17 @@
 import React, { FunctionComponent } from "react";
 import Paginator from "../../utilities/Paginator/Paginator";
 import User from "./User/User";
+import { usersType } from "../../types/types";
 
-interface PropsInterface {
-    users: any
-    usersCount: any
-    pageSize: any
-    currentPage: any
-    onPaginationClick: any
-    disableUsers: any
-    unfollowThunk: any
-    followThunk: any
+type PropsInterface = {
+    users: Array<usersType>,
+    usersCount: number,
+    pageSize: number,
+    currentPage: number,
+    onPaginationClick: (p: number) => void,
+    disableUsers: Array<number>,
+    unfollowThunk: (userId: number) => void,
+    followThunk: (userId: number) => void
 }
 
 let Users: FunctionComponent<PropsInterface> = (props) => {

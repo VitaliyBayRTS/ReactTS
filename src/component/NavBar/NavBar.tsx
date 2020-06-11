@@ -3,7 +3,6 @@ import s from './NavBar.module.scss';
 import { NavLink } from 'react-router-dom';
 
 interface PropsInterface {
-    store: any
 }
 
 

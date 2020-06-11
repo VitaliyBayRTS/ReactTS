@@ -34,7 +34,7 @@ export const setUserData = (userId: string  | null, login: string  | null, email
  ({type: SET_USER_DATA, payload: {userId, login, email, isAuth} })
 export const getCaptchaUrlSuccess = (captchaUrl: string): ACgetCaptchaUrlSuccessType =>
  ({type: GET_CAPTCHA_URL, payload: {captchaUrl} })
- export const setUserFoto = (userImage: string) => ({type: GET_USER_IMAGE, userImage})
+ export const setUserFoto = (userImage: string): ACSetUserFoto => ({type: GET_USER_IMAGE, userImage})
 
 export const meThunk = () => async (dispatch: any) => {
     const response = await authApi.me();
@@ -85,7 +85,7 @@ let initialState = {
     userImage: null as string | null
 }
 
-let authMeReducer = (state: stateType = initialState , action: any) => {
+let authMeReducer = (state: stateType = initialState , action: any): stateType => {
     switch (action.type) {
         case SET_USER_DATA:
         case GET_CAPTCHA_URL:

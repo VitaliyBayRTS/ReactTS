@@ -4,10 +4,11 @@ import Post from './Posts/Post';
 import { Field, reduxForm } from 'redux-form';
 import { required, maxLength } from '../../../utilities/validator/validator';
 import { Textarea } from '../../../utilities/ReduxForm/Form';
+import { postDataType } from '../../../types/types';
 
 interface PropsInterface {
-    postData: any
-    addPost: any
+    postData: Array<postDataType>,
+    addPost: (value: string) => void
 }
 
 const MyPosts: FunctionComponent<PropsInterface> = (props) => {
