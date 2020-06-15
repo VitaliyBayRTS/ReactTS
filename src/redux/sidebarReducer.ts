@@ -1,18 +1,12 @@
-const ADD_NOTE: string = "ADD-NOTE";
-const CHANGE_NOTE_MESSAGE: string = "CHANGE-NOTE-MESSAGE";
+import { InferActionsTypes } from "./redux-store";
 
-type addNoteActionCreatorType = {
-    type: typeof ADD_NOTE
-}
-export const addNoteActionCreator = (): addNoteActionCreatorType => ({ type: ADD_NOTE });
+type ActionsType = InferActionsTypes<typeof sidebarActions>
 
-type newNoteTextActionCreatorType = {
-    type: typeof CHANGE_NOTE_MESSAGE,
-    text: string | undefined
+
+export const sidebarActions = {
+    addNoteActionCreator: () => ({type: 'ADD_NOTE' } as const),
+    newNoteTextActionCreator: (text: string) => ({type: 'CHANGE_NOTE_MESSAGE', text: text} as const)
 }
-export const newNoteTextActionCreator = (text: string | undefined): newNoteTextActionCreatorType => (
-    { type: CHANGE_NOTE_MESSAGE, text: text }
-)
 
 type sidebarDataType = {
     id: number,
@@ -28,9 +22,9 @@ let initialState = {
 
 type stateType = typeof initialState;
 
-let sidebarReducer = (state: stateType = initialState, action: any): stateType => {
+let sidebarReducer = (state = initialState, action: ActionsType): stateType => {
     switch (action.type) {
-        case ADD_NOTE:
+        case 'ADD_NOTE':
             return {...state,
             sidebarData: [...state.sidebarData, {
                 id: state.sidebarData.length + 1,
@@ -38,7 +32,7 @@ let sidebarReducer = (state: stateType = initialState, action: any): stateType =
             }],
             newNoteText: ""
         }
-        case CHANGE_NOTE_MESSAGE:
+        case 'CHANGE_NOTE_MESSAGE':
             return {...state,
                 newNoteText: action.text
         }

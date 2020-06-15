@@ -1,52 +1,34 @@
-import { authApi, securityApi } from './../dal/dal';
+import { InferActionsTypes } from './redux-store';
+import { authApi, securityApi, resultCodeEnum } from './../dal/dal';
 import { stopSubmit } from 'redux-form';
-const SET_USER_DATA = 'SET_USER_DATA';
-const GET_CAPTCHA_URL = 'GET_CAPTCHA_URL';
-const GET_USER_IMAGE = 'GET_USER_IMAGE';
+import { ThunkAction } from 'redux-thunk';
 
-type payloadUserDataType = {
-    userId: string | null,
-    login: string | null,
-    email: string | null,
-    isAuth: boolean
+type ActionsTypes = InferActionsTypes<typeof authMeActions>;
+
+export const authMeActions = {
+    setUserData: (userId: number | null, login: string  | null, email: string  | null, isAuth: boolean) =>
+    ({type: 'SET_USER_DATA', payload: {userId, login, email, isAuth} } as const),
+    getCaptchaUrlSuccess: (captchaUrl: string) =>
+    ({type: 'GET_CAPTCHA_URL', payload: {captchaUrl} } as const),
+    setUserFoto: (userImage: string) => ({type: 'GET_USER_IMAGE', userImage} as const)
 }
 
-type ACsetUserDataType = {
-    type: typeof SET_USER_DATA,
-    payload: payloadUserDataType
-}
 
-type payloadCaptchaUrlType = {
-    captchaUrl: string
-}
+type DispatchType = ThunkAction<Promise<void | resultCodeEnum | null>, stateType, unknown, ActionsTypes>
 
-type ACgetCaptchaUrlSuccessType = {
-    type: typeof GET_CAPTCHA_URL,
-    payload: payloadCaptchaUrlType
-}
-
-type ACSetUserFoto = {
-    type: typeof GET_USER_IMAGE,
-    userImage: string
-}
-
-export const setUserData = (userId: string  | null, login: string  | null, email: string  | null, isAuth: boolean): ACsetUserDataType =>
- ({type: SET_USER_DATA, payload: {userId, login, email, isAuth} })
-export const getCaptchaUrlSuccess = (captchaUrl: string): ACgetCaptchaUrlSuccessType =>
- ({type: GET_CAPTCHA_URL, payload: {captchaUrl} })
- export const setUserFoto = (userImage: string): ACSetUserFoto => ({type: GET_USER_IMAGE, userImage})
-
-export const meThunk = () => async (dispatch: any) => {
-    const response = await authApi.me();
-    if(response.data.resultCode === 0) {
-        let {id, login, email} = response.data.data;
-        dispatch(setUserData(id, login, email, true));
+export const meThunk = (): DispatchType => async (dispatch) => {
+    const responsData = await authApi.me();
+    if(responsData.resultCode === resultCodeEnum.Success) {
+        let {id, login, email} = responsData.data;
+        dispatch(authMeActions.setUserData(id, login, email, true));
     } else {
-        return response.data.resultCode;
+        return responsData.resultCode;
     }
 }
 
-export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
+export const login = 
+(email: string, password: string, rememberMe: boolean, captcha: string): DispatchType => 
+async (dispatch) => {
     const response = await authApi.login(email, password, rememberMe, captcha);
     if(response.data.resultCode === 0) {
         dispatch(meThunk());
@@ -55,23 +37,24 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
             dispatch(getCaptchaUrl());
         }
         let errorMessage = response.data.messages
+        //@ts-ignore
         dispatch(stopSubmit('login', {_error: errorMessage}));
     }
 }
 
-export const logout = () => async (dispatch: any) => {
+export const logout = (): DispatchType => async (dispatch: any) => {
     const response = await authApi.logout();
     if(response.data.resultCode === 0) {
-        dispatch(setUserData(null, null, null, false));
+        dispatch(authMeActions.setUserData(null, null, null, false));
     } else {
         console.log(response.data.messages);
     }
 }
 
-export const getCaptchaUrl = () => async (dispatch: any) => {
+export const getCaptchaUrl = (): DispatchType => async (dispatch: any) => {
     const response = await securityApi.getCaptcha();
-    const url: string = response.data.url;
-    dispatch(getCaptchaUrlSuccess(url))
+    const url = response.data.url;
+    dispatch(authMeActions.getCaptchaUrlSuccess(url))
 }
 
 type stateType = typeof initialState;
@@ -85,15 +68,15 @@ let initialState = {
     userImage: null as string | null
 }
 
-let authMeReducer = (state: stateType = initialState , action: any): stateType => {
+let authMeReducer = (state: stateType = initialState , action: ActionsTypes): stateType => {
     switch (action.type) {
-        case SET_USER_DATA:
-        case GET_CAPTCHA_URL:
+        case 'SET_USER_DATA':
+        case 'GET_CAPTCHA_URL':
             return {
                 ...state,
                 ...action.payload
             }
-        case GET_USER_IMAGE:
+        case 'GET_USER_IMAGE':
             return {...state, userImage: action.userImage}
         default:
            return state

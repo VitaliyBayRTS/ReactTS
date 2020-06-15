@@ -3,10 +3,10 @@ import s from "./Paginator.module.scss";
 import cn from 'classnames';
 
 interface PropsInterface {
-    itemCount: any
-    pageSize: any
-    currentPage: any
-    onPaginationClick: any
+    itemCount: number,
+    pageSize: number,
+    currentPage: number,
+    onPaginationClick: (p: number) => void
 }
 
 let Paginator: FunctionComponent<PropsInterface> = (props) => {

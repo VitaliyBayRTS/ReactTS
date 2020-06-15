@@ -1,37 +1,38 @@
-import { meThunk, setUserFoto } from './authMeReducer';
+import { meThunk, authMeActions } from './authMeReducer';
 import { getProfileThunk } from './profileReducer';
-const SUCCESS_INITIALIZING: string = 'SUCCESS_INITIALIZING';
+import { stateType, InferActionsTypes } from './redux-store';
 
-type ACSuccessInitializingType = {
-    type: typeof SUCCESS_INITIALIZING
+type ActionsType = InferActionsTypes<typeof appActions>
+
+export const appActions = {
+    InitializedSuccess: () => ({type: 'SUCCESS_INITIALIZING' } as const)
 }
 
-export const InitializedSuccess = (): ACSuccessInitializingType => ({type: SUCCESS_INITIALIZING })
 
-export const initializeApp = () => (dispatch: any, getState: any) => {
-    dispatch(meThunk())
-    .then( (result: any) => {
-        if(result !== 1) {
-            let userId: number = getState().auth.userId;
-            dispatch(getProfileThunk(userId)).then((result: any) => {
-                dispatch(setUserFoto(result.data.photos.small))
-            })
-        }   
-        dispatch(InitializedSuccess())     
-    })
+type getStateType = () => stateType
+// type dispatchType = Dispatch<ActioType>
+
+export const initializeApp = () => async (dispatch: any, getState: getStateType) => {
+    let result = await dispatch(meThunk())
+    if(result !== 1) {
+        let userId = getState().auth.userId;
+        let profile = await dispatch(getProfileThunk(userId))
+        dispatch(authMeActions.setUserFoto(profile.data.photos.small))
+    }   
+    dispatch(appActions.InitializedSuccess()) 
 }
 
-type stateType = {
+type InicialStateType = {
     initialazed: boolean
 }
 
-let initialState: stateType = {
+let initialState: InicialStateType = {
     initialazed: false
 }
 
-let appReducer = (state: stateType = initialState , action: any): stateType => {
+let appReducer = (state = initialState , action: ActionsType): InicialStateType => {
     switch (action.type) {
-        case SUCCESS_INITIALIZING:
+        case 'SUCCESS_INITIALIZING':
             return {
                 ...state,
                 initialazed: true

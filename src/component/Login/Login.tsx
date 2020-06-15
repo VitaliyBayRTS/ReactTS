@@ -5,12 +5,16 @@ import { required } from '../../utilities/validator/validator';
 import { Redirect } from 'react-router-dom';
 import s from './../../utilities/ReduxForm/ReduxForm.module.scss';
 
-interface IFormProps {
-    handleSubmit: () => void
-    error: string
+type IFormProps = {
+    handleSubmit: () => void,
+    error: string,
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string
 }
 
-interface IDispatchProps {
+type IDispatchProps = {
     captchaUrl: string
 }
 
@@ -41,14 +45,23 @@ let LoginForm = (props: IDispatchProps & InjectedFormProps<IFormProps, IDispatch
 
 let LoginReduxForm = reduxForm<IFormProps, IDispatchProps>({form: 'login'})(LoginForm);
 
-interface propsInter {
+type propsInter = {
     login: (email: string, password: string, rememberMe: boolean, captcha: string) => void,
     isAuth: boolean
     captchaUrl: string
 }
 
+type formDataType = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string
+}
+
+
+
 let Login: FunctionComponent<propsInter> = (props) => {
-    let onSubmit = (formData: any) => {
+    let onSubmit = (formData: formDataType) => {
         props.login(formData.email, formData.password, formData.rememberMe, formData.captcha);
     }
 
