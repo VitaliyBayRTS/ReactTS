@@ -1,0 +1,1 @@
+{"version":3,"sources":["Dialog.module.scss"],"names":[],"mappings":"AAAA,yBACI,YAAa,CACb,sBAAuB,CACvB,6BAA8B","file":"4.b69765b4.chunk.css","sourcesContent":[".dialogBox {\r\n    display: grid;\r\n    grid-template-rows: 1fr;\r\n    grid-template-columns: 5fr 7fr;\r\n}"]}
