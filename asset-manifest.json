@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/ReactTs/static/css/main.cfbc6815.chunk.css",
-    "main.js": "/ReactTs/static/js/main.c80d39c3.chunk.js",
-    "main.js.map": "/ReactTs/static/js/main.c80d39c3.chunk.js.map",
-    "runtime-main.js": "/ReactTs/static/js/runtime-main.40a6091f.js",
-    "runtime-main.js.map": "/ReactTs/static/js/runtime-main.40a6091f.js.map",
-    "static/js/2.4ad5fdf4.chunk.js": "/ReactTs/static/js/2.4ad5fdf4.chunk.js",
-    "static/js/2.4ad5fdf4.chunk.js.map": "/ReactTs/static/js/2.4ad5fdf4.chunk.js.map",
+    "main.css": "/ReactTs/static/css/main.dd617219.chunk.css",
+    "main.js": "/ReactTs/static/js/main.79cf0469.chunk.js",
+    "main.js.map": "/ReactTs/static/js/main.79cf0469.chunk.js.map",
+    "runtime-main.js": "/ReactTs/static/js/runtime-main.fff752ce.js",
+    "runtime-main.js.map": "/ReactTs/static/js/runtime-main.fff752ce.js.map",
+    "static/js/2.5df17a4e.chunk.js": "/ReactTs/static/js/2.5df17a4e.chunk.js",
+    "static/js/2.5df17a4e.chunk.js.map": "/ReactTs/static/js/2.5df17a4e.chunk.js.map",
     "static/css/3.f09d5345.chunk.css": "/ReactTs/static/css/3.f09d5345.chunk.css",
-    "static/js/3.21a055a9.chunk.js": "/ReactTs/static/js/3.21a055a9.chunk.js",
-    "static/js/3.21a055a9.chunk.js.map": "/ReactTs/static/js/3.21a055a9.chunk.js.map",
+    "static/js/3.95e4f64a.chunk.js": "/ReactTs/static/js/3.95e4f64a.chunk.js",
+    "static/js/3.95e4f64a.chunk.js.map": "/ReactTs/static/js/3.95e4f64a.chunk.js.map",
     "static/css/4.b69765b4.chunk.css": "/ReactTs/static/css/4.b69765b4.chunk.css",
-    "static/js/4.27555de5.chunk.js": "/ReactTs/static/js/4.27555de5.chunk.js",
-    "static/js/4.27555de5.chunk.js.map": "/ReactTs/static/js/4.27555de5.chunk.js.map",
+    "static/js/4.778a7e3c.chunk.js": "/ReactTs/static/js/4.778a7e3c.chunk.js",
+    "static/js/4.778a7e3c.chunk.js.map": "/ReactTs/static/js/4.778a7e3c.chunk.js.map",
     "index.html": "/ReactTs/index.html",
-    "precache-manifest.6f57af224a6d13789e2949ae749cc322.js": "/ReactTs/precache-manifest.6f57af224a6d13789e2949ae749cc322.js",
+    "precache-manifest.a8419f9db3e472a3e746a66c6abd7765.js": "/ReactTs/precache-manifest.a8419f9db3e472a3e746a66c6abd7765.js",
     "service-worker.js": "/ReactTs/service-worker.js",
     "static/css/3.f09d5345.chunk.css.map": "/ReactTs/static/css/3.f09d5345.chunk.css.map",
     "static/css/4.b69765b4.chunk.css.map": "/ReactTs/static/css/4.b69765b4.chunk.css.map",
-    "static/css/main.cfbc6815.chunk.css.map": "/ReactTs/static/css/main.cfbc6815.chunk.css.map",
-    "static/js/2.4ad5fdf4.chunk.js.LICENSE.txt": "/ReactTs/static/js/2.4ad5fdf4.chunk.js.LICENSE.txt",
+    "static/css/main.dd617219.chunk.css.map": "/ReactTs/static/css/main.dd617219.chunk.css.map",
+    "static/js/2.5df17a4e.chunk.js.LICENSE.txt": "/ReactTs/static/js/2.5df17a4e.chunk.js.LICENSE.txt",
     "static/media/facebook.svg": "/ReactTs/static/media/facebook.c385bbca.svg",
     "static/media/github.svg": "/ReactTs/static/media/github.8f8edc5f.svg",
     "static/media/instagram.svg": "/ReactTs/static/media/instagram.59b0c8cb.svg",
@@ -32,9 +32,9 @@
     "static/media/youtube.svg": "/ReactTs/static/media/youtube.2c2eb485.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.40a6091f.js",
-    "static/js/2.4ad5fdf4.chunk.js",
-    "static/css/main.cfbc6815.chunk.css",
-    "static/js/main.c80d39c3.chunk.js"
+    "static/js/runtime-main.fff752ce.js",
+    "static/js/2.5df17a4e.chunk.js",
+    "static/css/main.dd617219.chunk.css",
+    "static/js/main.79cf0469.chunk.js"
   ]
 }
