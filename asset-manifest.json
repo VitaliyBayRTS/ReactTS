@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/ReactTs/static/css/main.df699881.chunk.css",
+    "main.css": "/ReactTs/static/css/main.2ab932e2.chunk.css",
     "main.js": "/ReactTs/static/js/main.5d7b8a20.chunk.js",
     "main.js.map": "/ReactTs/static/js/main.5d7b8a20.chunk.js.map",
     "runtime-main.js": "/ReactTs/static/js/runtime-main.16e31e32.js",
@@ -14,11 +14,11 @@
     "static/js/4.3da73d9f.chunk.js": "/ReactTs/static/js/4.3da73d9f.chunk.js",
     "static/js/4.3da73d9f.chunk.js.map": "/ReactTs/static/js/4.3da73d9f.chunk.js.map",
     "index.html": "/ReactTs/index.html",
-    "precache-manifest.59423a4eb7698cf5463d8ffaf651df64.js": "/ReactTs/precache-manifest.59423a4eb7698cf5463d8ffaf651df64.js",
+    "precache-manifest.5c9a4a23a76bca631ea054b7fcc1471e.js": "/ReactTs/precache-manifest.5c9a4a23a76bca631ea054b7fcc1471e.js",
     "service-worker.js": "/ReactTs/service-worker.js",
     "static/css/3.2c8cd872.chunk.css.map": "/ReactTs/static/css/3.2c8cd872.chunk.css.map",
     "static/css/4.f143121a.chunk.css.map": "/ReactTs/static/css/4.f143121a.chunk.css.map",
-    "static/css/main.df699881.chunk.css.map": "/ReactTs/static/css/main.df699881.chunk.css.map",
+    "static/css/main.2ab932e2.chunk.css.map": "/ReactTs/static/css/main.2ab932e2.chunk.css.map",
     "static/js/2.feb3b766.chunk.js.LICENSE.txt": "/ReactTs/static/js/2.feb3b766.chunk.js.LICENSE.txt",
     "static/media/facebook.svg": "/ReactTs/static/media/facebook.c385bbca.svg",
     "static/media/github.svg": "/ReactTs/static/media/github.8f8edc5f.svg",
@@ -34,7 +34,7 @@
   "entrypoints": [
     "static/js/runtime-main.16e31e32.js",
     "static/js/2.feb3b766.chunk.js",
-    "static/css/main.df699881.chunk.css",
+    "static/css/main.2ab932e2.chunk.css",
     "static/js/main.5d7b8a20.chunk.js"
   ]
 }
