@@ -3,6 +3,9 @@ body {
     background-color: #E3E3E3;
 }
 .container {
+    .menu {
+        display: none;
+    }
     .header {
         position: absolute;
         background: #099DBD;
@@ -21,3 +24,35 @@ body {
         grid-column: 2/3;
     }
 }
+
+@media (max-width: 800px) {
+    .container {
+        .app_wrapper { 
+            grid: 7vh auto / 0px auto;
+        }
+        .menu {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            display: block;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+        }
+        .navBar {
+            display: none;
+            position: absolute;
+            top: 7vh;
+            left: 0;
+            background-color: #E3E3E3;
+        }
+        .mobileNavBar {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            text-align: center;
+            z-index: 10;
+        }
+    }
+}
+

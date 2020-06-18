@@ -2,6 +2,8 @@ import { createSelector } from 'reselect';
 import { stateType } from './redux-store';
 import { usersType } from '../types/types';
 
+// At this moment i dont need reselector, so i just tested how its work
+
 const getUsers = (state: stateType) => {
     return state.usersPage.users
 }
@@ -24,4 +26,7 @@ export const getIsFetching = (state: stateType) => {
 }
 export const getDisableUsers = (state: stateType) => {
     return state.usersPage.disableUsers
+}
+export const isAuth = (state: stateType) => {
+    return state.auth.isAuth
 }

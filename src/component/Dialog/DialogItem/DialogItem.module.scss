@@ -1,0 +1,14 @@
+.dialogItemBox {
+    margin: 7px 0;
+    img {
+        width: 20px;
+        height: 20px;
+    }
+    .user {
+        color: #000;
+        text-decoration: none;
+    }
+    .selected {
+        color: rgba(9, 157, 189, 1);
+    }
+}

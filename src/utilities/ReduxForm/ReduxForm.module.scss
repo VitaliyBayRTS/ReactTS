@@ -2,6 +2,7 @@
     border: 2px solid red;
 }
 .errorText, .commonError {
+    display: inline-block;
     font-size: 19px;
     color: red;
 }

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import s from './App.module.scss';
 import NavBar from './component/NavBar/NavBar';
-import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
+import { Route, HashRouter, Switch, Redirect } from 'react-router-dom';
 import UserContainer from './component/Users/UsersContainer';
 import HeaderContainer from './component/Header/HeaderContainer';
 import LoginContainer from './component/Login/LoginContainer';
@@ -10,6 +10,7 @@ import { connect, Provider } from 'react-redux';
 import Preloader from './component/common/Preloader/Preloader';
 import store, { stateType } from './redux/redux-store';
 import { withSuspense } from './hoc/withSuspense';
+import cn from 'classnames';
 
 const ProfileContainer = React.lazy(() => import('./component/Profile/ProfileContainer'));
 const DialogContainer = React.lazy(() => import('./component/Dialog/DialogContainer'));
@@ -24,23 +25,39 @@ type mapDispatchToPropsType = {
 
 type PropsType = mapStateToPropsType & mapDispatchToPropsType
 
+type LocalStateType = {
+  isOpenMenu: boolean
+}
+
 class App extends React.Component<PropsType> {
 
   componentDidMount() {
     this.props.initializeApp();
   }
 
+  state: LocalStateType = {
+    isOpenMenu: false
+}
 
   render() {
     if(!this.props.appInitialized) return <Preloader />
 
     return (
       <div className={s.container}>
+        <button className={s.menu} onClick={() => this.setState({
+          isOpenMenu: !this.state.isOpenMenu
+        })}>☰</button>
         <div className={s.header}></div>
-        <BrowserRouter>
+        <HashRouter> {// Instead of hashRouter i was used BrowserRouter, but BrowserRouter is working incorrect with 
+                      // GitHub pages
+                    }
           <div className={s.app_wrapper}>
             <HeaderContainer />
-            <NavBar/>
+            <div className={cn(s.navBar, {
+              [s.mobileNavBar]: this.state.isOpenMenu 
+            })}>
+              <NavBar/>
+            </div>
             <div className={s.content}>
               <Switch>
                 <Route exact path="/" render={() => <Redirect to="/profile" />}/>
@@ -52,7 +69,7 @@ class App extends React.Component<PropsType> {
               </Switch>
             </div>
           </div>
-      </BrowserRouter>
+      </HashRouter>
       </div>
     );
   }

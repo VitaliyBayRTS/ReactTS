@@ -6,7 +6,7 @@ import { getProfileThunk, getUserStatusThunk,
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { withAuthRedirect } from '../../hoc/witAuthRedirect';
-import { profileInfoType, photosType } from '../../types/types';
+import { profileInfoType } from '../../types/types';
 import { stateType } from '../../redux/redux-store';
 
 type mapStateToPropsType = {
@@ -23,7 +23,7 @@ type mapDispatchToPropsType = {
     getProfileThunk: (userId: number) => void,
     getUserStatusThunk: (userId: number) => void,
     updateUserStatusThunk: (status: string) => void,
-    savePhoto: (photo: photosType) => void,
+    savePhoto: (photo: File) => void,
     saveProfileInfo: (profile: profileInfoType) => void
 }
 

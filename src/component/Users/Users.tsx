@@ -8,6 +8,7 @@ type PropsInterface = {
     usersCount: number,
     pageSize: number,
     currentPage: number,
+    isAuth: boolean,
     onPaginationClick: (p: number) => void,
     disableUsers: Array<number>,
     unfollowThunk: (userId: number) => void,
@@ -23,6 +24,7 @@ let Users: FunctionComponent<PropsInterface> = (props) => {
                     onPaginationClick={props.onPaginationClick}
                     />
         {props.users.map((u: any) => <User disableUsers={props.disableUsers}
+                        isAuth={props.isAuth}
                         unfollowThunk={props.unfollowThunk}
                         followThunk={props.followThunk}
                         key={u.id}

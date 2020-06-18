@@ -13,14 +13,14 @@ import vk from '../../../assets/img/socialNetworkIcon/vk.svg';
 import website from '../../../assets/img/socialNetworkIcon/website.svg';
 import youtube from '../../../assets/img/socialNetworkIcon/youtube.svg';
 import cn from 'classnames';
-import { profileInfoType, photosType } from '../../../types/types';
+import { profileInfoType } from '../../../types/types';
 
 interface PropsInterface {
     profileInfo: profileInfoType | null,
     status: string,
     isOwner: boolean,
     updateUserStatusThunk: (status: string) => void,
-    savePhoto: (photo: photosType) => void,
+    savePhoto: (photo: File) => void,
     saveProfileInfo: (profile: profileInfoType) => any
 }
 

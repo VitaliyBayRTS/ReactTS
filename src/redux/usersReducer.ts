@@ -23,14 +23,14 @@ type DispatchType = Dispatch<ActionsTypes>
 
 export const getUsersThunk = 
 (currentPage: number, pageSize: number): ThunkType => async (dispatch) => {
-    dispatch(userActions.setFetching(true))
+    dispatch(userActions.setFetching(true)) // Enable Preloader component
     const data = await usersAPI.getUsers(currentPage, pageSize);
     if (data.error === null) {
         dispatch(userActions.setUsers(data.items))
         dispatch(userActions.setUsersCount(data.totalCount))
-        dispatch(userActions.setFetching(false))
         dispatch(userActions.setCurrentPage(currentPage))
-    }
+        dispatch(userActions.setFetching(false)) // Disable Preloader component
+    } 
 }
 
 const followUnfollowFlow = async (dispatch: DispatchType, 
@@ -59,7 +59,7 @@ let initialState = {
     pageSize: 5,
     currentPage: 1,
     isFetching: true,
-    disableUsers: [] as Array<number>
+    disableUsers: [] as Array<number> // Aray of users id
 }
 
 type stateType = typeof initialState;

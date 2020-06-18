@@ -3,7 +3,7 @@ import Users from "./Users";
 import { getUsersThunk, unfollowThunk, followThunk } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
-import { getUsersSelector, getUserCount, getPageSize, getCurrentPage, getIsFetching, getDisableUsers } from "../../redux/usersSelectors";
+import { getUsersSelector, getUserCount, getPageSize, getCurrentPage, getIsFetching, getDisableUsers, isAuth } from "../../redux/usersSelectors";
 import { usersType } from "../../types/types";
 import { stateType } from "../../redux/redux-store";
 
@@ -13,7 +13,8 @@ type mapStateToPropsType = {
     pageSize: number,
     currentPage: number,
     isFetching: boolean,
-    disableUsers: Array<number>
+    disableUsers: Array<number>,
+    isAuth: boolean
 }
 
 type mapDispatchToPropsType = {
@@ -41,6 +42,7 @@ class UsersClassComponent extends React.Component<MyProps>{
                 usersCount={this.props.usersCount}
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
+                isAuth = {this.props.isAuth}
                 onPaginationClick={this.onPaginationClick}
                 disableUsers={this.props.disableUsers}
                 unfollowThunk={this.props.unfollowThunk}
@@ -56,7 +58,8 @@ let mapStateToProps = (state: stateType): mapStateToPropsType => {
         pageSize: getPageSize(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        disableUsers: getDisableUsers(state)
+        disableUsers: getDisableUsers(state),
+        isAuth: isAuth(state)
     }
 }
 

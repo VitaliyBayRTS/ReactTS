@@ -20,9 +20,9 @@ let initialState = {
         { id: 6, name: "User 6" }
     ] as Array<DialogItemDataType>,
     DialogMessageData: [
-        { id: 1, text: "PrePrePre" },
-        { id: 2, text: "PrePrePrePrePrePrePrePrePre" },
-        { id: 3, text: "OMG, i am in YouTube" }
+        { id: 1, text: "First message" },
+        { id: 2, text: "This part of social network is just somulation" },
+        { id: 3, text: "This is static message" }
     ] as Array<DialogMessageDataType>
 }
 
@@ -33,7 +33,7 @@ let dialogReducer = (state = initialState, action: ActionsType): stateType => {
                 ...state,
                 DialogMessageData: [...state.DialogMessageData, {
                     id: state.DialogMessageData.length + 1,
-                    text: action.messageBody               }],
+                    text: action.messageBody }],
             }
         default:
             return state;

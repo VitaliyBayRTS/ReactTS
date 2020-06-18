@@ -17,15 +17,15 @@ const NavBar: FunctionComponent<PropsInterface> = (props) => {
                     <li>
                         <NavLink to="/dialog" className={s.item} activeClassName={s.active}>Messages</NavLink>
                     </li>
-                    <li>
+                    {/* <li>
                         <NavLink to="/news" className={s.item} activeClassName={s.active}>News</NavLink>
-                    </li>
+                    </li> */}
                     <li>
                         <NavLink to="/users" className={s.item} activeClassName={s.active}>Users</NavLink>
                     </li>
-                    <li>
+                    {/* <li>
                         <NavLink to="/music" className={s.item} activeClassName={s.active}>Music</NavLink>
-                    </li>
+                    </li> */}
                     <li>
                         <NavLink to="/setting" className={s.item} activeClassName={s.active}>Settings</NavLink>
                     </li>

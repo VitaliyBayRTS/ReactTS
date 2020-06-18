@@ -36,7 +36,7 @@ let maxLength20 = maxLength(20);
 const AddPost: FunctionComponent<any> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
-            <Field component={Textarea} name="postBody" validate={[required, maxLength20]}/>
+            <Field component={Textarea} name="postBody" validate={[maxLength20]}/>
             <button>Add Post</button>
         </form>
     )

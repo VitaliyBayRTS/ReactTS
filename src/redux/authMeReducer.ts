@@ -1,7 +1,8 @@
-import { InferActionsTypes } from './redux-store';
+import { InferActionsTypes, stateType } from './redux-store';
 import { authApi, securityApi, resultCodeEnum } from './../dal/dal';
 import { stopSubmit } from 'redux-form';
 import { ThunkAction } from 'redux-thunk';
+import { initializeApp } from './appReducer';
 
 type ActionsTypes = InferActionsTypes<typeof authMeActions>;
 
@@ -31,7 +32,8 @@ export const login =
 async (dispatch) => {
     const response = await authApi.login(email, password, rememberMe, captcha);
     if(response.data.resultCode === 0) {
-        dispatch(meThunk());
+        // dispatch(meThunk());
+        dispatch(initializeApp());
     } else {
         if(response.data.resultCode === 10) {
             dispatch(getCaptchaUrl());
@@ -57,7 +59,7 @@ export const getCaptchaUrl = (): DispatchType => async (dispatch: any) => {
     dispatch(authMeActions.getCaptchaUrlSuccess(url))
 }
 
-type stateType = typeof initialState;
+type authStateType = typeof initialState;
 
 let initialState = {
     userId: null as number | null,
@@ -68,7 +70,7 @@ let initialState = {
     userImage: null as string | null
 }
 
-let authMeReducer = (state: stateType = initialState , action: ActionsTypes): stateType => {
+let authMeReducer = (state = initialState , action: ActionsTypes): authStateType => {
     switch (action.type) {
         case 'SET_USER_DATA':
         case 'GET_CAPTCHA_URL':

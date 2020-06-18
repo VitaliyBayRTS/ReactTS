@@ -1,7 +1,10 @@
+import { authMeActions } from './authMeReducer';
+import { ThunkAction } from 'redux-thunk';
 import { profileInfoType, photosType, postDataType } from './../types/types';
-import { usersAPI, profileAPI } from "../dal/dal";
+import { usersAPI, profileAPI, resultCodeEnum } from "../dal/dal";
 import { stopSubmit } from "redux-form";
-import { InferActionsTypes } from './redux-store';
+import { InferActionsTypes, stateType } from './redux-store';
+import { AxiosResponse } from 'axios';
 
 type ActionsTypes = InferActionsTypes<typeof profileActions>
 
@@ -10,52 +13,57 @@ export const profileActions = {
     setPofileInfo: (profile: profileInfoType) => ({ type: 'SET_PROFILE_INFO', profile } as const),
     setUserStatus: (status: string) => ({ type: 'SET_STATUS', status } as const),
     deletePost: (postId: number) => ({ type: 'DELETE_POST', postId } as const),
-    savePhotoSuccess: (photoFile: photosType) => ({ type: 'SAVE_PHOTO', photoFile } as const)
+    savePhotoSuccess: (photoFile: photosType) => ({ type: 'SAVE_PHOTO', photoFile } as const),
+    setUserFoto: authMeActions.setUserFoto
 }
 
+type DispatchType = ThunkAction<Promise<void | resultCodeEnum | null | AxiosResponse<profileInfoType>>, stateType, unknown, ActionsTypes >
 
-export const getProfileThunk = (userId: number | null) => async (dispatch: any) => {
-    const response = await usersAPI.getProfile(userId)
+export const getProfileThunk = (userId: number | null): DispatchType => async (dispatch) => {
+    const response = await usersAPI.getProfile(userId);
     dispatch(profileActions.setPofileInfo(response.data));
     return response;
 }
 
-export const getUserStatusThunk = (userId: number) => async (dispatch: any) => {
+export const getUserStatusThunk = (userId: number): DispatchType => async (dispatch) => {
     const response = await profileAPI.getUserStatus(userId)
     dispatch(profileActions.setUserStatus(response.data))
     
 }
 
-export const updateUserStatusThunk = (status: string) => async (dispatch: any) => {
+export const updateUserStatusThunk = (status: string): DispatchType => async (dispatch) => {
     const response = await profileAPI.updateUserStatus(status)
-    if(response.data.resultCode === 0) {
+    if(response.data.resultCode === resultCodeEnum.Success) {
         dispatch(profileActions.setUserStatus(status))
     }
 }
 
-export const savePhoto = (photo: photosType) => async (dispatch: any) => {
+export const savePhoto = (photo: File): DispatchType => async (dispatch) => { //Update image of user account
     const responseData = await profileAPI.savePhoto(photo)
-    if(responseData.resultCode === 0) {
+    if(responseData.resultCode === resultCodeEnum.Success) {
         dispatch(profileActions.savePhotoSuccess(responseData.data.photos))
+        dispatch(authMeActions.setUserFoto(responseData.data.photos.small))
     }
 }
 
 
-export const saveProfileInfo = (profile: profileInfoType) => async (dispatch: any, getState: any) => {
-    const userId: number = getState().auth.userId;
+export const saveProfileInfo = (profile: profileInfoType): DispatchType => async (dispatch, getState) => {
+    const userId = getState().auth.userId;
     const response = await profileAPI.saveProfileInfo(profile)
-    if(response.data.resultCode === 0) {
+    if(response.data.resultCode === resultCodeEnum.Success) {
         dispatch(getProfileThunk(userId))
     } else {
         const errorMessage = response.data.messages[0];
-        let field: number = errorMessage.indexOf("Contacts->") + 10;
-        if(field === 9) {
+        let field = errorMessage.indexOf("Contacts->") + 10;
+        if(field === 9) { // Handle general error
+            //@ts-ignore
             dispatch(stopSubmit("profileData", {_error: errorMessage}));
-        } else {
-            let socialNetworkName: string = errorMessage.substr(field, errorMessage.length - field - 1).toLowerCase();
+        } else { // Handle error of some social network link
+            let socialNetworkName = errorMessage.substr(field, errorMessage.length - field - 1).toLowerCase();
             let objError: Record<string, any> = {};
             objError[socialNetworkName] = errorMessage;
             const object = {"contacts": objError}
+            //@ts-ignore
             dispatch(stopSubmit("profileData", object));
         }
         return Promise.reject(errorMessage)
@@ -63,7 +71,7 @@ export const saveProfileInfo = (profile: profileInfoType) => async (dispatch: an
 }
 
 
-type stateType = typeof initialState;
+type profileStateType = typeof initialState;
 
 let initialState = {
     PostData: [
@@ -75,7 +83,7 @@ let initialState = {
     status: ""
 }
 
-let profileReducer = (state = initialState, action: ActionsTypes): stateType => {
+let profileReducer = (state = initialState, action: ActionsTypes): profileStateType => {
     switch (action.type) {
         case 'ADD_POST': {
             let newPost: postDataType = {

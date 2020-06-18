@@ -8,16 +8,15 @@ export const appActions = {
     InitializedSuccess: () => ({type: 'SUCCESS_INITIALIZING' } as const)
 }
 
-
 type getStateType = () => stateType
 // type dispatchType = Dispatch<ActioType>
 
 export const initializeApp = () => async (dispatch: any, getState: getStateType) => {
     let result = await dispatch(meThunk())
-    if(result !== 1) {
+    if(result !== 1) { // If user is authorized
         let userId = getState().auth.userId;
         let profile = await dispatch(getProfileThunk(userId))
-        dispatch(authMeActions.setUserFoto(profile.data.photos.small))
+        dispatch(authMeActions.setUserFoto(profile.data.photos.small)) //Add foto of ayhorized user to store
     }   
     dispatch(appActions.InitializedSuccess()) 
 }

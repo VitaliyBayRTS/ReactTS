@@ -1,7 +1,13 @@
-.avatar {
-    width: 100px;
-    height: 100px;
-}
-span {
-    display: block;
+.userBox {
+    margin: 0 0 15px 0;
+    .avatar {
+        width: 100px;
+        height: 100px;
+    }
+    span {
+        display: block;
+    }
+    button {
+        display: block;
+    }
 }

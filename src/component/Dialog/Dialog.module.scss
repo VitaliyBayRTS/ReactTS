@@ -3,3 +3,11 @@
     grid-template-rows: 1fr;
     grid-template-columns: 5fr 7fr;
 }
+
+
+@media (max-width: 510px) {
+    .dialogBox {
+        grid-template-rows: auto;
+        grid-template-columns: auto;
+    }
+}

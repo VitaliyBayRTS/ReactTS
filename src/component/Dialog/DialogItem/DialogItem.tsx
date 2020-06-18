@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from 'react';
+import s from './DialogItem.module.scss';
 import { NavLink } from 'react-router-dom';
+import userFoto from '../../../assets/img/user.jpeg';
 
 interface PropsDialogItem {
     id: number
@@ -10,8 +12,9 @@ const DialogItem: FunctionComponent<PropsDialogItem> = (props) => {
 
     let path = '/dialog/' + props.id;
 
-    return <div>
-         <NavLink to={path} >{props.name}</NavLink> 
+    return <div className={s.dialogItemBox}>
+        <img src={userFoto} alt=""/>
+        <NavLink to={path} className={s.user} activeClassName={s.selected}>{props.name}</NavLink> 
     </div>
 }
 
