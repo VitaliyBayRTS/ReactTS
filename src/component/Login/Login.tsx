@@ -31,7 +31,7 @@ let LoginForm = (props: IDispatchProps & InjectedFormProps<IFormProps, IDispatch
                 <Field type="checkbox" name="rememberMe" component={Input}/> Remember me
             </div>
             {props.error && <div className={s.commonError}> {props.error} </div>}
-            {props.captchaUrl && <img src={props.captchaUrl} alt="asd"/>}
+            {props.captchaUrl && <img src={props.captchaUrl} className={s.captchaImg} alt="captch"/>}
             { props.captchaUrl && <div>
                 <Field placeholder="Input symbols of image" name="captcha" component={Input} validate={[required]}/>
             </div> }

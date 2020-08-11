@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Posts/Post';
 import { Field, reduxForm } from 'redux-form';
-import { required, maxLength } from '../../../utilities/validator/validator';
+import { maxLength } from '../../../utilities/validator/validator';
 import { Textarea } from '../../../utilities/ReduxForm/Form';
 import { postDataType } from '../../../types/types';
 

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import s from './Dialog.module.scss';
 import DialogItem from './DialogItem/DialogItem';
 import DialogMessage from './DialogMessages/DialogMessage';
-import { Field, reduxForm, destroy} from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { maxLength } from '../../utilities/validator/validator';
 import { Textarea } from '../../utilities/ReduxForm/Form';
 import { dialogDataType } from '../../types/types';

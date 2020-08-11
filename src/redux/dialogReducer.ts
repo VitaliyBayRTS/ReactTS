@@ -21,7 +21,7 @@ let initialState = {
     ] as Array<DialogItemDataType>,
     DialogMessageData: [
         { id: 1, text: "First message" },
-        { id: 2, text: "This part of social network is just somulation" },
+        { id: 2, text: "This part of social network is just simulation" },
         { id: 3, text: "This is static message" }
     ] as Array<DialogMessageDataType>
 }

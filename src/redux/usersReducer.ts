@@ -18,7 +18,7 @@ export const userActions = {
 }
 
 
-type ThunkType = ThunkAction<Promise<void>, stateType, unknown, ActionsTypes>
+type ThunkType = ThunkAction<Promise<void>, userStateType, unknown, ActionsTypes>
 type DispatchType = Dispatch<ActionsTypes>
 
 export const getUsersThunk = 
@@ -62,10 +62,10 @@ let initialState = {
     disableUsers: [] as Array<number> // Aray of users id
 }
 
-type stateType = typeof initialState;
+export type userStateType = typeof initialState;
 
 
-let usersReducer = (state = initialState, action: ActionsTypes): stateType => {
+let usersReducer = (state = initialState, action: ActionsTypes): userStateType => {
     switch (action.type) {
         case 'FOLLOW':
             return {
@@ -101,7 +101,7 @@ let usersReducer = (state = initialState, action: ActionsTypes): stateType => {
             return {
                 ...state,
                 disableUsers: action.isDisable ? [...state.disableUsers, action.usersId]
-                    : state.disableUsers.filter((id: any) => id !== action.usersId)
+                    : state.disableUsers.filter((id: number) => id !== action.usersId)
             }
         default:
             return state;
