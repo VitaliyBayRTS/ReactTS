@@ -71,7 +71,7 @@ export const saveProfileInfo = (profile: profileInfoType): DispatchType => async
 }
 
 
-type profileStateType = typeof initialState;
+export type profileStateType = typeof initialState;
 
 let initialState = {
     PostData: [
