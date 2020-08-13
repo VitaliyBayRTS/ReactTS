@@ -20,9 +20,9 @@ let initialState = {
     newNoteText: ""
 }
 
-type stateType = typeof initialState;
+export type sidebarStateType = typeof initialState;
 
-let sidebarReducer = (state = initialState, action: ActionsType): stateType => {
+let sidebarReducer = (state = initialState, action: ActionsType): sidebarStateType => {
     switch (action.type) {
         case 'ADD_NOTE':
             return {...state,

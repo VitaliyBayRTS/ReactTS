@@ -8,7 +8,7 @@ export const DialogActions = {
 }
 
 
-type stateType = typeof initialState;
+export type dialogStateType = typeof initialState;
 
 let initialState = {
     DialogItemData: [
@@ -26,7 +26,7 @@ let initialState = {
     ] as Array<DialogMessageDataType>
 }
 
-let dialogReducer = (state = initialState, action: ActionsType): stateType => {
+let dialogReducer = (state = initialState, action: ActionsType): dialogStateType => {
     switch (action.type) {
         case 'ADD_MESSAGE':
             return {

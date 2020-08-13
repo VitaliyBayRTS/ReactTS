@@ -59,7 +59,7 @@ export const getCaptchaUrl = (): DispatchType => async (dispatch: any) => {
     dispatch(authMeActions.getCaptchaUrlSuccess(url))
 }
 
-type authStateType = typeof initialState;
+export type authStateType = typeof initialState;
 
 let initialState = {
     userId: null as number | null,

@@ -21,15 +21,15 @@ export const initializeApp = () => async (dispatch: any, getState: getStateType)
     dispatch(appActions.InitializedSuccess()) 
 }
 
-type InicialStateType = {
+ export type inicialStateType = {
     initialazed: boolean
 }
 
-let initialState: InicialStateType = {
+let initialState: inicialStateType = {
     initialazed: false
 }
 
-let appReducer = (state = initialState , action: ActionsType): InicialStateType => {
+let appReducer = (state = initialState , action: ActionsType): inicialStateType => {
     switch (action.type) {
         case 'SUCCESS_INITIALIZING':
             return {

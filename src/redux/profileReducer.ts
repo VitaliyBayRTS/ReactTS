@@ -14,7 +14,7 @@ export const profileActions = {
     setUserStatus: (status: string) => ({ type: 'SET_STATUS', status } as const),
     deletePost: (postId: number) => ({ type: 'DELETE_POST', postId } as const),
     savePhotoSuccess: (photoFile: photosType) => ({ type: 'SAVE_PHOTO', photoFile } as const),
-    setUserFoto: authMeActions.setUserFoto
+    setUserFoto: (userImage: string) => (authMeActions.setUserFoto(userImage))
 }
 
 type DispatchType = ThunkAction<Promise<void | resultCodeEnum | null | AxiosResponse<profileInfoType>>, stateType, unknown, ActionsTypes >
