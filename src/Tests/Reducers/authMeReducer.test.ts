@@ -1,4 +1,4 @@
-import authMeReducer, { authStateType, authMeActions } from './authMeReducer';
+import authMeReducer, { authStateType, authMeActions } from './../../redux/authMeReducer';
 
 let state: authStateType
 

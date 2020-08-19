@@ -1,5 +1,5 @@
 import { unfollowFollowChanging } from './../utilities/objectHelpers/objectHelper';
-import { usersAPI } from "../dal/dal";
+import { usersAPI, unfollowFollowTypes } from "../dal/dal";
 import { usersType } from '../types/types';
 import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'redux';
@@ -21,7 +21,7 @@ export const userActions = {
 type ThunkType = ThunkAction<Promise<void>, userStateType, unknown, ActionsTypes>
 type DispatchType = Dispatch<ActionsTypes>
 
-export const getUsersThunk = 
+export const getUsersThunk =
 (currentPage: number, pageSize: number): ThunkType => async (dispatch) => {
     dispatch(userActions.setFetching(true)) // Enable Preloader component
     const data = await usersAPI.getUsers(currentPage, pageSize);
@@ -35,21 +35,21 @@ export const getUsersThunk =
 
 const followUnfollowFlow = async (dispatch: DispatchType, 
                                 userId: number, 
-                                dal: any, 
+                                userAPI: (userId: number) => Promise<unfollowFollowTypes>, 
                                 actionCreator: (userId: number) => ActionsTypes) => {
     dispatch(userActions.setDisableUsers(true, userId))
-    const data = await dal(userId)
-    if (data.error == null) {
+    const data = await userAPI(userId)
+    if (data.resultCode == 0) {
         dispatch(userActions.setDisableUsers(false, userId))
         dispatch(actionCreator(userId))
     }
-}
+} 
 
 export const unfollowThunk = (userId: number): ThunkType => async (dispatch) => {
-    followUnfollowFlow(dispatch, userId, usersAPI.unfollow, userActions.unfollow);
+    await followUnfollowFlow(dispatch, userId, usersAPI.unfollow, userActions.unfollow);
 }
 export const followThunk = (userId: number): ThunkType => async (dispatch) => {
-    followUnfollowFlow(dispatch, userId, usersAPI.follow, userActions.follow);
+    await followUnfollowFlow(dispatch, userId, usersAPI.follow, userActions.follow);
 }
 
 

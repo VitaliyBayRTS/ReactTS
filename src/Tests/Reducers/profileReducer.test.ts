@@ -1,5 +1,5 @@
-import { profileInfoType, photosType } from './../types/types';
-import profileReducer, { profileActions, profileStateType } from './profileReducer';
+import { profileInfoType, photosType } from './../../types/types';
+import profileReducer, { profileActions, profileStateType } from './../../redux/profileReducer';
 
 let state : profileStateType;
 let UserInfo: profileInfoType;

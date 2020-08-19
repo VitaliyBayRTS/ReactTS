@@ -9,7 +9,7 @@ import {reducer as formReducer} from 'redux-form';
 import appReducer from './appReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-let reducers = combineReducers({    
+export let reducers = combineReducers({    
     dialogPage: dialogReducer,
     profilePage: profileReducer,
     sidebarPage: sidebarReducer,

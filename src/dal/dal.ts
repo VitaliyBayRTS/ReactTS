@@ -10,13 +10,13 @@ let instance = Axios.create({
     },
 })
 
-type getUsersType = {
+export type getUsersType = {
     items: Array<usersType>,
     totalCount: number,
     error: string | null
 }
 
-type unfollowFollowTypes = {
+export type unfollowFollowTypes = {
     data?: {},
     resultCode: resultCodeEnum | null,
     messages: Array<string>
@@ -45,13 +45,13 @@ export const usersAPI = {
 }
 
 
-type updateUserStatusType = {
+export type updateUserStatusType = {
     data?: {},
     resultCode: resultCodeEnum | null,
     messages: Array<string>
 }
 
-type savePhotoType = {
+export type savePhotoType = {
     data: {
         photos: photosType
     },
@@ -59,7 +59,7 @@ type savePhotoType = {
     messages: Array<string>
 }
 
-type saveProfileInfoType = {
+export type saveProfileInfoType = {
     data?: {},
     resultCode: resultCodeEnum | null,
     messages: Array<string>
@@ -67,13 +67,15 @@ type saveProfileInfoType = {
 
 export const profileAPI = {
     getProfile(userId: number | null) {
-        return instance.get<profileInfoType>(`profile/${userId}`)
+        return instance.get<profileInfoType>(`profile/${userId}`).then(response => {
+            return response.data
+        })
     },
     getUserStatus(userId: number) {
-        return instance.get<string>(`profile/status/${userId}`)
+        return instance.get<string>(`profile/status/${userId}`).then(response => {return response.data})
     },
     updateUserStatus(status: string) {
-        return instance.put<updateUserStatusType>(`profile/status`, {status: status})
+        return instance.put<updateUserStatusType>(`profile/status`, {status: status}).then(response => response.data)
     },
     savePhoto(photo: File) {
         const formData = new FormData();
@@ -85,7 +87,7 @@ export const profileAPI = {
         }).then(res => res.data)
     },
     saveProfileInfo(profile: profileInfoType) {
-        return instance.put<saveProfileInfoType>(`profile`, profile)
+        return instance.put<saveProfileInfoType>(`profile`, profile).then(response => response.data)
     }
 }
 
@@ -95,10 +97,10 @@ export enum resultCodeEnum {
 }
 
 export enum resultCodeForCaptcha {
-    CaptchaREquired = 10
+    CaptchaRequired = 10
 }
 
-type meType = {
+export type meType = {
     data: {
         id: number,
         email: string,
@@ -108,11 +110,11 @@ type meType = {
     messages: Array<string>
 }
 
-type loginType = {
+export type loginType = {
     data: {
         userId?: number
     },
-    resultCode: resultCodeEnum | resultCodeForCaptcha | null,
+    resultCode: resultCodeEnum | resultCodeForCaptcha,
     messages: Array<string>
 }
 
@@ -121,19 +123,19 @@ export const authApi = {
         return instance.get<meType>(`auth/me`).then(result => result.data);
     },
     login(email: string, password: string, rememberMe = false, captcha: string | null = null) {
-        return instance.post<loginType>(`auth/login`, {email, password, rememberMe, captcha})
+        return instance.post<loginType>(`auth/login`, {email, password, rememberMe, captcha}).then( response => response.data)
     },
     logout() {
-        return instance.delete<loginType>(`auth/login`)
+        return instance.delete<loginType>(`auth/login`).then(response => response.data)
     }
 }
 
-type getCaptchaType = {
+export type getCaptchaType = {
     url: string
 }
 
-export const securityApi = {
+export const securityAPI = {
     getCaptcha() {
-        return instance.get<getCaptchaType>(`security/get-captcha-url`);
+        return instance.get<getCaptchaType>(`security/get-captcha-url`).then(response => response.data)
     }
 }

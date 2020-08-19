@@ -16,7 +16,7 @@ export const initializeApp = () => async (dispatch: any, getState: getStateType)
     if(result !== 1) { // If user is authorized
         let userId = getState().auth.userId;
         let profile = await dispatch(getProfileThunk(userId))
-        dispatch(authMeActions.setUserFoto(profile.data.photos.small)) //Add foto of ayhorized user to store
+        dispatch(authMeActions.setUserFoto(profile.photos.small)) //Add foto of aythorized user to store
     }   
     dispatch(appActions.InitializedSuccess()) 
 }

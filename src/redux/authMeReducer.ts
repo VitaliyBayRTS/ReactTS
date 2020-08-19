@@ -1,5 +1,5 @@
 import { InferActionsTypes, stateType } from './redux-store';
-import { authApi, securityApi, resultCodeEnum } from './../dal/dal';
+import { authApi, securityAPI, resultCodeEnum, resultCodeForCaptcha } from './../dal/dal';
 import { stopSubmit } from 'redux-form';
 import { ThunkAction } from 'redux-thunk';
 import { initializeApp } from './appReducer';
@@ -30,32 +30,32 @@ export const meThunk = (): DispatchType => async (dispatch) => {
 export const login = 
 (email: string, password: string, rememberMe: boolean, captcha: string): DispatchType => 
 async (dispatch) => {
-    const response = await authApi.login(email, password, rememberMe, captcha);
-    if(response.data.resultCode === 0) {
+    const data = await authApi.login(email, password, rememberMe, captcha);
+    if(data.resultCode === resultCodeEnum.Success) {
         // dispatch(meThunk());
         dispatch(initializeApp());
     } else {
-        if(response.data.resultCode === 10) {
+        if(data.resultCode === resultCodeForCaptcha.CaptchaRequired) {
             dispatch(getCaptchaUrl());
         }
-        let errorMessage = response.data.messages
+        let errorMessage = data.messages
         //@ts-ignore
         dispatch(stopSubmit('login', {_error: errorMessage}));
     }
 }
 
 export const logout = (): DispatchType => async (dispatch: any) => {
-    const response = await authApi.logout();
-    if(response.data.resultCode === 0) {
+    const data = await authApi.logout();
+    if(data.resultCode === resultCodeEnum.Success) {
         dispatch(authMeActions.setUserData(null, null, null, false));
     } else {
-        console.log(response.data.messages);
+        console.log(data.messages);
     }
 }
 
 export const getCaptchaUrl = (): DispatchType => async (dispatch: any) => {
-    const response = await securityApi.getCaptcha();
-    const url = response.data.url;
+    const data = await securityAPI.getCaptcha();
+    const url = data.url;
     dispatch(authMeActions.getCaptchaUrlSuccess(url))
 }
 

@@ -1,4 +1,4 @@
-import sidebarReducer, { sidebarStateType, sidebarActions } from './sidebarReducer';
+import sidebarReducer, { sidebarStateType, sidebarActions } from './../../redux/sidebarReducer';
 
 let state: sidebarStateType;
 

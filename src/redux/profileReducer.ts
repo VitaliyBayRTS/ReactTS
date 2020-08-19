@@ -17,23 +17,23 @@ export const profileActions = {
     setUserFoto: (userImage: string) => (authMeActions.setUserFoto(userImage))
 }
 
-type DispatchType = ThunkAction<Promise<void | resultCodeEnum | null | AxiosResponse<profileInfoType>>, stateType, unknown, ActionsTypes >
+type DispatchType = ThunkAction<Promise<void | resultCodeEnum | null | AxiosResponse<profileInfoType> | profileInfoType>, stateType, unknown, ActionsTypes>
 
 export const getProfileThunk = (userId: number | null): DispatchType => async (dispatch) => {
-    const response = await usersAPI.getProfile(userId);
-    dispatch(profileActions.setPofileInfo(response.data));
+    const response = await profileAPI.getProfile(userId);
+    dispatch(profileActions.setPofileInfo(response));
     return response;
 }
 
 export const getUserStatusThunk = (userId: number): DispatchType => async (dispatch) => {
-    const response = await profileAPI.getUserStatus(userId)
-    dispatch(profileActions.setUserStatus(response.data))
+    const data = await profileAPI.getUserStatus(userId)
+    dispatch(profileActions.setUserStatus(data))
     
 }
 
 export const updateUserStatusThunk = (status: string): DispatchType => async (dispatch) => {
-    const response = await profileAPI.updateUserStatus(status)
-    if(response.data.resultCode === resultCodeEnum.Success) {
+    const data = await profileAPI.updateUserStatus(status)
+    if(data.resultCode === resultCodeEnum.Success) {
         dispatch(profileActions.setUserStatus(status))
     }
 }
@@ -49,22 +49,22 @@ export const savePhoto = (photo: File): DispatchType => async (dispatch) => { //
 
 export const saveProfileInfo = (profile: profileInfoType): DispatchType => async (dispatch, getState) => {
     const userId = getState().auth.userId;
-    const response = await profileAPI.saveProfileInfo(profile)
-    if(response.data.resultCode === resultCodeEnum.Success) {
-        dispatch(getProfileThunk(userId))
+    const data = await profileAPI.saveProfileInfo(profile)
+    if(data.resultCode === resultCodeEnum.Success) {
+        getProfileThunk(userId)
     } else {
-        const errorMessage = response.data.messages[0];
-        let field = errorMessage.indexOf("Contacts->") + 10;
+        const errorMessage = data.messages[0];
+        let field = errorMessage.indexOf("Contacts->") + 10
         if(field === 9) { // Handle general error
             //@ts-ignore
-            dispatch(stopSubmit("profileData", {_error: errorMessage}));
+            dispatch(stopSubmit("profileData", {_error: errorMessage}))
         } else { // Handle error of some social network link
-            let socialNetworkName = errorMessage.substr(field, errorMessage.length - field - 1).toLowerCase();
-            let objError: Record<string, any> = {};
-            objError[socialNetworkName] = errorMessage;
+            let socialNetworkName = errorMessage.substr(field, errorMessage.length - field - 1).toLowerCase()
+            let objError: Record<string, any> = {}
+            objError[socialNetworkName] = errorMessage
             const object = {"contacts": objError}
             //@ts-ignore
-            dispatch(stopSubmit("profileData", object));
+            dispatch(stopSubmit("profileData", object))
         }
         return Promise.reject(errorMessage)
     }

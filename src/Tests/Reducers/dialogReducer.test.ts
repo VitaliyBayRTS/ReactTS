@@ -1,4 +1,4 @@
-import dialogReducer, { dialogStateType, DialogActions } from './dialogReducer';
+import dialogReducer, { dialogStateType, DialogActions } from './../../redux/dialogReducer';
 
 let state: dialogStateType;
 

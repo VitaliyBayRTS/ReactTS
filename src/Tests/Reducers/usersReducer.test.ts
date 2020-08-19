@@ -1,4 +1,4 @@
-import usersReducer, { userStateType, userActions } from './usersReducer';
+import usersReducer, { userStateType, userActions } from './../../redux/usersReducer';
 let state: userStateType;
 
 beforeEach(() => {
