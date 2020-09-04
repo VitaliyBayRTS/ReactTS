@@ -30,3 +30,6 @@ export const getDisableUsers = (state: stateType) => {
 export const isAuth = (state: stateType) => {
     return state.auth.isAuth
 }
+export const getFilter = (state: stateType) => {
+    return state.usersPage.filter
+}

@@ -1,5 +1,5 @@
 import { unfollowFollowChanging } from './../utilities/objectHelpers/objectHelper';
-import { usersAPI, unfollowFollowTypes } from "../dal/dal";
+import { usersAPI, unfollowFollowTypes, resultCodeEnum } from "../dal/dal";
 import { usersType } from '../types/types';
 import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'redux';
@@ -12,6 +12,7 @@ export const userActions = {
     unfollow: (userId: number) => ({ type: 'UNFOLLOW', userId } as const),
     setUsers: (users: Array<usersType>) => ({ type: 'SET_USERS', users } as const),
     setCurrentPage: (page: number) => ({ type: 'SET_CURRENT_PAGE', page } as const),
+    setFilter: (filter: FilterType) => ({ type: 'SET_FILTER', payload: filter } as const),
     setUsersCount: (count: number) => ({ type: 'SET_USERS_COUNT', count } as const),
     setFetching: (value: boolean) => ({ type: 'SET_FETCHING', value } as const),
     setDisableUsers: (isDisable: boolean, usersId: number) => ({ type: 'DISABLE_USERS', isDisable, usersId } as const)
@@ -22,13 +23,14 @@ type ThunkType = ThunkAction<Promise<void>, userStateType, unknown, ActionsTypes
 type DispatchType = Dispatch<ActionsTypes>
 
 export const getUsersThunk =
-(currentPage: number, pageSize: number): ThunkType => async (dispatch) => {
+(currentPage: number, pageSize: number, filter: FilterType): ThunkType => async (dispatch) => {
     dispatch(userActions.setFetching(true)) // Enable Preloader component
-    const data = await usersAPI.getUsers(currentPage, pageSize);
+    const data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend);
     if (data.error === null) {
         dispatch(userActions.setUsers(data.items))
         dispatch(userActions.setUsersCount(data.totalCount))
         dispatch(userActions.setCurrentPage(currentPage))
+        dispatch(userActions.setFilter(filter))
         dispatch(userActions.setFetching(false)) // Disable Preloader component
     } 
 }
@@ -39,7 +41,7 @@ const followUnfollowFlow = async (dispatch: DispatchType,
                                 actionCreator: (userId: number) => ActionsTypes) => {
     dispatch(userActions.setDisableUsers(true, userId))
     const data = await userAPI(userId)
-    if (data.resultCode == 0) {
+    if (data.resultCode === resultCodeEnum.Success) {
         dispatch(userActions.setDisableUsers(false, userId))
         dispatch(actionCreator(userId))
     }
@@ -59,10 +61,15 @@ let initialState = {
     pageSize: 5,
     currentPage: 1,
     isFetching: true,
-    disableUsers: [] as Array<number> // Aray of users id
+    disableUsers: [] as Array<number>, // Aray of users id
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
 }
 
 export type userStateType = typeof initialState;
+export type FilterType = typeof initialState.filter
 
 
 let usersReducer = (state = initialState, action: ActionsTypes): userStateType => {
@@ -103,6 +110,8 @@ let usersReducer = (state = initialState, action: ActionsTypes): userStateType =
                 disableUsers: action.isDisable ? [...state.disableUsers, action.usersId]
                     : state.disableUsers.filter((id: number) => id !== action.usersId)
             }
+        case 'SET_FILTER':
+            return {...state, filter: action.payload}
         default:
             return state;
     }

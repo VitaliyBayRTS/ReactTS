@@ -1,9 +1,11 @@
 import { connect } from "react-redux";
 import Users from "./Users";
-import { getUsersThunk, unfollowThunk, followThunk } from "../../redux/usersReducer";
+import { getUsersThunk, unfollowThunk, followThunk, FilterType } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../common/Preloader/Preloader";
-import { getUsersSelector, getUserCount, getPageSize, getCurrentPage, getIsFetching, getDisableUsers, isAuth } from "../../redux/usersSelectors";
+import { getUsersSelector, getUserCount, getPageSize, 
+        getCurrentPage, getIsFetching, getDisableUsers, 
+        isAuth, getFilter } from "../../redux/usersSelectors";
 import { usersType } from "../../types/types";
 import { stateType } from "../../redux/redux-store";
 
@@ -14,11 +16,12 @@ type mapStateToPropsType = {
     currentPage: number,
     isFetching: boolean,
     disableUsers: Array<number>,
-    isAuth: boolean
+    isAuth: boolean,
+    filter: FilterType
 }
 
 type mapDispatchToPropsType = {
-    getUsersThunk: (currentPage: number, pageSize: number) => void,
+    getUsersThunk: (currentPage: number, pageSize: number, filter: FilterType) => void,
     unfollowThunk: (userId: number) => void,
     followThunk: (userId: number) => void
 }
@@ -29,11 +32,15 @@ class UsersClassComponent extends React.Component<MyProps>{
 
     componentDidMount() {
         let {currentPage, pageSize} = this.props;
-        this.props.getUsersThunk(currentPage, pageSize);
+        this.props.getUsersThunk(currentPage, pageSize, this.props.filter);
     }
 
-    onPaginationClick = (p: number) => {
-        this.props.getUsersThunk(p, this.props.pageSize);
+    onPaginationClick = (PageNumber: number) => {
+        this.props.getUsersThunk(PageNumber, this.props.pageSize, this.props.filter);
+    }
+
+    onFilterApply = (filter: FilterType) => {
+        this.props.getUsersThunk(1, this.props.pageSize, filter);
     }
 
     render() {
@@ -46,7 +53,8 @@ class UsersClassComponent extends React.Component<MyProps>{
                 onPaginationClick={this.onPaginationClick}
                 disableUsers={this.props.disableUsers}
                 unfollowThunk={this.props.unfollowThunk}
-                followThunk={this.props.followThunk} />}
+                followThunk={this.props.followThunk}
+                onFilterApply={this.onFilterApply} />}
         </>
     }
 }
@@ -59,7 +67,8 @@ let mapStateToProps = (state: stateType): mapStateToPropsType => {
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         disableUsers: getDisableUsers(state),
-        isAuth: isAuth(state)
+        isAuth: isAuth(state),
+        filter: getFilter(state)
     }
 }
 

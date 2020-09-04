@@ -1,7 +1,7 @@
 import { authMeActions } from './authMeReducer';
 import { ThunkAction } from 'redux-thunk';
 import { profileInfoType, photosType, postDataType } from './../types/types';
-import { usersAPI, profileAPI, resultCodeEnum } from "../dal/dal";
+import { profileAPI, resultCodeEnum } from "../dal/dal";
 import { stopSubmit } from "redux-form";
 import { InferActionsTypes, stateType } from './redux-store';
 import { AxiosResponse } from 'axios';

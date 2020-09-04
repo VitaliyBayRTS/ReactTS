@@ -1,12 +1,13 @@
 import { usersType, profileInfoType, photosType } from './../types/types';
 import Axios from 'axios';
+import { FilterType } from '../redux/usersReducer';
 
 
 let instance = Axios.create({
     withCredentials: true,
     baseURL: "https://social-network.samuraijs.com/api/1.0/",
     headers: {
-        "API-KEY": "767f330b-ea1f-4316-94ad-051b6e7ad9dd"
+        "API-KEY": "fdd75b8c-6436-43ef-9820-ed9356461c34"
     },
 })
 
@@ -23,8 +24,9 @@ export type unfollowFollowTypes = {
 }
 
 export const usersAPI = {
-    getUsers(currentPage: number, pageSize: number) {
-        return instance.get<getUsersType>(`users?page=${currentPage}&count=${pageSize}`).then( response => {
+    getUsers(currentPage: number, pageSize: number, term: string = '', friend: null | boolean) {
+        return instance.get<getUsersType>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === null ? '' : `&friend=${friend}`))
+        .then( response => {
             return response.data;
         })
     },
