@@ -2,15 +2,15 @@ import React, { FunctionComponent } from 'react';
 import s from './App.module.scss';
 import NavBar from './component/NavBar/NavBar';
 import { Route, HashRouter, Switch, Redirect } from 'react-router-dom';
-import UserContainer from './component/Users/UsersContainer';
+import { UsersPage } from './component/Users/UsersPage';
 import HeaderContainer from './component/Header/HeaderContainer';
-import LoginContainer from './component/Login/LoginContainer';
 import { initializeApp } from './redux/appReducer';
 import { connect, Provider } from 'react-redux';
 import Preloader from './component/common/Preloader/Preloader';
 import store, { stateType } from './redux/redux-store';
 import { withSuspense } from './hoc/withSuspense';
 import cn from 'classnames';
+import { Login } from './component/Login/Login';
 
 const ProfileContainer = React.lazy(() => import('./component/Profile/ProfileContainer'));
 const DialogContainer = React.lazy(() => import('./component/Dialog/DialogContainer'));
@@ -48,7 +48,7 @@ class App extends React.Component<PropsType> {
           isOpenMenu: !this.state.isOpenMenu
         })}>☰</button>
         <div className={s.header}></div>
-        <HashRouter> {// Instead of hashRouter i was used BrowserRouter, but BrowserRouter is working incorrect with 
+        <HashRouter> {// Instead of hashRouter I was used BrowserRouter, but BrowserRouter is working incorrect with 
                       // GitHub pages
                     }
           <div className={s.app_wrapper}>
@@ -63,8 +63,8 @@ class App extends React.Component<PropsType> {
                 <Route exact path="/" render={() => <Redirect to="/profile" />}/>
                 <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
                 <Route path="/dialog" render={withSuspense(DialogContainer)}/>
-                <Route path="/users" render={() => <UserContainer />} />
-                <Route path="/login" render={() => <LoginContainer />} />
+                <Route path="/users" render={() => <UsersPage />} />
+                <Route path="/login" render={() => <Login />} />
                 <Route path="*" render={() => <div>404 Page not Found</div>}/>
               </Switch>
             </div>

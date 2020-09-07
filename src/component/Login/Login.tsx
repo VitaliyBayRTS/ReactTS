@@ -4,6 +4,10 @@ import { Input } from '../../utilities/ReduxForm/Form';
 import { required } from '../../utilities/validator/validator';
 import { Redirect } from 'react-router-dom';
 import s from './../../utilities/ReduxForm/ReduxForm.module.scss';
+import { useSelector, useDispatch } from 'react-redux';
+import { isAuth } from '../../redux/usersSelectors';
+import {stateType} from '../../redux/redux-store';
+import { login } from '../../redux/authMeReducer';
 
 type IFormProps = {
     handleSubmit: () => void,
@@ -15,7 +19,7 @@ type IFormProps = {
 }
 
 type IDispatchProps = {
-    captchaUrl: string
+    captchaUrl: string | null
 }
 
 let LoginForm = (props: IDispatchProps & InjectedFormProps<IFormProps, IDispatchProps>) => {
@@ -45,12 +49,6 @@ let LoginForm = (props: IDispatchProps & InjectedFormProps<IFormProps, IDispatch
 
 let LoginReduxForm = reduxForm<IFormProps, IDispatchProps>({form: 'login'})(LoginForm);
 
-type propsInter = {
-    login: (email: string, password: string, rememberMe: boolean, captcha: string) => void,
-    isAuth: boolean
-    captchaUrl: string
-}
-
 type formDataType = {
     email: string,
     password: string,
@@ -60,19 +58,23 @@ type formDataType = {
 
 
 
-let Login: FunctionComponent<propsInter> = (props) => {
+export const Login: FunctionComponent = () => {
+
+    const isAuthValue = useSelector(isAuth)
+    const captchaUrl = useSelector((state: stateType) => state.auth.captchaUrl)
+
+    const dispatch = useDispatch()
+
     let onSubmit = (formData: formDataType) => {
-        props.login(formData.email, formData.password, formData.rememberMe, formData.captcha);
+        dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
 
-    if(props.isAuth) return <Redirect to="/profile" />
+    if(isAuthValue) return <Redirect to="/profile" />
 
     return (
         <div>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
+            <LoginReduxForm onSubmit={onSubmit} captchaUrl={captchaUrl}/>
         </div>
     )
 }
-
-export default Login;
