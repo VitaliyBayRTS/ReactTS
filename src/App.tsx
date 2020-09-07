@@ -3,7 +3,7 @@ import s from './App.module.scss';
 import NavBar from './component/NavBar/NavBar';
 import { Route, HashRouter, Switch, Redirect } from 'react-router-dom';
 import { UsersPage } from './component/Users/UsersPage';
-import HeaderContainer from './component/Header/HeaderContainer';
+import { HeaderPage } from './component/Header/HeaderPage';
 import { initializeApp } from './redux/appReducer';
 import { connect, Provider } from 'react-redux';
 import Preloader from './component/common/Preloader/Preloader';
@@ -52,7 +52,7 @@ class App extends React.Component<PropsType> {
                       // GitHub pages
                     }
           <div className={s.app_wrapper}>
-            <HeaderContainer />
+            <HeaderPage />
             <div className={cn(s.navBar, {
               [s.mobileNavBar]: this.state.isOpenMenu 
             })}>
@@ -86,7 +86,7 @@ let AppContainer =  connect<mapStateToPropsType, mapDispatchToPropsType, {}, sta
 
 type SocialApp = {}
 
-let SocialApp: FunctionComponent<SocialApp> = (props) => {
+const SocialApp: FunctionComponent<SocialApp> = (props) => {
   return <Provider store={store}>
     <AppContainer />
   </Provider>
